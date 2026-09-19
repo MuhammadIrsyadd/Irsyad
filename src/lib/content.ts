@@ -135,9 +135,9 @@ export type Social = {
 };
 
 export const socials: Social[] = [
-  { id: "github", label: "GitHub", handle: "@username", url: "" },
-  { id: "linkedin", label: "LinkedIn", handle: "Nama Kamu", url: "" },
-  { id: "instagram", label: "Instagram", handle: "@username", url: "" },
+  { id: "github", label: "GitHub", handle: "@muhammadirsyadd", url: "https://github.com/MuhammadIrsyadd" },
+  { id: "linkedin", label: "LinkedIn", handle: "Muh. Irsyad", url: "https://www.linkedin.com/in/muh-irsyad-dwi-kurniawan/" },
+  { id: "instagram", label: "Instagram", handle: "@irsyad_dwi", url: "https://www.instagram.com/irsyad_dwi/" },
 ];
 
 export const terminalSkillDump = `$ whoami
