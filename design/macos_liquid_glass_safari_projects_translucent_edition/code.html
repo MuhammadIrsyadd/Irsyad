@@ -1,0 +1,622 @@
+<!DOCTYPE html>
+
+<html class="dark" lang="en"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<link href="https://fonts.googleapis.com/css2?family=Geist:wght@300;400;500;600;700&amp;family=JetBrains+Mono:wght@400;500;600&amp;family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@20..48,100..700,0..1,-50..200" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<style>
+@layer base {
+  html, body { margin: 0; padding: 0; }
+  body { overscroll-behavior: none; }
+  main > :first-child { margin-top: 0 !important; }
+  main > :last-child { margin-bottom: 0 !important; }
+}
+::-webkit-scrollbar { display: none; }
+.liquid-glass-window {
+  background: rgba(15, 18, 28, 0.72);
+  backdrop-filter: blur(36px) saturate(200%);
+  -webkit-backdrop-filter: blur(36px) saturate(200%);
+  border: 1px solid rgba(255, 255, 255, 0.20);
+  box-shadow: 0 35px 80px -15px rgba(0, 0, 0, 0.8), 0 0 0 1px rgba(255, 255, 255, 0.1) inset;
+}
+.liquid-glass-card {
+  background: rgba(22, 26, 40, 0.65);
+  backdrop-filter: blur(20px) saturate(180%);
+  -webkit-backdrop-filter: blur(20px) saturate(180%);
+  border: 1px solid rgba(255, 255, 255, 0.12);
+  box-shadow: 0 16px 36px rgba(0, 0, 0, 0.45), inset 0 1px 1px rgba(255, 255, 255, 0.15);
+}
+.liquid-glass-card:hover {
+  background: rgba(28, 34, 52, 0.75);
+  border-color: rgba(255, 193, 116, 0.35);
+  box-shadow: 0 20px 42px rgba(0, 0, 0, 0.55), inset 0 1px 2px rgba(255, 255, 255, 0.25);
+}
+.glass-tab-active {
+  background: rgba(36, 42, 64, 0.85);
+  box-shadow: 0 4px 16px rgba(0, 0, 0, 0.4), inset 0 1px 1px rgba(255, 255, 255, 0.25);
+  border: 1px solid rgba(255, 255, 255, 0.18);
+}
+</style>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<script id="tailwind-config">
+  tailwind.config = {
+    darkMode: "class",
+    theme: {
+      extend: {
+        "colors": {
+          "traffic-close": "#FF5F56",
+          "on-error": "#690005",
+          "inverse-surface": "#e2e2eb",
+          "on-error-container": "#ffdad6",
+          "inverse-primary": "#855300",
+          "surface-variant": "#33343b",
+          "outline-variant": "#534434",
+          "error-container": "#93000a",
+          "on-tertiary-container": "#004b58",
+          "tertiary-fixed-dim": "#4cd7f6",
+          "terminal-canvas": "rgba(10, 13, 20, 0.82)",
+          "surface-tint": "#ffb95f",
+          "on-secondary-container": "#c4abff",
+          "primary-fixed": "#ffddb8",
+          "surface-container-highest": "#33343b",
+          "on-tertiary-fixed-variant": "#004e5c",
+          "on-primary-fixed": "#2a1700",
+          "glass-fill-light": "rgba(255, 255, 255, 0.65)",
+          "glass-specular": "rgba(255, 255, 255, 0.28)",
+          "primary-fixed-dim": "#ffb95f",
+          "error": "#ffb4ab",
+          "traffic-minimize": "#FFBD2E",
+          "primary-container": "#f59e0b",
+          "tertiary-container": "#29c1df",
+          "surface-container-lowest": "#0c0e14",
+          "on-secondary-fixed": "#23005c",
+          "on-tertiary": "#003640",
+          "on-tertiary-fixed": "#001f26",
+          "on-secondary-fixed-variant": "#5516be",
+          "on-background": "#e2e2eb",
+          "on-primary-fixed-variant": "#653e00",
+          "dock-fill": "rgba(18, 22, 34, 0.65)",
+          "on-surface-variant": "#d8c3ad",
+          "traffic-maximize": "#27C93F",
+          "tertiary-fixed": "#acedff",
+          "outline": "#a08e7a",
+          "glass-specular-subtle": "rgba(255, 255, 255, 0.12)",
+          "tertiary": "#54ddfc",
+          "terminal-green": "#34D399",
+          "surface-container": "#1e1f26",
+          "secondary-fixed-dim": "#d0bcff",
+          "on-secondary": "#3c0091",
+          "primary": "#ffc174",
+          "secondary-container": "#571bc1",
+          "on-primary-container": "#613b00",
+          "glass-fill-dark": "rgba(15, 18, 28, 0.72)",
+          "on-primary": "#472a00",
+          "surface-container-high": "#282a30",
+          "background": "#0b0d13",
+          "on-surface": "#e2e2eb",
+          "secondary-fixed": "#e9ddff",
+          "surface-container-low": "#191b22",
+          "surface-dim": "#0b0d13",
+          "inverse-on-surface": "#2e3037",
+          "surface-bright": "#373940",
+          "secondary": "#d0bcff",
+          "surface": "#111319"
+        },
+        "borderRadius": {
+          "DEFAULT": "0.25rem",
+          "lg": "0.5rem",
+          "xl": "0.75rem",
+          "full": "9999px"
+        },
+        "spacing": {
+          "space-md": "0.75rem",
+          "space-xs": "0.25rem",
+          "margin-mobile": "0.75rem",
+          "gutter-mobile": "0.75rem",
+          "margin": "1.5rem",
+          "space-xl": "2rem",
+          "gutter": "1rem",
+          "space-sm": "0.5rem",
+          "space-lg": "1.25rem"
+        },
+        "fontFamily": {
+          "label-md": ["JetBrains Mono"],
+          "label-xs": ["JetBrains Mono"],
+          "headline-xl-mobile": ["Geist"],
+          "headline-2xl-mobile": ["Geist"],
+          "headline-sm": ["Geist"],
+          "body-md": ["Geist"],
+          "body-sm": ["Geist"],
+          "body-lg": ["Geist"],
+          "headline-lg": ["Geist"],
+          "headline-2xl": ["Geist"],
+          "label-sm": ["JetBrains Mono"],
+          "headline-xl": ["Geist"],
+          "headline-md": ["Geist"]
+        }
+      }
+    }
+  }
+</script>
+</head>
+<body class="min-h-screen bg-background text-on-surface font-body-md text-body-md selection:bg-primary-container selection:text-on-primary-container relative overflow-x-hidden">
+<!-- Desktop Dynamic Wallpaper Layer -->
+<div class="fixed inset-0 z-0 pointer-events-none overflow-hidden">
+<img alt="Desktop Background" class="w-full h-full object-cover object-center filter brightness-[0.75] contrast-[1.12]" src="https://lh3.googleusercontent.com/aida-public/AB6AXuBp1q6c1nP_uJRoc_nfUAoSC1F7YplWP3pv9jA0Ib6-WqXdgSiHsw6CWvahgvmZs27keVcC1Y9WGtKd16KTLvyCPVNsqtDbc7WYb4GC7sPf2L2RoSene2eptxa3qAP-QDaD6nQNpABAepZW5XModCfFAdLV_VWOCGpvCgdtZhOpsN6w4nni9YC3HVjeRPuP9Dp18T2ws6TO88Pa82ULlKbu2bG6JJ49_RXjetzVLxS-3Lja2Y9MNcMStw"/>
+<!-- Subtle caustics & ambient dark gradient overlay -->
+<div class="absolute inset-0 bg-gradient-to-b from-black/40 via-transparent to-black/70"></div>
+<div class="absolute inset-0 bg-[radial-gradient(ellipse_80%_80%_at_50%_-20%,rgba(245,158,11,0.12),transparent_70%)]"></div>
+</div>
+<!-- Top macOS Liquid Glass Menu Bar -->
+<header class="fixed top-0 inset-x-0 z-50 bg-[rgba(12,15,24,0.65)] backdrop-blur-2xl border-b border-white/10 shadow-[0_4px_24px_rgba(0,0,0,0.5)]">
+<div class="h-8 w-full px-gutter flex items-center justify-between font-body-sm text-body-sm">
+<div class="flex items-center gap-space-md">
+<!-- Brand Monogram Mark -->
+<a class="flex items-center gap-1.5 opacity-90 hover:opacity-100 transition-opacity" href="#">
+<img alt="OS Monogram Emblem" class="h-5 w-5 rounded-full object-contain filter drop-shadow-[0_0_8px_rgba(245,158,11,0.5)]" src="https://lh3.googleusercontent.com/aida/AEtjO1W1Z0E4AGuDvoBEBQiwquLiHmSrFD6mcqHsn7xX_Hg7tj43sQf8i1Rvouu_osUXmvbdVdP1Mz31zbgorXRmDfJGUfYNWu0TrV-OgUTNqjA6Yxn-TVfVA94SUnVymtFYtJ5sS_0W_TMLsd8aEfciSoq4idH9sboXd4pr_g4qAL4HzPKAHlcu_9BjgzEVVZDN0qcacRvTD-nnhvGxaJwbAeL9KPPHBy4Suz9fgHn7REAo3Q88ebImZ8JN2u8-"/>
+<span class="font-headline-sm text-headline-sm font-semibold text-white tracking-tight">Safari</span>
+</a>
+<nav class="hidden md:flex items-center gap-space-md font-body-sm" data-active-classes="text-on-surface font-semibold">
+<a class="text-white/80 hover:text-white transition-colors" href="#">File</a>
+<a class="text-white/80 hover:text-white transition-colors" href="#">Edit</a>
+<a class="text-white/80 hover:text-white transition-colors" href="#">View</a>
+<a class="text-white/80 hover:text-white transition-colors" href="#">History</a>
+<a class="text-white/80 hover:text-white transition-colors" href="#">Bookmarks</a>
+<a class="text-white/80 hover:text-white transition-colors" href="#">Window</a>
+<a class="text-white/80 hover:text-white transition-colors" href="#">Help</a>
+</nav>
+</div>
+<div class="flex items-center gap-space-md font-label-xs text-label-xs text-white/80">
+<div class="flex items-center gap-space-xs hover:text-white cursor-pointer">
+<span class="material-symbols-outlined text-sm">search</span>
+</div>
+<div class="flex items-center gap-space-xs hover:text-white cursor-pointer">
+<span class="material-symbols-outlined text-sm">wifi</span>
+</div>
+<div class="flex items-center gap-space-xs bg-white/10 border border-white/10 px-2 py-0.5 rounded-full backdrop-blur-md">
+<span class="material-symbols-outlined text-sm text-terminal-green">battery_charging_80</span>
+<span class="text-white hidden sm:inline font-medium">92%</span>
+</div>
+<div class="flex items-center gap-space-xs hover:text-white cursor-pointer">
+<span class="material-symbols-outlined text-sm">tune</span>
+</div>
+<span class="text-white font-medium hidden sm:inline tracking-wide">Tue Jun 24 9:41 AM</span>
+<div class="flex items-center pl-1">
+<img alt="Avatar" class="w-5 h-5 rounded-full object-cover border border-white/30" src="https://lh3.googleusercontent.com/aida-public/AB6AXuCsBaJZKwHbnK8ddZgrIJ30RacKhTnMzya2FCLpe-hjEWelzDteh7EAghuOnzDg6gvitpCxLfjQ_uA74cWOOxzlbZyx9_yFuKGeT2_7Q4USIcPEyc47vQ06j3VfTvpVpY5GOX5t5968ywh1UheYsHtyZZDQRT-vtfNmdFyczZUbAHI-5PTbq81j6Sq2IL_q-7jH-Wdxur7U9mGO569AJLSa-2XAyQ-KNTu4RcwAikuOKjMAnxcNLnI5NA"/>
+</div>
+</div>
+</div>
+</header>
+<!-- Main Workspace Area -->
+<main class="relative z-10 w-full pt-10 pb-28 min-h-screen flex flex-col justify-between">
+<div class="flex flex-col w-full">
+<div class="relative w-full max-w-7xl mx-auto px-4 sm:px-6 lg:px-gutter py-2">
+<!-- Liquid Glass Safari Window Master Container -->
+<div class="relative z-20 w-full rounded-2xl overflow-hidden liquid-glass-window transition-all duration-300" id="safari-window">
+<!-- Top Chrome Bar: Traffic Lights & Liquid Tab Strip -->
+<div class="h-11 px-space-md flex items-center justify-between bg-black/40 border-b border-white/10 backdrop-blur-2xl select-none">
+<!-- Left: macOS Traffic Lights Trio -->
+<div class="flex items-center gap-2 group/traffic w-28">
+<div class="w-3 h-3 rounded-full bg-traffic-close flex items-center justify-center cursor-pointer shadow-[inset_0_1px_1px_rgba(255,255,255,0.6),0_0_8px_rgba(255,95,86,0.5)]">
+<span class="material-symbols-outlined text-[9px] text-on-error opacity-0 group-hover/traffic:opacity-100 font-bold transition-opacity">close</span>
+</div>
+<div class="w-3 h-3 rounded-full bg-traffic-minimize flex items-center justify-center cursor-pointer shadow-[inset_0_1px_1px_rgba(255,255,255,0.6),0_0_8px_rgba(255,189,46,0.5)]">
+<span class="material-symbols-outlined text-[9px] text-on-primary opacity-0 group-hover/traffic:opacity-100 font-bold transition-opacity">remove</span>
+</div>
+<div class="w-3 h-3 rounded-full bg-traffic-maximize flex items-center justify-center cursor-pointer shadow-[inset_0_1px_1px_rgba(255,255,255,0.6),0_0_8px_rgba(39,201,63,0.5)]">
+<span class="material-symbols-outlined text-[8px] text-[#054010] opacity-0 group-hover/traffic:opacity-100 font-bold transition-opacity">open_in_full</span>
+</div>
+</div>
+<!-- Center: Safari Liquid Glass Tabs Strip -->
+<div class="flex-1 max-w-2xl flex items-center gap-2 px-2 overflow-x-auto">
+<!-- Tab 1: Lumina OS (Active glowing liquid tab) -->
+<button class="safari-tab active flex items-center gap-2 px-3.5 py-1.5 rounded-lg glass-tab-active text-white font-label-xs text-label-xs transition-all relative">
+<span class="w-2 h-2 rounded-full bg-primary animate-pulse shadow-[0_0_8px_#ffc174]"></span>
+<span class="material-symbols-outlined text-tertiary text-sm">explore</span>
+<span class="truncate max-w-[170px] font-medium text-white tracking-tight">Lumina OS — Spatial Web</span>
+<span class="material-symbols-outlined text-xs text-white/50 hover:text-white ml-1">close</span>
+</button>
+<!-- Tab 2: Veloce HFT -->
+<button class="safari-tab flex items-center gap-2 px-3 py-1.5 rounded-lg bg-white/5 hover:bg-white/10 text-white/70 hover:text-white font-label-xs text-label-xs border border-white/5 transition-all">
+<span class="material-symbols-outlined text-primary text-sm">bolt</span>
+<span class="truncate max-w-[140px]">⚡ Veloce — HFT</span>
+<span class="material-symbols-outlined text-xs text-white/40 hover:text-white ml-0.5">close</span>
+</button>
+<!-- Tab 3: Aetheria -->
+<button class="safari-tab flex items-center gap-2 px-3 py-1.5 rounded-lg bg-white/5 hover:bg-white/10 text-white/70 hover:text-white font-label-xs text-label-xs border border-white/5 transition-all">
+<span class="material-symbols-outlined text-terminal-green text-sm">graphic_eq</span>
+<span class="truncate max-w-[130px]">🌿 Aetheria DSP</span>
+<span class="material-symbols-outlined text-xs text-white/40 hover:text-white ml-0.5">close</span>
+</button>
+</div>
+<!-- Right: Window Utility Controls -->
+<div class="flex items-center justify-end gap-1.5 text-white/70 w-28">
+<button class="p-1 rounded-md hover:bg-white/10 hover:text-white transition-colors" title="New Tab">
+<span class="material-symbols-outlined text-sm">add</span>
+</button>
+<button class="p-1 rounded-md hover:bg-white/10 hover:text-white transition-colors" title="Tab Overview">
+<span class="material-symbols-outlined text-sm">view_agenda</span>
+</button>
+</div>
+</div>
+<!-- Safari Navigation Controls & Frosted Glass URL Search Pill -->
+<div class="h-12 px-space-md flex items-center gap-space-md bg-black/30 border-b border-white/10 backdrop-blur-xl">
+<!-- Navigation Action Buttons -->
+<div class="flex items-center gap-1 text-white/70">
+<button class="p-1.5 rounded-md hover:bg-white/10 hover:text-white transition-colors" title="Back">
+<span class="material-symbols-outlined text-base">arrow_back_ios_new</span>
+</button>
+<button class="p-1.5 rounded-md hover:bg-white/10 opacity-40 cursor-not-allowed transition-colors" title="Forward">
+<span class="material-symbols-outlined text-base">arrow_forward_ios</span>
+</button>
+<button class="p-1.5 rounded-md hover:bg-white/10 hover:text-white transition-colors ml-1" title="Reload">
+<span class="material-symbols-outlined text-base">refresh</span>
+</button>
+</div>
+<!-- Frosted Glass URL Search Pill -->
+<div class="flex-1 max-w-2xl mx-auto flex items-center justify-between px-4 py-1.5 rounded-full bg-black/40 border border-white/15 shadow-[inset_0_2px_4px_rgba(0,0,0,0.5)] backdrop-blur-xl group hover:border-primary/40 transition-colors">
+<div class="flex items-center gap-2 min-w-0">
+<span class="material-symbols-outlined text-terminal-green text-sm filter drop-shadow-[0_0_5px_rgba(52,211,153,0.6)]">lock</span>
+<span class="font-label-sm text-label-sm text-tertiary font-mono">https://</span>
+<span class="font-label-sm text-label-sm text-white font-mono truncate">portfolio.dev/projects/lumina-os</span>
+</div>
+<div class="flex items-center gap-2 text-white/60 pl-2">
+<span class="material-symbols-outlined text-sm hover:text-white cursor-pointer transition-colors">tune</span>
+<span class="font-label-xs text-label-xs bg-white/10 border border-white/10 px-1.5 py-0.5 rounded text-white/80">⌘R</span>
+</div>
+</div>
+<!-- Window Right Quick Actions -->
+<div class="flex items-center gap-1.5 text-white/70">
+<button class="p-1.5 rounded-md hover:bg-white/10 hover:text-white transition-colors" title="Share Project">
+<span class="material-symbols-outlined text-base">ios_share</span>
+</button>
+<button class="p-1.5 rounded-md hover:bg-white/10 hover:text-white transition-colors" title="Tabs View">
+<span class="material-symbols-outlined text-base">grid_view</span>
+</button>
+</div>
+</div>
+<!-- Web Content Viewport inside Safari -->
+<div class="relative w-full max-h-[750px] overflow-y-auto bg-black/45 p-4 md:p-space-lg select-text scroll-smooth">
+<!-- Hero Project Showcase: Lumina OS -->
+<section class="relative rounded-2xl liquid-glass-card p-6 md:p-space-lg overflow-hidden">
+<!-- Glossy specular refraction corner accents -->
+<div class="absolute -right-20 -top-20 w-96 h-96 rounded-full bg-primary/10 blur-[90px] pointer-events-none"></div>
+<div class="absolute -left-16 -bottom-16 w-80 h-80 rounded-full bg-secondary/15 blur-[100px] pointer-events-none"></div>
+<div class="relative z-10 grid grid-cols-1 lg:grid-cols-12 gap-space-lg items-center">
+<!-- Left Details Column -->
+<div class="lg:col-span-6 flex flex-col gap-space-md">
+<!-- Badges Strip -->
+<div class="flex flex-wrap items-center gap-2">
+<span class="inline-flex items-center gap-1.5 px-3 py-1 rounded-full bg-primary-container text-on-primary-container font-label-xs text-label-xs uppercase tracking-wider font-bold shadow-[0_0_14px_rgba(245,158,11,0.4)]">
+<span class="w-1.5 h-1.5 rounded-full bg-on-primary-container animate-ping"></span>
+                      Live Case Study
+                    </span>
+<span class="inline-flex items-center gap-1 px-3 py-1 rounded-full bg-white/10 border border-primary/30 text-primary font-label-xs text-label-xs backdrop-blur-md">
+<span class="material-symbols-outlined text-xs">workspace_premium</span>
+                      FWA of the Day
+                    </span>
+<span class="inline-flex items-center gap-1 px-3 py-1 rounded-full bg-white/10 border border-tertiary/30 text-tertiary font-label-xs text-label-xs backdrop-blur-md">
+<span class="material-symbols-outlined text-xs">memory</span>
+                      WebGPU &amp; v3.4 Engine
+                    </span>
+</div>
+<!-- Title & Pitch -->
+<div>
+<h1 class="font-headline-2xl text-headline-2xl text-white font-bold tracking-tight drop-shadow-[0_2px_12px_rgba(0,0,0,0.5)]">
+                      Lumina OS
+                    </h1>
+<p class="font-headline-md text-headline-md text-primary mt-1 font-medium">
+                      Spatial Glass Web Operating Environment &amp; 3D Interaction Paradigm
+                    </p>
+</div>
+<p class="font-body-lg text-body-lg text-white/80 max-w-xl leading-relaxed">
+                    Engineered for tactile multi-threaded creative workflows directly inside modern browser runtimes. Powered by custom WebGL fluid shaders, zero-latency Web Workers, and ergonomic spatial micro-gestures.
+                  </p>
+<!-- Tech Stack Chips -->
+<div class="flex flex-wrap gap-2 pt-1">
+<span class="px-2.5 py-1 rounded-md bg-white/10 border border-white/10 text-white/90 font-label-xs text-label-xs">Next.js 15</span>
+<span class="px-2.5 py-1 rounded-md bg-white/10 border border-white/10 text-white/90 font-label-xs text-label-xs">Three.js / WebGL</span>
+<span class="px-2.5 py-1 rounded-md bg-white/10 border border-white/10 text-white/90 font-label-xs text-label-xs">Tailwind CSS</span>
+<span class="px-2.5 py-1 rounded-md bg-white/10 border border-white/10 text-white/90 font-label-xs text-label-xs">Web Audio API</span>
+<span class="px-2.5 py-1 rounded-md bg-white/10 border border-white/10 text-white/90 font-label-xs text-label-xs">TypeScript</span>
+</div>
+<!-- Action Buttons -->
+<div class="flex items-center gap-space-md pt-2">
+<a class="inline-flex items-center gap-2 px-5 py-2.5 rounded-xl bg-primary-container text-on-primary-container font-headline-sm text-headline-sm font-semibold hover:brightness-110 shadow-[0_8px_24px_rgba(245,158,11,0.35)] transition-all" href="#">
+<span>Launch Spatial Demo</span>
+<span class="material-symbols-outlined text-base">open_in_new</span>
+</a>
+<a class="inline-flex items-center gap-2 px-4 py-2.5 rounded-xl bg-white/10 hover:bg-white/15 border border-white/15 text-white font-headline-sm text-headline-sm backdrop-blur-md transition-colors" href="#">
+<span class="material-symbols-outlined text-base">code</span>
+<span>View Source</span>
+</a>
+</div>
+</div>
+<!-- Right Visual Preview -->
+<div class="lg:col-span-6 relative">
+<div class="relative rounded-xl overflow-hidden border border-white/20 shadow-2xl bg-black/50 group">
+<img alt="Lumina OS 3D Environment" class="w-full h-72 md:h-80 object-cover transform group-hover:scale-105 transition-transform duration-500" data-alt="Futuristic glassmorphic spatial user interface showing glowing 3D geometric nodes floating over dark liquid glass panels with warm amber and purple refraction rays on a dark slate canvas" src="https://lh3.googleusercontent.com/aida-public/AB6AXuAtjhJefCVIhVOvRAZLAMMcZgSJ0fQKAO-2ub-rM16f5pNHj7MnqakTct2rqEfVNMxx_axmfwLoNPxNuJBI_HalgV5zokMhWQLJdbXZnWeTDtGMIGShd2mPnUkpreanrmVjofphHnMpgjSP_PQxQBTCHvlQwVhoEBUbpLu_RVVjN1l4DXerM_ybn6F2BgaKogX_shTQK0c_pQmNT7B7wecAiMST_gEuIY-I6Q9E-HW8XMm6pa3aMMRyrg"/>
+<!-- Overlay HUD Bar -->
+<div class="absolute bottom-3 inset-x-3 p-3 rounded-lg bg-[rgba(10,13,22,0.85)] border border-white/15 backdrop-blur-xl flex items-center justify-between shadow-lg">
+<div class="flex items-center gap-2">
+<div class="w-2.5 h-2.5 rounded-full bg-terminal-green animate-pulse shadow-[0_0_8px_#34d399]"></div>
+<span class="font-label-xs text-label-xs text-white font-medium">Spatial Frame Target: 120 FPS</span>
+</div>
+<span class="font-label-xs text-label-xs text-tertiary bg-tertiary/10 border border-tertiary/20 px-2 py-0.5 rounded">WebGL 2.0 Active</span>
+</div>
+</div>
+</div>
+</div>
+<!-- Project Metrics Strip -->
+<div class="mt-space-lg pt-space-md grid grid-cols-2 md:grid-cols-4 gap-4 bg-black/40 border border-white/10 rounded-xl p-space-md backdrop-blur-xl">
+<div class="flex flex-col">
+<span class="font-headline-xl text-headline-xl text-primary font-bold tracking-tight drop-shadow-[0_0_12px_rgba(255,193,116,0.4)]">+140%</span>
+<span class="font-label-xs text-label-xs text-white/70 uppercase tracking-wider mt-0.5">User Engagement</span>
+</div>
+<div class="flex flex-col">
+<span class="font-headline-xl text-headline-xl text-tertiary font-bold tracking-tight drop-shadow-[0_0_12px_rgba(84,221,252,0.4)]">45ms</span>
+<span class="font-label-xs text-label-xs text-white/70 uppercase tracking-wider mt-0.5">Average Render Time</span>
+</div>
+<div class="flex flex-col">
+<span class="font-headline-xl text-headline-xl text-secondary font-bold tracking-tight drop-shadow-[0_0_12px_rgba(208,188,255,0.4)]">30k+</span>
+<span class="font-label-xs text-label-xs text-white/70 uppercase tracking-wider mt-0.5">GitHub Stars</span>
+</div>
+<div class="flex flex-col">
+<span class="font-headline-xl text-headline-xl text-terminal-green font-bold tracking-tight drop-shadow-[0_0_12px_rgba(52,211,153,0.4)]">99.9%</span>
+<span class="font-label-xs text-label-xs text-white/70 uppercase tracking-wider mt-0.5">Test Suite Coverage</span>
+</div>
+</div>
+</section>
+<!-- Section Title & Filter Tabs -->
+<div class="flex flex-col sm:flex-row items-start sm:items-center justify-between gap-4 mt-space-xl mb-space-md">
+<div>
+<span class="font-label-xs text-label-xs uppercase tracking-widest text-primary font-semibold flex items-center gap-1">
+<span class="w-1.5 h-1.5 rounded-full bg-primary"></span>
+                  Repository Showcase
+                </span>
+<h2 class="font-headline-xl text-headline-xl text-white font-semibold tracking-tight">Featured Engineering Projects</h2>
+</div>
+<!-- Category Segmented Controls -->
+<div class="inline-flex p-1 rounded-xl bg-black/50 border border-white/10 backdrop-blur-xl">
+<button class="px-3 py-1 rounded-lg bg-white/15 text-white font-label-xs text-label-xs font-semibold shadow-inner">All Systems (12)</button>
+<button class="px-3 py-1 rounded-lg text-white/60 hover:text-white font-label-xs text-label-xs transition-colors">Distributed</button>
+<button class="px-3 py-1 rounded-lg text-white/60 hover:text-white font-label-xs text-label-xs transition-colors">Computer Vision</button>
+<button class="px-3 py-1 rounded-lg text-white/60 hover:text-white font-label-xs text-label-xs transition-colors">Creative Audio</button>
+</div>
+</div>
+<!-- Secondary Projects Liquid Glass Bento Grid -->
+<div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-space-md">
+<!-- Case Study Card 1: Veloce HFT Terminal -->
+<div class="group flex flex-col justify-between rounded-xl liquid-glass-card p-space-md transition-all duration-300">
+<div>
+<div class="relative rounded-lg overflow-hidden bg-black/60 h-44 mb-space-md border border-white/10">
+<img alt="Veloce Terminal" class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500" data-alt="High frequency trading software terminal with dark financial candlestick charts, glowing neon amber order books, and real-time execution stream metrics in a minimalist obsidian layout" src="https://lh3.googleusercontent.com/aida-public/AB6AXuC76SL_s-_nKLqPF2DdQADJiaMfchLBvUeQflxysNtd17TlqvOUJihHp4cDSF8eoy3eDAYOFL0Rtz2wy02QNo9rbjes7XfsUyqqJuwwnEFZKFg2JcwaSUInXAWgNKcJK1KXT-aFFchtdM-SD7fqxxFhQJdoqnKYOLSL0h1CQqO-CYB6YFlDHwfBRzZGw8c9YJgbt4h40HzILEEGpb4pxxMcf94f5L9m2hER5kyxj8pGj4MD1EX6UoS3CQ"/>
+<div class="absolute top-2.5 right-2.5 px-2.5 py-0.5 rounded-full bg-black/70 border border-primary/40 text-primary font-label-xs text-label-xs backdrop-blur-md shadow-sm font-mono">
+                      Rust + WASM
+                    </div>
+</div>
+<div class="flex items-center gap-2 mb-1">
+<span class="material-symbols-outlined text-primary text-base">bolt</span>
+<span class="font-label-xs text-label-xs text-white/70">Fintech / High-Scale</span>
+</div>
+<h3 class="font-headline-lg text-headline-lg text-white font-semibold group-hover:text-primary transition-colors">
+                    Veloce HFT Terminal
+                  </h3>
+<p class="font-body-md text-body-md text-white/70 mt-2 line-clamp-2">
+                    Sub-millisecond market execution dashboard rendering 100,000 live order book depth events per second via WebGL canvas pipeline.
+                  </p>
+</div>
+<div class="pt-space-md mt-space-md border-t border-white/10">
+<div class="flex items-center justify-between font-label-xs text-label-xs text-white/70">
+<span>Latency: <strong class="text-white font-mono">0.38ms</strong></span>
+<a class="inline-flex items-center gap-1 text-primary hover:underline font-semibold" href="#">
+<span>Case Study</span>
+<span class="material-symbols-outlined text-sm">arrow_forward</span>
+</a>
+</div>
+</div>
+</div>
+<!-- Case Study Card 2: Aetheria Audio Engine -->
+<div class="group flex flex-col justify-between rounded-xl liquid-glass-card p-space-md transition-all duration-300">
+<div>
+<div class="relative rounded-lg overflow-hidden bg-black/60 h-44 mb-space-md border border-white/10">
+<img alt="Aetheria Engine" class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500" data-alt="Interactive 3D audio synthesizer and generative sound visualizer showing shimmering soundwaves and organic iridescent rings on a deep indigo black backdrop" src="https://lh3.googleusercontent.com/aida-public/AB6AXuAO8eB4KERHNVisnPCSZmY9Tc6HakRO1cNLPW51rbnRc-Cli2UJpI5dKQd9SrzaZu9utj0xgcYgG_QZa4oSxMLsoIhMMBiPIQfnn54THCbc48GWqwEobgwNBwm-YuHycB6YJM_0Kp3umHShpNhEFjYg5lg_Yt5HHEZKWIQWXWZRbVIdXmE8pi2KCBgJgFstBxFMSVAIqb8K43c6Md3Mv7ZTFGotV9iHHd7NwSn5L5jJiC-hmpsU6N8qNQ"/>
+<div class="absolute top-2.5 right-2.5 px-2.5 py-0.5 rounded-full bg-black/70 border border-terminal-green/40 text-terminal-green font-label-xs text-label-xs backdrop-blur-md shadow-sm font-mono">
+                      Spatial DSP
+                    </div>
+</div>
+<div class="flex items-center gap-2 mb-1">
+<span class="material-symbols-outlined text-terminal-green text-base">graphic_eq</span>
+<span class="font-label-xs text-label-xs text-white/70">Audio Synthesizer</span>
+</div>
+<h3 class="font-headline-lg text-headline-lg text-white font-semibold group-hover:text-tertiary transition-colors">
+                    Aetheria Audio Engine
+                  </h3>
+<p class="font-body-md text-body-md text-white/70 mt-2 line-clamp-2">
+                    Real-time procedural audio synthesis inside WebAssembly with interactive binaural 3D spatial reverberation algorithms.
+                  </p>
+</div>
+<div class="pt-space-md mt-space-md border-t border-white/10">
+<div class="flex items-center justify-between font-label-xs text-label-xs text-white/70">
+<span>Audio Latency: <strong class="text-white font-mono">&lt;5ms</strong></span>
+<a class="inline-flex items-center gap-1 text-tertiary hover:underline font-semibold" href="#">
+<span>Case Study</span>
+<span class="material-symbols-outlined text-sm">arrow_forward</span>
+</a>
+</div>
+</div>
+</div>
+<!-- Case Study Card 3: Prism Vision AI Studio -->
+<div class="group flex flex-col justify-between rounded-xl liquid-glass-card p-space-md transition-all duration-300">
+<div>
+<div class="relative rounded-lg overflow-hidden bg-black/60 h-44 mb-space-md border border-white/10">
+<img alt="Prism Neural Studio" class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500" data-alt="Neural computer vision studio interface with glowing multi-colored segmentations, wireframe depth maps, and real-time tensor telemetry graphs on a dark translucent glass grid" src="https://lh3.googleusercontent.com/aida-public/AB6AXuBd3447GCSUVANbZ9ZhBYGhj8qPACb-d09Jr3Ln2Wgcua70YqS0UJLf8qhIrqB-PWAQh_82TK1PbwWgQ7c4-Eiv6bAkdE5n8ptRH5rLuevCZHrDgHLzn1FmMHGxLSJZZoqm-IbZ48KHiUqWs1ese3AlXvAKk-uatpMID811Vt2n9CMBwRbvX5GzNrcgws8R7fCsZpNUAHKRgJeQTx423cVdEdN2uYKXFATdJ7HbwD8m6m0ZGshSowo0Uw"/>
+<div class="absolute top-2.5 right-2.5 px-2.5 py-0.5 rounded-full bg-black/70 border border-secondary/40 text-secondary font-label-xs text-label-xs backdrop-blur-md shadow-sm font-mono">
+                      WebGPU / PyTorch
+                    </div>
+</div>
+<div class="flex items-center gap-2 mb-1">
+<span class="material-symbols-outlined text-secondary text-base">psychology</span>
+<span class="font-label-xs text-label-xs text-white/70">Edge ML / Segmentation</span>
+</div>
+<h3 class="font-headline-lg text-headline-lg text-white font-semibold group-hover:text-secondary transition-colors">
+                    Prism Neural Suite
+                  </h3>
+<p class="font-body-md text-body-md text-white/70 mt-2 line-clamp-2">
+                    Zero-cloud client-side vision model inference utilizing WebGPU compute pipelines for instant 4K image segmentation.
+                  </p>
+</div>
+<div class="pt-space-md mt-space-md border-t border-white/10">
+<div class="flex items-center justify-between font-label-xs text-label-xs text-white/70">
+<span>Inference: <strong class="text-white font-mono">14.2ms</strong></span>
+<a class="inline-flex items-center gap-1 text-secondary hover:underline font-semibold" href="#">
+<span>Case Study</span>
+<span class="material-symbols-outlined text-sm">arrow_forward</span>
+</a>
+</div>
+</div>
+</div>
+</div>
+<!-- Bottom Architecture Telemetry Banner -->
+<div class="mt-space-lg p-space-md rounded-xl liquid-glass-card flex flex-col lg:flex-row items-start lg:items-center justify-between gap-4">
+<div class="flex items-center gap-3">
+<div class="w-10 h-10 rounded-xl bg-primary/10 border border-primary/25 flex items-center justify-center text-primary shadow-[0_0_12px_rgba(245,158,11,0.2)]">
+<span class="material-symbols-outlined text-xl">dataset</span>
+</div>
+<div>
+<p class="font-headline-sm text-headline-sm text-white font-medium">Interactive Sandbox Runtime Ready</p>
+<p class="font-label-xs text-label-xs text-white/70">Select any card above to trigger live preview sandbox with WebContainer architecture.</p>
+</div>
+</div>
+<div class="flex items-center gap-2.5">
+<button class="px-3.5 py-2 rounded-lg bg-white/10 hover:bg-white/15 border border-white/15 text-white font-label-xs text-label-xs backdrop-blur-md transition-colors">
+                  Download Architecture PDF
+                </button>
+<button class="px-4 py-2 rounded-lg bg-primary-container hover:brightness-110 text-on-primary-container font-label-xs text-label-xs font-semibold shadow-[0_0_16px_rgba(245,158,11,0.4)] transition-all">
+                  Schedule Technical Review
+                </button>
+</div>
+</div>
+</div>
+<!-- Safari Bottom Status Bar -->
+<div class="h-7 px-space-md flex items-center justify-between bg-black/50 border-t border-white/10 font-label-xs text-label-xs text-white/70 select-none backdrop-blur-md">
+<div class="flex items-center gap-2 font-mono">
+<span class="w-1.5 h-1.5 rounded-full bg-terminal-green shadow-[0_0_6px_#34d399]"></span>
+<span>DOM Ready (212ms)</span>
+<span class="text-white/30">/</span>
+<span>Memory: 42.8 MB</span>
+</div>
+<div class="flex items-center gap-3 font-mono text-white/60">
+<span>Encoding: UTF-8</span>
+<span>Zoom: 100%</span>
+</div>
+</div>
+</div>
+</div>
+</div>
+</main>
+<!-- 3D Avatar Companion Floating Interactive Widget -->
+<aside class="fixed bottom-20 right-6 z-40 flex items-end gap-3 pointer-events-auto">
+<!-- Playful Speech Bubble -->
+<div class="max-w-[230px] p-3 rounded-2xl rounded-br-none bg-[rgba(15,18,28,0.85)] border border-white/20 backdrop-blur-2xl shadow-[0_16px_36px_rgba(0,0,0,0.6)] animate-bounce duration-1000">
+<div class="flex items-center justify-between mb-1">
+<span class="font-label-xs text-label-xs text-primary font-bold tracking-wider uppercase flex items-center gap-1">
+<span class="w-1.5 h-1.5 rounded-full bg-terminal-green animate-pulse"></span> Companion
+        </span>
+<span class="font-label-xs text-label-xs text-white/50">just now</span>
+</div>
+<p class="font-body-sm text-body-sm text-white/95 leading-snug">
+        Checked out <span class="text-primary font-semibold">Lumina OS</span> yet? It runs on custom WebGL shaders! 🚀
+      </p>
+</div>
+<!-- 3D Stylized Avatar Figure -->
+<div class="relative group cursor-pointer">
+<div class="relative w-20 h-20 md:w-24 md:h-24 rounded-2xl overflow-hidden bg-white/5 border border-white/25 backdrop-blur-2xl shadow-[0_16px_40px_rgba(0,0,0,0.7)] transform group-hover:scale-110 group-hover:-translate-y-1 transition-all duration-300">
+<img alt="Cute 3D stylized animated companion avatar" class="w-full h-full object-cover object-top filter contrast-105" src="https://lh3.googleusercontent.com/aida-public/AB6AXuCsBaJZKwHbnK8ddZgrIJ30RacKhTnMzya2FCLpe-hjEWelzDteh7EAghuOnzDg6gvitpCxLfjQ_uA74cWOOxzlbZyx9_yFuKGeT2_7Q4USIcPEyc47vQ06j3VfTvpVpY5GOX5t5968ywh1UheYsHtyZZDQRT-vtfNmdFyczZUbAHI-5PTbq81j6Sq2IL_q-7jH-Wdxur7U9mGO569AJLSa-2XAyQ-KNTu4RcwAikuOKjMAnxcNLnI5NA"/>
+<!-- Specular gloss highlight edge -->
+<div class="absolute inset-0 bg-gradient-to-tr from-transparent via-white/10 to-white/25 pointer-events-none"></div>
+</div>
+<!-- Online Badge indicator -->
+<span class="absolute -bottom-1 -right-1 w-4 h-4 rounded-full bg-terminal-green ring-2 ring-black shadow-[0_0_10px_#34d399]"></span>
+</div>
+</aside>
+<!-- Bottom Floating Liquid Glass Dock -->
+<footer class="fixed bottom-3 inset-x-0 z-50 flex justify-center pointer-events-none">
+<div class="pointer-events-auto flex items-end gap-2 px-4 py-2.5 rounded-2xl bg-dock-fill border border-white/20 backdrop-blur-3xl shadow-[0_24px_50px_rgba(0,0,0,0.75),inset_0_1px_1px_rgba(255,255,255,0.2)]">
+<!-- Finder (About Me) -->
+<a class="group relative flex flex-col items-center p-1 transition-all duration-200 hover:-translate-y-2 hover:scale-125" data-path="finder-about-me" href="#" title="Finder (About Me)">
+<div class="w-11 h-11 rounded-xl bg-white/10 border border-white/15 flex items-center justify-center text-primary shadow-[0_4px_16px_rgba(0,0,0,0.4)] group-hover:bg-primary-container group-hover:text-on-primary-container transition-all">
+<span class="material-symbols-outlined text-2xl">folder_open</span>
+</div>
+<span class="w-1.5 h-1.5 mt-1 rounded-full bg-primary shadow-[0_0_6px_#ffc174]"></span>
+</a>
+<!-- Terminal (Skills & Stack) -->
+<a class="group relative flex flex-col items-center p-1 transition-all duration-200 hover:-translate-y-2 hover:scale-125" data-path="terminal-skills-stack" href="#" title="Terminal (Skills &amp; Stack)">
+<div class="w-11 h-11 rounded-xl bg-white/10 border border-white/15 flex items-center justify-center text-terminal-green shadow-[0_4px_16px_rgba(0,0,0,0.4)] group-hover:bg-white/20 transition-all">
+<span class="material-symbols-outlined text-2xl">terminal</span>
+</div>
+<span class="w-1.5 h-1.5 mt-1 rounded-full bg-terminal-green shadow-[0_0_6px_#34d399]"></span>
+</a>
+<!-- Safari (Active Showcase Window) -->
+<a class="group relative flex flex-col items-center p-1 transition-all duration-200 hover:-translate-y-2 hover:scale-125" data-path="safari-featured-projects" href="#" title="Safari (Featured Projects)">
+<div class="w-11 h-11 rounded-xl bg-tertiary-container/30 border border-tertiary/40 flex items-center justify-center text-tertiary shadow-[0_4px_20px_rgba(41,193,223,0.35)] group-hover:bg-tertiary-container group-hover:text-on-tertiary-container transition-all">
+<span class="material-symbols-outlined text-2xl">explore</span>
+</div>
+<!-- Active App Indicator Glow -->
+<span class="w-2 h-2 mt-0.5 rounded-full bg-tertiary shadow-[0_0_8px_#54ddfc] animate-pulse"></span>
+</a>
+<!-- Mail (Contact) -->
+<a class="group relative flex flex-col items-center p-1 transition-all duration-200 hover:-translate-y-2 hover:scale-125" data-path="mail-contact" href="#" title="Mail (Contact)">
+<div class="w-11 h-11 rounded-xl bg-white/10 border border-white/15 flex items-center justify-center text-secondary shadow-[0_4px_16px_rgba(0,0,0,0.4)] group-hover:bg-secondary-container group-hover:text-on-secondary-container transition-all">
+<span class="material-symbols-outlined text-2xl">mail</span>
+</div>
+<span class="w-1.5 h-1.5 mt-1 rounded-full bg-secondary shadow-[0_0_6px_#d0bcff]"></span>
+</a>
+<!-- Photos (Certificates) -->
+<a class="group relative flex flex-col items-center p-1 transition-all duration-200 hover:-translate-y-2 hover:scale-125" data-path="photos-certificates" href="#" title="Photos (Certificates &amp; Shots)">
+<div class="w-11 h-11 rounded-xl bg-white/10 border border-white/15 flex items-center justify-center text-primary-fixed-dim shadow-[0_4px_16px_rgba(0,0,0,0.4)] group-hover:bg-primary group-hover:text-on-primary transition-all">
+<span class="material-symbols-outlined text-2xl">photo_library</span>
+</div>
+<span class="w-1 h-1 mt-1 rounded-full bg-primary-fixed-dim/60"></span>
+</a>
+<!-- Notes (Articles) -->
+<a class="group relative flex flex-col items-center p-1 transition-all duration-200 hover:-translate-y-2 hover:scale-125" data-path="notes-articles" href="#" title="Notes (Articles)">
+<div class="w-11 h-11 rounded-xl bg-white/10 border border-white/15 flex items-center justify-center text-white/80 shadow-[0_4px_16px_rgba(0,0,0,0.4)] group-hover:bg-white/20 group-hover:text-white transition-all">
+<span class="material-symbols-outlined text-2xl">description</span>
+</div>
+<span class="w-1 h-1 mt-1 rounded-full bg-white/40"></span>
+</a>
+<!-- Settings (Preferences) -->
+<a class="group relative flex flex-col items-center p-1 transition-all duration-200 hover:-translate-y-2 hover:scale-125" data-path="settings-preferences" href="#" title="Settings">
+<div class="w-11 h-11 rounded-xl bg-white/10 border border-white/15 flex items-center justify-center text-white/80 shadow-[0_4px_16px_rgba(0,0,0,0.4)] group-hover:bg-white/20 group-hover:text-white transition-all">
+<span class="material-symbols-outlined text-2xl">settings</span>
+</div>
+<span class="w-1 h-1 mt-1 rounded-full bg-white/40"></span>
+</a>
+<!-- Divider -->
+<div class="h-8 w-px bg-white/20 mx-1 self-center"></div>
+<!-- Trash -->
+<a class="group relative flex flex-col items-center p-1 transition-all duration-200 hover:-translate-y-2 hover:scale-125" data-path="trash-archive" href="#" title="Trash (Archive)">
+<div class="w-11 h-11 rounded-xl bg-white/5 border border-white/10 flex items-center justify-center text-white/60 shadow-[0_4px_16px_rgba(0,0,0,0.4)] group-hover:bg-white/15 group-hover:text-white transition-all">
+<span class="material-symbols-outlined text-2xl">delete</span>
+</div>
+</a>
+</div>
+</footer>
+<script>
+    (function initSafariTabs() {
+      const tabs = document.querySelectorAll('.safari-tab');
+      tabs.forEach(tab => {
+        tab.addEventListener('click', () => {
+          tabs.forEach(t => {
+            t.classList.remove('glass-tab-active', 'text-white');
+            t.classList.add('bg-white/5', 'text-white/70');
+          });
+          tab.classList.remove('bg-white/5', 'text-white/70');
+          tab.classList.add('glass-tab-active', 'text-white');
+        });
+      });
+    })();
+  </script>
+</body></html>

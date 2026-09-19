@@ -1,0 +1,393 @@
+@import "tailwindcss";
+
+:root {
+  color-scheme: dark;
+
+  /* Surfaces */
+  --color-surface: #111319;
+  --color-surface-dim: #111319;
+  --color-surface-bright: #373940;
+  --color-surface-container-lowest: #0c0e14;
+  --color-surface-container-low: #191b22;
+  --color-surface-container: #1e1f26;
+  --color-surface-container-high: #282a30;
+  --color-surface-container-highest: #33343b;
+  --color-on-surface: #e2e2eb;
+  --color-on-surface-variant: #d8c3ad;
+  --color-inverse-surface: #e2e2eb;
+  --color-inverse-on-surface: #2e3037;
+  --color-outline: #a08e7a;
+  --color-outline-variant: #534434;
+  --color-surface-variant: #33343b;
+  --color-background: #0b0d13;
+  --color-on-background: #e2e2eb;
+
+  /* Accent (user-selectable via Settings, defaults to amber) */
+  --accent-300: #ffd9a8;
+  --accent-400: #ffc174;
+  --accent-500: #f59e0b;
+  --accent-600: #d97a06;
+  --accent-glow: rgba(245, 158, 11, 0.45);
+
+  /* Accents */
+  --color-surface-tint: var(--accent-400);
+  --color-primary: var(--accent-400);
+  --color-on-primary: #241705;
+  --color-primary-container: var(--accent-500);
+  --color-on-primary-container: #241705;
+  --color-inverse-primary: var(--accent-600);
+  --color-secondary: #d0bcff;
+  --color-on-secondary: #3c0091;
+  --color-secondary-container: #571bc1;
+  --color-on-secondary-container: #c4abff;
+  --color-tertiary: #54ddfc;
+  --color-on-tertiary: #003640;
+  --color-tertiary-container: #29c1df;
+  --color-on-tertiary-container: #004b58;
+  --color-error: #ffb4ab;
+  --color-on-error: #690005;
+  --color-error-container: #93000a;
+  --color-on-error-container: #ffdad6;
+
+  /* macOS traffic lights */
+  --color-traffic-close: #ff5f56;
+  --color-traffic-minimize: #ffbd2e;
+  --color-traffic-maximize: #27c93f;
+
+  /* Glass */
+  --color-glass-specular: rgba(255, 255, 255, 0.28);
+  --color-glass-specular-subtle: rgba(255, 255, 255, 0.12);
+  --color-glass-fill-dark: rgba(15, 17, 23, 0.72);
+  --color-glass-fill-light: rgba(255, 255, 255, 0.65);
+  --color-dock-fill: rgba(255, 255, 255, 0.1);
+  --color-terminal-canvas: rgba(8, 10, 15, 0.88);
+  --color-terminal-green: #34d399;
+
+  /* Radii */
+  --radius-app: 14px;
+  --radius-window: 16px;
+  --radius-dock: 22px;
+
+  /* Wallpaper mesh stops (dark, default) */
+  --wallpaper-a: #0a0d14;
+  --wallpaper-b: #1e1338;
+  --wallpaper-c: #0b2530;
+}
+
+:root[data-accent="violet"] {
+  --accent-300: #e4d4ff;
+  --accent-400: #c4abff;
+  --accent-500: #8b5cf6;
+  --accent-600: #6d28d9;
+  --accent-glow: rgba(139, 92, 246, 0.45);
+}
+
+:root[data-accent="cyan"] {
+  --accent-300: #a5f3fc;
+  --accent-400: #54ddfc;
+  --accent-500: #06b6d4;
+  --accent-600: #0891b2;
+  --accent-glow: rgba(6, 182, 212, 0.45);
+}
+
+:root[data-accent="coral"] {
+  --accent-300: #ffcabd;
+  --accent-400: #ff9a86;
+  --accent-500: #fb6a53;
+  --accent-600: #e34a32;
+  --accent-glow: rgba(251, 106, 83, 0.45);
+}
+
+/*
+  Light mode only re-tints the desktop environment (wallpaper mood +
+  background). The glass window/dock/menu-bar/modal chrome intentionally
+  stays on the dark-glass palette in both modes: every piece of UI copy
+  in this app is authored as white-on-dark (per the Liquid Glass OS
+  design system, which only ever specs a dark-glass surface), so
+  flipping those surfaces to a light fill made the text unreadable.
+  Keeping chrome dark keeps text legible while still giving the toggle
+  a real, visible effect on the desktop's mood.
+*/
+:root[data-theme="light"] {
+  color-scheme: dark;
+  --color-background: #2a2438;
+  --wallpaper-a: #3d3556;
+  --wallpaper-b: #7a4f8f;
+  --wallpaper-c: #3f7a8c;
+}
+
+@theme inline {
+  --color-surface: var(--color-surface);
+  --color-surface-dim: var(--color-surface-dim);
+  --color-surface-bright: var(--color-surface-bright);
+  --color-surface-container-lowest: var(--color-surface-container-lowest);
+  --color-surface-container-low: var(--color-surface-container-low);
+  --color-surface-container: var(--color-surface-container);
+  --color-surface-container-high: var(--color-surface-container-high);
+  --color-surface-container-highest: var(--color-surface-container-highest);
+  --color-on-surface: var(--color-on-surface);
+  --color-on-surface-variant: var(--color-on-surface-variant);
+  --color-inverse-surface: var(--color-inverse-surface);
+  --color-inverse-on-surface: var(--color-inverse-on-surface);
+  --color-outline: var(--color-outline);
+  --color-outline-variant: var(--color-outline-variant);
+  --color-surface-variant: var(--color-surface-variant);
+  --color-background: var(--color-background);
+  --color-on-background: var(--color-on-background);
+
+  --color-surface-tint: var(--color-surface-tint);
+  --color-primary: var(--color-primary);
+  --color-on-primary: var(--color-on-primary);
+  --color-primary-container: var(--color-primary-container);
+  --color-on-primary-container: var(--color-on-primary-container);
+  --color-inverse-primary: var(--color-inverse-primary);
+  --color-secondary: var(--color-secondary);
+  --color-on-secondary: var(--color-on-secondary);
+  --color-secondary-container: var(--color-secondary-container);
+  --color-on-secondary-container: var(--color-on-secondary-container);
+  --color-tertiary: var(--color-tertiary);
+  --color-on-tertiary: var(--color-on-tertiary);
+  --color-tertiary-container: var(--color-tertiary-container);
+  --color-on-tertiary-container: var(--color-on-tertiary-container);
+  --color-error: var(--color-error);
+  --color-on-error: var(--color-on-error);
+  --color-error-container: var(--color-error-container);
+  --color-on-error-container: var(--color-on-error-container);
+
+  --color-traffic-close: var(--color-traffic-close);
+  --color-traffic-minimize: var(--color-traffic-minimize);
+  --color-traffic-maximize: var(--color-traffic-maximize);
+
+  --color-glass-specular: var(--color-glass-specular);
+  --color-glass-specular-subtle: var(--color-glass-specular-subtle);
+  --color-glass-fill-dark: var(--color-glass-fill-dark);
+  --color-glass-fill-light: var(--color-glass-fill-light);
+  --color-dock-fill: var(--color-dock-fill);
+  --color-terminal-canvas: var(--color-terminal-canvas);
+  --color-terminal-green: var(--color-terminal-green);
+
+  --radius-app: var(--radius-app);
+  --radius-window: var(--radius-window);
+  --radius-dock: var(--radius-dock);
+
+  --font-sans: var(--font-geist-sans);
+  --font-mono: var(--font-jetbrains-mono);
+}
+
+* {
+  -webkit-tap-highlight-color: transparent;
+}
+
+html,
+body {
+  height: 100%;
+  overscroll-behavior: none;
+}
+
+body {
+  background: var(--color-background);
+  color: var(--color-on-surface);
+  font-family: var(--font-sans), "Geist", ui-sans-serif, system-ui, sans-serif;
+}
+
+::-webkit-scrollbar {
+  display: none;
+}
+* {
+  scrollbar-width: none;
+}
+
+.material-symbols-outlined {
+  font-family: "Material Symbols Outlined";
+  font-weight: normal;
+  font-style: normal;
+  font-size: 24px;
+  line-height: 1;
+  letter-spacing: normal;
+  text-transform: none;
+  display: inline-block;
+  white-space: nowrap;
+  word-wrap: normal;
+  direction: ltr;
+  -webkit-font-feature-settings: "liga";
+  -webkit-font-smoothing: antialiased;
+  font-variation-settings:
+    "FILL" 0,
+    "wght" 400,
+    "GRAD" 0,
+    "opsz" 24;
+}
+
+.icon-fill {
+  font-variation-settings:
+    "FILL" 1,
+    "wght" 500,
+    "GRAD" 0,
+    "opsz" 24;
+}
+
+.font-mono-ui {
+  font-family: var(--font-jetbrains-mono), "JetBrains Mono", ui-monospace, monospace;
+}
+
+/* Liquid glass surfaces.
+   The menu bar and dock stay mounted for the entire session and sit on
+   top of the animated wallpaper, so their backdrop-filter has to be
+   resampled on every compositor frame the wallpaper moves — unlike
+   window/modal blur, which only costs anything while that surface is
+   open. They get a noticeably smaller blur radius than the rest of the
+   glass system for that reason; it's the main lever for real perceived
+   smoothness of the idle desktop. */
+.glass-menubar {
+  background: var(--color-glass-fill-dark);
+  backdrop-filter: blur(14px) saturate(180%);
+  -webkit-backdrop-filter: blur(14px) saturate(180%);
+  border-bottom: 1px solid rgba(255, 255, 255, 0.12);
+}
+
+.glass-window {
+  background: var(--color-glass-fill-dark);
+  backdrop-filter: blur(28px) saturate(160%);
+  -webkit-backdrop-filter: blur(28px) saturate(160%);
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  box-shadow: 0 12px 32px -4px rgba(0, 0, 0, 0.4);
+}
+
+.glass-window.is-focused {
+  backdrop-filter: blur(30px) saturate(190%);
+  -webkit-backdrop-filter: blur(30px) saturate(190%);
+  background: color-mix(in srgb, var(--color-glass-fill-dark) 96%, transparent);
+  box-shadow:
+    0 24px 64px -8px rgba(0, 0, 0, 0.6),
+    0 0 0 1px rgba(255, 255, 255, 0.18);
+}
+
+.glass-window.is-focused::before {
+  content: "";
+  position: absolute;
+  inset: 0 0 auto 0;
+  height: 1px;
+  background: linear-gradient(
+    90deg,
+    rgba(245, 158, 11, 0.35) 0%,
+    rgba(255, 255, 255, 0.28) 50%,
+    rgba(139, 92, 246, 0.28) 100%
+  );
+  pointer-events: none;
+}
+
+.glass-dock {
+  background: var(--color-dock-fill);
+  backdrop-filter: blur(18px) saturate(200%);
+  -webkit-backdrop-filter: blur(18px) saturate(200%);
+  border: 1px solid rgba(255, 255, 255, 0.22);
+  box-shadow:
+    inset 0 1px 1px 0 rgba(255, 255, 255, 0.3),
+    0 20px 48px rgba(0, 0, 0, 0.5);
+}
+
+.glass-sheet {
+  background: color-mix(in srgb, var(--color-surface-container-lowest) 96%, transparent);
+  backdrop-filter: blur(30px) saturate(180%);
+  -webkit-backdrop-filter: blur(30px) saturate(180%);
+}
+
+.glass-modal {
+  background: color-mix(in srgb, var(--color-glass-fill-dark) 92%, transparent);
+  backdrop-filter: blur(34px) saturate(210%);
+  -webkit-backdrop-filter: blur(34px) saturate(210%);
+  border: 1px solid rgba(255, 255, 255, 0.25);
+  box-shadow: 0 32px 80px -12px rgba(0, 0, 0, 0.75);
+}
+
+.glass-pill {
+  background: rgba(255, 255, 255, 0.08);
+  backdrop-filter: blur(14px) saturate(160%);
+  -webkit-backdrop-filter: blur(14px) saturate(160%);
+  border: 1px solid rgba(255, 255, 255, 0.15);
+}
+
+/* Fine film-grain texture laid over upscaled photo wallpapers. It can't
+   invent missing detail, but breaking a smooth blurry gradient up into
+   grain reads as far less "soft" than the same blur left perfectly
+   smooth — a standard trick for masking low-res source upscaling. */
+.grain-overlay {
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='180' height='180'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='2' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E");
+  mix-blend-mode: overlay;
+  opacity: 0.05;
+}
+
+.wallpaper-mesh {
+  /* Deliberately no `position` here: every usage already supplies
+     `fixed inset-0` / `absolute inset-0` via Tailwind utility classes.
+     Tailwind v4 puts utilities inside a CSS @layer, and any unlayered
+     rule (like this one) always wins the cascade regardless of source
+     order — so setting `position` here would silently override those
+     utility classes and break full-screen positioning. */
+  overflow: hidden;
+  background: linear-gradient(160deg, var(--wallpaper-a), var(--wallpaper-b) 45%, var(--wallpaper-c) 100%);
+}
+
+.wallpaper-mesh::before {
+  content: "";
+  position: absolute;
+  /* oversized + only ever moved/scaled via transform (GPU-composited,
+     no repaint) instead of animating background-position, which was
+     forcing a full-canvas repaint every frame and was the main source
+     of the janky motion on the desktop background. */
+  inset: -20%;
+  background:
+    radial-gradient(ellipse 60% 50% at 25% 30%, color-mix(in srgb, var(--wallpaper-b) 70%, transparent), transparent 60%),
+    radial-gradient(ellipse 55% 45% at 75% 25%, color-mix(in srgb, var(--wallpaper-c) 65%, transparent), transparent 60%),
+    radial-gradient(ellipse 70% 60% at 50% 85%, color-mix(in srgb, var(--wallpaper-a) 80%, transparent), transparent 65%);
+  animation: mesh-drift 32s ease-in-out infinite alternate;
+  will-change: transform;
+}
+
+@keyframes mesh-drift {
+  0% {
+    transform: translate3d(-2%, -2%, 0) scale(1.05);
+  }
+  100% {
+    transform: translate3d(3%, 3%, 0) scale(1.12);
+  }
+}
+
+@keyframes blink {
+  0%, 92%, 100% {
+    transform: scaleY(1);
+  }
+  96% {
+    transform: scaleY(0.08);
+  }
+}
+
+@keyframes caret-blink {
+  0%, 49% {
+    opacity: 1;
+  }
+  50%, 100% {
+    opacity: 0;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .wallpaper-mesh::before {
+    animation: none;
+  }
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+  }
+}
+
+/* Lock-screen hero wordmark: silver-blue vertical gradient text. */
+.hero-heading {
+  background: linear-gradient(180deg, #646973 0%, #bbccd7 100%);
+  -webkit-background-clip: text;
+  background-clip: text;
+  -webkit-text-fill-color: transparent;
+}
