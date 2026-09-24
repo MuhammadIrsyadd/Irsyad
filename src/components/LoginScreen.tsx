@@ -4,7 +4,7 @@ import { useEffect, useState } from "react";
 import { motion } from "framer-motion";
 import { useSystemStore } from "@/store/system-store";
 import FadeIn from "@/components/lockscreen/FadeIn";
-import Magnet from "@/components/lockscreen/Magnet";
+import Magnet from "@/components/Magnet";
 
 function useClock() {
   const [now, setNow] = useState<Date | null>(null);

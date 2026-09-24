@@ -2,6 +2,7 @@
 
 import { useState } from "react";
 import AppFrame from "@/components/AppFrame";
+import Magnet from "@/components/Magnet";
 import { journey, profile, values } from "@/lib/content";
 import { useSystemStore } from "@/store/system-store";
 
@@ -84,20 +85,24 @@ export default function FinderApp() {
                     <span className="text-sm font-medium tracking-tight text-[var(--accent-400)]">{profile.role}</span>
                     <p className="text-xs leading-relaxed text-white/75">{profile.tagline}</p>
                     <div className="flex flex-wrap items-center justify-center gap-3 pt-1 sm:justify-start">
-                      <a
-                        href="/resume.pdf"
-                        className="inline-flex items-center gap-1.5 rounded-xl bg-gradient-to-r from-[var(--accent-500)] to-[var(--accent-600)] px-3.5 py-1.5 text-xs font-semibold text-black shadow-[0_4px_16px_var(--accent-glow)] transition-transform active:scale-95"
-                      >
-                        <span className="material-symbols-outlined text-sm font-bold">download</span>
-                        Download CV
-                      </a>
-                      <button
-                        onClick={() => openApp("mail")}
-                        className="inline-flex items-center gap-1.5 rounded-xl border border-white/15 bg-white/10 px-3.5 py-1.5 text-xs font-medium text-white transition-transform active:scale-95"
-                      >
-                        <span className="material-symbols-outlined text-sm">send</span>
-                        Get in touch
-                      </button>
+                      <Magnet padding={30} magnetStrength={6}>
+                        <a
+                          href="/resume.pdf"
+                          className="inline-flex items-center gap-1.5 rounded-xl bg-gradient-to-r from-[var(--accent-500)] to-[var(--accent-600)] px-3.5 py-1.5 text-xs font-semibold text-black shadow-[0_4px_16px_var(--accent-glow)] transition-transform active:scale-95"
+                        >
+                          <span className="material-symbols-outlined text-sm font-bold">download</span>
+                          Download CV
+                        </a>
+                      </Magnet>
+                      <Magnet padding={30} magnetStrength={6}>
+                        <button
+                          onClick={() => openApp("mail")}
+                          className="inline-flex items-center gap-1.5 rounded-xl border border-white/15 bg-white/10 px-3.5 py-1.5 text-xs font-medium text-white transition-transform active:scale-95"
+                        >
+                          <span className="material-symbols-outlined text-sm">send</span>
+                          Get in touch
+                        </button>
+                      </Magnet>
                     </div>
                   </div>
                 </div>

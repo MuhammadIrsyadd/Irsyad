@@ -140,6 +140,45 @@ export const socials: Social[] = [
   { id: "instagram", label: "Instagram", handle: "@irsyad_dwi", url: "https://www.instagram.com/irsyad_dwi/" },
 ];
 
+export type CaseStudy = {
+  id: string;
+  projectId: string; // matches a Project.id in `projects` above
+  title: string;
+  problem: string;
+  approach: string;
+  result: string;
+  tags: string[];
+};
+
+// Placeholder case studies — swap these in for the real story behind each
+// project (what was the actual problem, why you made the decisions you
+// made, what changed as a result). This is usually what convinces a
+// recruiter or client more than the finished screenshot does.
+export const caseStudies: CaseStudy[] = [
+  {
+    id: "liquid-glass-os-story",
+    projectId: "liquid-glass-os",
+    title: "Kenapa portofolio ini dibungkus jadi 'desktop OS'?",
+    problem:
+      "Portofolio developer kebanyakan bentuknya sama: hero besar, 3 kartu fitur, testimonial. Susah dibedakan satu sama lain, dan gampang dilupakan begitu tab-nya ditutup.",
+    approach:
+      "Daripada halaman yang di-scroll, aku bikin simulasi desktop macOS penuh — window system, dock magnify, material liquid glass, sampai boot & lock screen. Setiap bagian portofolio jadi 'aplikasi' yang dibuka sendiri, bukan section yang dilewatin.",
+    result:
+      "Hasilnya jadi sesuatu yang orang mau eksplorasi, bukan cuma scroll cepat lalu pergi. Detail interaksi — dock magnify, animasi genie saat window ditutup, avatar yang bereaksi — jadi bagian dari cerita, bukan dekorasi tempelan.",
+    tags: ["Next.js", "Framer Motion", "Zustand", "Design System"],
+  },
+  {
+    id: "project-two-story",
+    projectId: "project-two",
+    title: "Ganti judul ini sesuai case study project #2",
+    problem: "Ceritakan masalah nyata yang project ini selesaikan — buat siapa, dan kenapa penting.",
+    approach:
+      "Jelaskan keputusan desain/teknis yang menarik: kenapa stack itu, trade-off apa yang diambil, bagian mana yang paling menantang.",
+    result: "Tutup dengan hasil terukur kalau ada (lebih cepat, lebih banyak konversi, dll) atau pelajaran yang didapat.",
+    tags: ["React", "Node.js"],
+  },
+];
+
 export const terminalSkillDump = `$ whoami
 ${profile.name.toLowerCase().replace(/\s+/g, "-")}
 

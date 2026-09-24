@@ -9,8 +9,11 @@ import FinderApp from "@/components/apps/FinderApp";
 import TerminalApp from "@/components/apps/TerminalApp";
 import SafariApp from "@/components/apps/SafariApp";
 import MailApp from "@/components/apps/MailApp";
+import NotesApp from "@/components/apps/NotesApp";
+import PhotosApp from "@/components/apps/PhotosApp";
 import SettingsApp from "@/components/apps/SettingsApp";
 import Avatar from "@/components/Avatar";
+import IdleScreensaver from "@/components/IdleScreensaver";
 
 function useClock() {
   const [now, setNow] = useState<Date | null>(null);
@@ -82,12 +85,15 @@ export default function MobileHome() {
       </div>
 
       <Avatar />
+      <IdleScreensaver />
 
       <AnimatePresence>
         {windows.finder.isOpen && <FinderApp key="finder" />}
         {windows.terminal.isOpen && <TerminalApp key="terminal" />}
         {windows.safari.isOpen && <SafariApp key="safari" />}
         {windows.mail.isOpen && <MailApp key="mail" />}
+        {windows.notes.isOpen && <NotesApp key="notes" />}
+        {windows.photos.isOpen && <PhotosApp key="photos" />}
         {windows.settings.isOpen && <SettingsApp key="settings" />}
       </AnimatePresence>
     </div>

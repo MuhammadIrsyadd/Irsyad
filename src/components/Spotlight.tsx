@@ -3,7 +3,7 @@
 import { useEffect, useMemo, useState } from "react";
 import { AnimatePresence, motion } from "framer-motion";
 import { useSystemStore, type AppId } from "@/store/system-store";
-import { projects, skills } from "@/lib/content";
+import { projects, skills, caseStudies, socials } from "@/lib/content";
 
 type Hit = { label: string; hint: string; icon: string; onSelect: () => void };
 
@@ -11,6 +11,8 @@ export default function Spotlight() {
   const open = useSystemStore((s) => s.spotlightOpen);
   const setOpen = useSystemStore((s) => s.setSpotlightOpen);
   const openApp = useSystemStore((s) => s.openApp);
+  const lock = useSystemStore((s) => s.lock);
+  const toggleSound = useSystemStore((s) => s.toggleSound);
   const [query, setQuery] = useState("");
 
   useEffect(() => {
@@ -41,22 +43,40 @@ export default function Spotlight() {
       },
     });
 
+    const actionHit = (label: string, icon: string, hint: string, onSelect: () => void): Hit => ({
+      label,
+      hint,
+      icon,
+      onSelect: () => {
+        onSelect();
+        setOpen(false);
+      },
+    });
+
     const base: Hit[] = [
       openAppHit("finder", "Finder — About Me", "folder_open"),
       openAppHit("terminal", "Terminal — Skills", "terminal"),
       openAppHit("safari", "Safari — Projects", "explore"),
       openAppHit("mail", "Mail — Contact", "mail"),
+      openAppHit("notes", "Notes — Case Studies", "sticky_note_2"),
+      openAppHit("photos", "Photos", "photo_library"),
       openAppHit("settings", "Settings", "settings"),
       ...projects.map((p) =>
         openAppHit("safari", `Project: ${p.name}`, "web")
       ),
+      ...caseStudies.map((c) => openAppHit("notes", `Case Study: ${c.title}`, "sticky_note_2")),
       ...skills.map((s) => openAppHit("terminal", `Skill: ${s.category}`, "code")),
+      actionHit("Lock Screen", "lock", "Aksi", lock),
+      actionHit("Toggle Sound Effects", "volume_up", "Aksi", toggleSound),
+      ...socials
+        .filter((s) => s.url)
+        .map((s) => actionHit(`Buka ${s.label}`, "north_east", "Link", () => window.open(s.url, "_blank"))),
     ];
 
     if (!query.trim()) return base.slice(0, 6);
     const q = query.toLowerCase();
     return base.filter((h) => h.label.toLowerCase().includes(q)).slice(0, 8);
-  }, [query, openApp, setOpen]);
+  }, [query, openApp, setOpen, lock, toggleSound]);
 
   return (
     <AnimatePresence>

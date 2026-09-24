@@ -1,7 +1,7 @@
 import { create } from "zustand";
 import { sound } from "@/lib/sound";
 
-export type AppId = "finder" | "terminal" | "safari" | "mail" | "settings";
+export type AppId = "finder" | "terminal" | "safari" | "mail" | "notes" | "photos" | "settings";
 
 export type BootStage = "boot" | "login" | "desktop";
 
@@ -29,6 +29,7 @@ type SystemState = {
   windows: Record<AppId, WindowState>;
   hoveredApp: AppId | null;
   wallpaperId: string;
+  dockOrder: AppId[];
 
   setBootStage: (stage: BootStage) => void;
   unlock: () => void;
@@ -39,6 +40,7 @@ type SystemState = {
   setSpotlightOpen: (open: boolean) => void;
   setHoveredApp: (id: AppId | null) => void;
   setWallpaper: (id: string) => void;
+  setDockOrder: (order: AppId[]) => void;
 
   openApp: (id: AppId) => void;
   closeApp: (id: AppId) => void;
@@ -53,6 +55,8 @@ const defaultRects: Record<AppId, Rect> = {
   terminal: { x: 240, y: 120, width: 640, height: 420 },
   safari: { x: 190, y: 60, width: 920, height: 600 },
   mail: { x: 280, y: 100, width: 620, height: 520 },
+  notes: { x: 210, y: 90, width: 700, height: 520 },
+  photos: { x: 260, y: 80, width: 780, height: 560 },
   settings: { x: 320, y: 140, width: 560, height: 460 },
 };
 
@@ -68,7 +72,7 @@ function makeWindow(id: AppId): WindowState {
   };
 }
 
-const appOrder: AppId[] = ["finder", "terminal", "safari", "mail", "settings"];
+const appOrder: AppId[] = ["finder", "terminal", "safari", "mail", "notes", "photos", "settings"];
 
 export const useSystemStore = create<SystemState>((set, get) => ({
   bootStage: "boot",
@@ -83,6 +87,7 @@ export const useSystemStore = create<SystemState>((set, get) => ({
   >,
   hoveredApp: null,
   wallpaperId: "wallpaper1", // default; falls back to the first discovered wallpaper if missing
+  dockOrder: appOrder,
 
   setBootStage: (stage) => set({ bootStage: stage }),
   unlock: () => set({ bootStage: "desktop" }),
@@ -113,6 +118,7 @@ export const useSystemStore = create<SystemState>((set, get) => ({
   setSpotlightOpen: (open) => set({ spotlightOpen: open }),
   setHoveredApp: (id) => set({ hoveredApp: id }),
   setWallpaper: (id) => set({ wallpaperId: id }),
+  setDockOrder: (order) => set({ dockOrder: order }),
 
   openApp: (id) => {
     const nextZ = get().topZ + 1;

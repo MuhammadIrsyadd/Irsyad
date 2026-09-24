@@ -1,10 +1,24 @@
 "use client";
 
 import { useState } from "react";
+import emailjs from "@emailjs/browser";
 import AppFrame from "@/components/AppFrame";
+import Magnet from "@/components/Magnet";
 import { profile } from "@/lib/content";
 
 type Status = "idle" | "sending" | "sent" | "error";
+
+// EmailJS (client-side, free tier) sends the message straight to your
+// inbox without a backend. Create a free account at emailjs.com, add an
+// Email Service + Template, then put the 3 IDs in .env.local (see
+// .env.local.example). Until those are set, the form falls back to
+// opening the visitor's own email client via `mailto:` — same as before.
+const EMAILJS_SERVICE_ID = process.env.NEXT_PUBLIC_EMAILJS_SERVICE_ID;
+const EMAILJS_TEMPLATE_ID = process.env.NEXT_PUBLIC_EMAILJS_TEMPLATE_ID;
+const EMAILJS_PUBLIC_KEY = process.env.NEXT_PUBLIC_EMAILJS_PUBLIC_KEY;
+const EMAILJS_CONFIGURED = Boolean(
+  EMAILJS_SERVICE_ID && EMAILJS_TEMPLATE_ID && EMAILJS_PUBLIC_KEY
+);
 
 export default function MailApp() {
   const [name, setName] = useState("");
@@ -22,7 +36,7 @@ export default function MailApp() {
     return "";
   }
 
-  function handleSend(e: React.FormEvent) {
+  async function handleSend(e: React.FormEvent) {
     e.preventDefault();
     const err = validate();
     if (err) {
@@ -33,14 +47,41 @@ export default function MailApp() {
     setError("");
     setStatus("sending");
 
+    if (EMAILJS_CONFIGURED) {
+      try {
+        await emailjs.send(
+          EMAILJS_SERVICE_ID!,
+          EMAILJS_TEMPLATE_ID!,
+          {
+            from_name: name,
+            from_email: email,
+            subject: `[Portfolio] ${subject}`,
+            message: body,
+            to_email: profile.email,
+          },
+          { publicKey: EMAILJS_PUBLIC_KEY! }
+        );
+        setStatus("sent");
+        setName("");
+        setEmail("");
+        setSubject("");
+        setBody("");
+      } catch {
+        setError("Gagal terkirim, coba lagi atau pakai email langsung.");
+        setStatus("error");
+      }
+      return;
+    }
+
+    // Fallback: no EmailJS keys configured yet, open the visitor's own
+    // email client with everything pre-filled.
     const mailto = `mailto:${profile.email}?subject=${encodeURIComponent(
       `[Portfolio] ${subject}`
     )}&body=${encodeURIComponent(`${body}\n\n— ${name} (${email})`)}`;
-
     setTimeout(() => {
       window.location.href = mailto;
       setStatus("sent");
-    }, 550);
+    }, 400);
   }
 
   return (
@@ -105,19 +146,27 @@ export default function MailApp() {
             {error && status === "error" ? (
               <span className="text-red-400">{error}</span>
             ) : status === "sent" ? (
-              <span className="text-emerald-400">Terkirim! Aplikasi email default kamu akan terbuka.</span>
+              <span className="text-emerald-400">
+                {EMAILJS_CONFIGURED
+                  ? "Terkirim! Makasih sudah menghubungi 🙌"
+                  : "Terkirim! Aplikasi email default kamu akan terbuka."}
+              </span>
+            ) : EMAILJS_CONFIGURED ? (
+              "Langsung masuk ke inbox-ku."
             ) : (
               "Terkirim via klien email defaultmu."
             )}
           </span>
-          <button
-            type="submit"
-            disabled={status === "sending"}
-            className="inline-flex items-center gap-1.5 rounded-xl bg-gradient-to-r from-[var(--accent-500)] to-[var(--accent-600)] px-4 py-1.5 text-xs font-semibold text-black shadow-[0_4px_16px_var(--accent-glow)] transition-transform active:scale-95 disabled:opacity-60"
-          >
-            <span className="material-symbols-outlined text-sm">send</span>
-            {status === "sending" ? "Mengirim..." : "Send"}
-          </button>
+          <Magnet padding={26} magnetStrength={7}>
+            <button
+              type="submit"
+              disabled={status === "sending"}
+              className="inline-flex items-center gap-1.5 rounded-xl bg-gradient-to-r from-[var(--accent-500)] to-[var(--accent-600)] px-4 py-1.5 text-xs font-semibold text-black shadow-[0_4px_16px_var(--accent-glow)] transition-transform active:scale-95 disabled:opacity-60"
+            >
+              <span className="material-symbols-outlined text-sm">send</span>
+              {status === "sending" ? "Mengirim..." : "Send"}
+            </button>
+          </Magnet>
         </div>
       </form>
     </AppFrame>

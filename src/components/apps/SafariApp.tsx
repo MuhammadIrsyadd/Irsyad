@@ -3,6 +3,7 @@
 import { useState } from "react";
 import { AnimatePresence, motion } from "framer-motion";
 import AppFrame from "@/components/AppFrame";
+import Magnet from "@/components/Magnet";
 import { projects, type Project } from "@/lib/content";
 
 const accentMap: Record<Project["accent"], { text: string; ring: string; dot: string }> = {
@@ -100,26 +101,30 @@ export default function SafariApp() {
                 </div>
                 <div className="flex gap-3 pt-2">
                   {active.url && (
-                    <a
-                      href={active.url}
-                      target="_blank"
-                      rel="noreferrer"
-                      className="inline-flex items-center gap-1.5 rounded-xl bg-gradient-to-r from-amber-500 to-amber-600 px-3.5 py-1.5 text-xs font-semibold text-black"
-                    >
-                      <span className="material-symbols-outlined text-sm">open_in_new</span>
-                      Live Demo
-                    </a>
+                    <Magnet padding={30} magnetStrength={6}>
+                      <a
+                        href={active.url}
+                        target="_blank"
+                        rel="noreferrer"
+                        className="inline-flex items-center gap-1.5 rounded-xl bg-gradient-to-r from-amber-500 to-amber-600 px-3.5 py-1.5 text-xs font-semibold text-black"
+                      >
+                        <span className="material-symbols-outlined text-sm">open_in_new</span>
+                        Live Demo
+                      </a>
+                    </Magnet>
                   )}
                   {active.repo && (
-                    <a
-                      href={active.repo}
-                      target="_blank"
-                      rel="noreferrer"
-                      className="inline-flex items-center gap-1.5 rounded-xl border border-white/15 bg-white/10 px-3.5 py-1.5 text-xs font-medium text-white"
-                    >
-                      <span className="material-symbols-outlined text-sm">code</span>
-                      Source
-                    </a>
+                    <Magnet padding={30} magnetStrength={6}>
+                      <a
+                        href={active.repo}
+                        target="_blank"
+                        rel="noreferrer"
+                        className="inline-flex items-center gap-1.5 rounded-xl border border-white/15 bg-white/10 px-3.5 py-1.5 text-xs font-medium text-white"
+                      >
+                        <span className="material-symbols-outlined text-sm">code</span>
+                        Source
+                      </a>
+                    </Magnet>
                   )}
                 </div>
               </div>

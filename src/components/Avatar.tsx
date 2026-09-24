@@ -2,7 +2,7 @@
 
 import { useEffect, useRef, useState } from "react";
 import { AnimatePresence, motion, useMotionValue, useSpring, useTransform } from "framer-motion";
-import { useSystemStore, isAnyWindowOpen } from "@/store/system-store";
+import { useSystemStore, isAnyWindowOpen, appOrder } from "@/store/system-store";
 import { getAppMeta } from "@/lib/apps";
 import { profile } from "@/lib/content";
 
@@ -21,8 +21,12 @@ export default function Avatar() {
   const [blink, setBlink] = useState(false);
   const windows = useSystemStore((s) => s.windows);
   const hoveredApp = useSystemStore((s) => s.hoveredApp);
-  const mailOpen = windows.mail.isOpen && !windows.mail.isMinimized;
+  const topZ = useSystemStore((s) => s.topZ);
   const anyOpen = isAnyWindowOpen(windows);
+  // Whichever open, non-minimized window currently has focus (topmost z-index).
+  const focusedAppId = appOrder.find(
+    (id) => windows[id].isOpen && !windows[id].isMinimized && windows[id].zIndex === topZ
+  );
 
   const rotateX = useMotionValue(0);
   const rotateY = useMotionValue(0);
@@ -71,13 +75,14 @@ export default function Avatar() {
     return () => clearInterval(t);
   }, []);
 
-  // Priority: hovering a dock icon > Mail being open > idle rotation.
-  // Hover reacts instantly since it's the most useful moment to explain
-  // what that app does.
+  // Priority: hovering a dock icon > whichever app is focused & open >
+  // idle rotation. Hover reacts instantly since it's the most useful
+  // moment to explain what that app does; once a window has focus, the
+  // avatar comments on that app specifically instead of going quiet.
   const mood = hoveredApp
     ? getAppMeta(hoveredApp).hint
-    : mailOpen
-      ? "Ada yang mau kontak, semangat! 💌"
+    : focusedAppId
+      ? getAppMeta(focusedAppId).openHint
       : anyOpen
         ? null
         : bubble;

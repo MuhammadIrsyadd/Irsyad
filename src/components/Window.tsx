@@ -1,6 +1,6 @@
 "use client";
 
-import { useRef, type ReactNode } from "react";
+import { useRef, useState, type ReactNode } from "react";
 import { motion, useDragControls } from "framer-motion";
 import { useSystemStore, type AppId } from "@/store/system-store";
 
@@ -34,7 +34,37 @@ export default function Window({
 
   const dragControls = useDragControls();
   const startRect = useRef(w.rect);
+  const resizeStart = useRef({ width: 0, height: 0, pointerX: 0, pointerY: 0 });
+  const [isResizing, setIsResizing] = useState(false);
   const isFocused = w.zIndex === topZ;
+
+  function handleResizeStart(e: React.PointerEvent) {
+    if (w.isMaximized) return;
+    e.stopPropagation();
+    focusApp(id);
+    setIsResizing(true);
+    resizeStart.current = {
+      width: w.rect.width,
+      height: w.rect.height,
+      pointerX: e.clientX,
+      pointerY: e.clientY,
+    };
+    function onMove(ev: PointerEvent) {
+      const dx = ev.clientX - resizeStart.current.pointerX;
+      const dy = ev.clientY - resizeStart.current.pointerY;
+      moveWindow(id, {
+        width: Math.max(minWidth, resizeStart.current.width + dx),
+        height: Math.max(minHeight, resizeStart.current.height + dy),
+      });
+    }
+    function onUp() {
+      setIsResizing(false);
+      window.removeEventListener("pointermove", onMove);
+      window.removeEventListener("pointerup", onUp);
+    }
+    window.addEventListener("pointermove", onMove);
+    window.addEventListener("pointerup", onUp);
+  }
 
   const viewportW = typeof window !== "undefined" ? window.innerWidth : 1200;
   const viewportH = typeof window !== "undefined" ? window.innerHeight : 800;
@@ -120,7 +150,18 @@ export default function Window({
         filter: "blur(5px)",
         transition: { duration: 0.3, ease: [0.4, 0, 0.2, 1] },
       }}
-      transition={w.isMinimized ? genieTransition : popTransition}
+      transition={
+        w.isMinimized
+          ? genieTransition
+          : {
+              default: popTransition,
+              // While actively dragging the resize handle, width/height
+              // should track the cursor 1:1 — springing them in on every
+              // pointermove would feel laggy instead of direct.
+              width: { duration: isResizing ? 0 : undefined },
+              height: { duration: isResizing ? 0 : undefined },
+            }
+      }
       style={{
         position: "absolute",
         left: 0,
@@ -130,6 +171,7 @@ export default function Window({
         zIndex: w.zIndex,
         transformOrigin: "bottom center",
       }}
+      data-window-id={id}
       className={`glass-window pointer-events-auto flex flex-col overflow-hidden rounded-window ${
         isFocused ? "is-focused" : "opacity-95"
       }`}
@@ -177,6 +219,28 @@ export default function Window({
 
       {/* Content */}
       <div className="min-h-0 flex-1 overflow-y-auto overscroll-contain">{children}</div>
+
+      {/* Resize handle */}
+      {!w.isMaximized && (
+        <div
+          onPointerDown={handleResizeStart}
+          title="Resize"
+          className="group/resize absolute bottom-0 right-0 h-5 w-5 cursor-nwse-resize touch-none"
+        >
+          <svg
+            viewBox="0 0 16 16"
+            className="absolute bottom-1 right-1 h-2.5 w-2.5 text-white/25 transition-colors group-hover/resize:text-white/60"
+          >
+            <path
+              d="M14 2 2 14M14 8 8 14M14 14h.01"
+              stroke="currentColor"
+              strokeWidth="1.6"
+              strokeLinecap="round"
+              fill="none"
+            />
+          </svg>
+        </div>
+      )}
     </motion.div>
   );
 }
