@@ -7,6 +7,7 @@ import Avatar from "@/components/Avatar";
 import Spotlight from "@/components/Spotlight";
 import DesktopIcons from "@/components/DesktopIcons";
 import IdleScreensaver from "@/components/IdleScreensaver";
+import HomeLogo from "@/components/HomeLogo";
 import FinderApp from "@/components/apps/FinderApp";
 import TerminalApp from "@/components/apps/TerminalApp";
 import SafariApp from "@/components/apps/SafariApp";
@@ -38,6 +39,7 @@ export default function Desktop() {
         </AnimatePresence>
       </div>
 
+      <HomeLogo />
       <Avatar />
       <Dock />
       <Spotlight />

@@ -62,7 +62,7 @@ export default function Spotlight() {
       openAppHit("photos", "Photos", "photo_library"),
       openAppHit("settings", "Settings", "settings"),
       ...projects.map((p) =>
-        openAppHit("safari", `Project: ${p.name}`, "web")
+        openAppHit("safari", `Project: ${p.name}`, "web_asset")
       ),
       ...caseStudies.map((c) => openAppHit("notes", `Case Study: ${c.title}`, "sticky_note_2")),
       ...skills.map((s) => openAppHit("terminal", `Skill: ${s.category}`, "code")),

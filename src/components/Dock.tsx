@@ -58,7 +58,7 @@ function DockIcon({
     let cancelled = false;
     const node = document.querySelector<HTMLElement>(`[data-window-id="${id}"]`);
     if (!node) return;
-    toPng(node, { pixelRatio: 0.35, cacheBust: false })
+    toPng(node, { pixelRatio: 0.35, cacheBust: false, skipFonts: true })
       .then((url) => {
         if (!cancelled) setPreview(url);
       })
@@ -149,7 +149,7 @@ function DockIcon({
         >
           <span
             className={`material-symbols-outlined icon-fill ${iconColor}`}
-            style={{ fontSize: "min(60%, 40px)" }}
+            style={{ fontSize: "32px", transform: "translateZ(0)" }}
           >
             {icon}
           </span>

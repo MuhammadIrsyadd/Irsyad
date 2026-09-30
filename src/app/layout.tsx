@@ -20,17 +20,24 @@ const kanit = Kanit({
 });
 
 export const metadata: Metadata = {
-  title: "Muh Irsyad — Portfolio OS",
+  metadataBase: new URL(process.env.NEXT_PUBLIC_SITE_URL || "https://muhirsyad.dev"),
+  title: "Muh Irsyad",
   description:
-    "Portofolio interaktif Muh Irsyad, dibungkus sebagai simulasi desktop macOS bermaterial Liquid Glass. Buka Finder, Terminal, Safari, dan Mail untuk menjelajah.",
+    "Hi, namaku Irsyad. Kenalan lebih dekat yuk sama aku! Klik, jelajah, dan buka tiap 'app' untuk kenal aku lebih jauh.",
   icons: {
-    icon: "/images/avatar.png",
+    icon: [
+      { url: "/logo.png?v=3" },
+      { url: "/favicon.ico?v=3" },
+    ],
+    shortcut: "/logo.png?v=3",
+    apple: "/logo.png?v=3",
   },
   openGraph: {
-    title: "Muh Irsyad — Portfolio OS",
+    title: "Muh Irsyad",
     description:
-      "Portofolio interaktif bergaya desktop macOS Liquid Glass. Klik, jelajah, dan buka tiap 'app' untuk kenal saya lebih jauh.",
+      "Hi, namaku Irsyad. Kenalan lebih dekat yuk sama aku! Klik, jelajah, dan buka tiap 'app' untuk kenal aku lebih jauh.",
     type: "website",
+    images: ["/logo.png"],
   },
 };
 
@@ -49,9 +56,15 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
       className={`${geistSans.variable} ${jetbrainsMono.variable} ${kanit.variable} h-full antialiased dark`}
     >
       <head>
+        <link rel="icon" type="image/png" href="/logo.png?v=3" />
+        <link rel="shortcut icon" href="/favicon.ico?v=3" />
+        <link rel="apple-touch-icon" href="/logo.png?v=3" />
+        <link rel="preconnect" href="https://fonts.googleapis.com" />
+        <link rel="preconnect" href="https://fonts.gstatic.com" crossOrigin="anonymous" />
         <link
           rel="stylesheet"
           href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@20..48,100..700,0..1,-50..200"
+          crossOrigin="anonymous"
         />
       </head>
       <body className="h-full min-h-full overflow-hidden bg-background text-on-surface">

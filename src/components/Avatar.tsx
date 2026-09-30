@@ -128,7 +128,6 @@ export default function Avatar() {
             className="pointer-events-none absolute left-[38%] top-[27%] h-2 w-3 rounded-full bg-white/50 blur-[2px]"
           />
         </motion.div>
-        <span className="absolute bottom-16 right-5 h-3.5 w-3.5 rounded-full bg-terminal-green ring-2 ring-black/40 shadow-[0_0_10px_rgba(52,211,153,0.9)]" />
       </motion.div>
     </div>
   );

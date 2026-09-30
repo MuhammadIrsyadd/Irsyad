@@ -81,7 +81,7 @@ export default function LoginScreen() {
               className="font-light uppercase leading-snug tracking-wide text-[#D7E2EA]"
               style={{ fontSize: "clamp(0.75rem, 1.4vw, 1.5rem)" }}
             >
-              a creative developer driven by crafting striking and unforgettable interfaces
+              BUILDING WEB AND MOBILE EXPERIENCES WITH CODE AND CURIOSITY
             </p>
           </FadeIn>
           <FadeIn delay={0.5} y={20}>

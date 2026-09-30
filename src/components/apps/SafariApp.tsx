@@ -79,7 +79,7 @@ export default function SafariApp() {
                   className={`flex h-40 w-full items-center justify-center rounded-2xl border ${accentMap[active.accent].ring} bg-gradient-to-br from-white/10 to-black/30`}
                 >
                   <span className={`material-symbols-outlined text-6xl ${accentMap[active.accent].text}`}>
-                    web
+                    web_asset
                   </span>
                 </div>
                 <div>

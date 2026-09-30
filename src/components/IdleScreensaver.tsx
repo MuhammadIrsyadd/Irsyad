@@ -41,14 +41,15 @@ export default function IdleScreensaver() {
           transition={{ duration: 0.9 }}
           className="fixed inset-0 z-[9650] flex cursor-pointer flex-col items-center justify-center gap-3 bg-black/75 backdrop-blur-md"
         >
-          <motion.span
+          <motion.div
             animate={{ scale: [0.98, 1.02, 0.98] }}
             transition={{ duration: 8, repeat: Infinity, ease: "easeInOut" }}
-            className="hero-heading block text-center text-[10vw] font-black uppercase leading-none tracking-tight sm:text-[7vw]"
+            className="hero-heading flex flex-col items-center justify-center text-center text-[10vw] font-black uppercase leading-[0.92] tracking-tight sm:text-[7.5vw] md:text-[6.5vw]"
             style={{ fontFamily: "var(--font-kanit), 'Kanit', sans-serif" }}
           >
-            {profile.name}
-          </motion.span>
+            <span>Muh. Irsyad</span>
+            <span>Dwi Kurniawan</span>
+          </motion.div>
           <motion.span
             animate={{ opacity: [0.4, 1, 0.4] }}
             transition={{ duration: 2.2, repeat: Infinity }}

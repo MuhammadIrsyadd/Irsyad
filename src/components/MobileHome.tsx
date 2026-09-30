@@ -14,6 +14,7 @@ import PhotosApp from "@/components/apps/PhotosApp";
 import SettingsApp from "@/components/apps/SettingsApp";
 import Avatar from "@/components/Avatar";
 import IdleScreensaver from "@/components/IdleScreensaver";
+import HomeLogo from "@/components/HomeLogo";
 
 function useClock() {
   const [now, setNow] = useState<Date | null>(null);
@@ -84,6 +85,7 @@ export default function MobileHome() {
         </span>
       </div>
 
+      <HomeLogo />
       <Avatar />
       <IdleScreensaver />
 
