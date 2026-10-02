@@ -5,6 +5,7 @@ import { AnimatePresence, motion, useMotionValue, useSpring, useTransform } from
 import { useSystemStore, isAnyWindowOpen, appOrder } from "@/store/system-store";
 import { getAppMeta } from "@/lib/apps";
 import { profile } from "@/lib/content";
+import { sound } from "@/lib/sound";
 
 const INTRO_MESSAGE = `Hai, aku ${profile.name} 👋`;
 
@@ -15,15 +16,28 @@ const IDLE_MESSAGES = [
   "Liquid glass, bukan sekadar blur biasa loh.",
 ];
 
+const CLICK_MESSAGES = [
+  "Hai! Mau diskusi atau kerja sama? Buka Mail app ya 📬",
+  "Psst, coba ketik 'neofetch' atau 'sudo hire-me' di Terminal 😉",
+  "Klik dock di bawah buat jelajah project dan resume Irsyad ✨",
+  "Kamu menemukan easter egg klik maskot! 🚀",
+  "Portofolio ini dibangun dengan Next.js & Framer Motion loh 🍏",
+  "Lulusan UPN Veteran Jatim (IPK 3.93) siap berkontribusi! 🎓",
+];
+
 export default function Avatar() {
   const ref = useRef<HTMLDivElement>(null);
   const [bubble, setBubble] = useState(IDLE_MESSAGES[0]);
+  const [clickSpeech, setClickSpeech] = useState<string | null>(null);
+  const [isJumping, setIsJumping] = useState(false);
   const [blink, setBlink] = useState(false);
+
   const windows = useSystemStore((s) => s.windows);
   const hoveredApp = useSystemStore((s) => s.hoveredApp);
   const topZ = useSystemStore((s) => s.topZ);
+  const soundEnabled = useSystemStore((s) => s.soundEnabled);
+
   const anyOpen = isAnyWindowOpen(windows);
-  // Whichever open, non-minimized window currently has focus (topmost z-index).
   const focusedAppId = appOrder.find(
     (id) => windows[id].isOpen && !windows[id].isMinimized && windows[id].zIndex === topZ
   );
@@ -63,8 +77,7 @@ export default function Avatar() {
     return () => clearInterval(t);
   }, []);
 
-  // idle bubble rotation — AnimatePresence (keyed by message text) handles
-  // the crossfade, so this just needs to swap the text periodically.
+  // idle bubble rotation
   useEffect(() => {
     const t = setInterval(() => {
       setBubble((prev) => {
@@ -75,17 +88,29 @@ export default function Avatar() {
     return () => clearInterval(t);
   }, []);
 
-  // Priority: hovering a dock icon > whichever app is focused & open >
-  // idle rotation. Hover reacts instantly since it's the most useful
-  // moment to explain what that app does; once a window has focus, the
-  // avatar comments on that app specifically instead of going quiet.
-  const mood = hoveredApp
-    ? getAppMeta(hoveredApp).hint
-    : focusedAppId
-      ? getAppMeta(focusedAppId).openHint
-      : anyOpen
-        ? null
-        : bubble;
+  function handleAvatarClick() {
+    if (soundEnabled) sound.open();
+    setIsJumping(true);
+    setTimeout(() => setIsJumping(false), 600);
+
+    const randomMsg = CLICK_MESSAGES[Math.floor(Math.random() * CLICK_MESSAGES.length)];
+    setClickSpeech(randomMsg);
+
+    setTimeout(() => {
+      setClickSpeech(null);
+    }, 5500);
+  }
+
+  // Priority: clicked avatar > hovering dock icon > focused window > idle rotation
+  const mood = clickSpeech
+    ? clickSpeech
+    : hoveredApp
+      ? getAppMeta(hoveredApp).hint
+      : focusedAppId
+        ? getAppMeta(focusedAppId).openHint
+        : anyOpen
+          ? null
+          : bubble;
 
   return (
     <div className="pointer-events-none fixed bottom-[-12px] right-2 z-40 flex flex-col items-end sm:right-8">
@@ -97,7 +122,7 @@ export default function Avatar() {
             animate={{ opacity: 1, y: 0, scale: 1 }}
             exit={{ opacity: 0, transition: { duration: 0.15 } }}
             transition={{ type: "spring", stiffness: 260, damping: 22 }}
-            className="glass-modal mb-2 mr-2 max-w-[260px] rounded-2xl rounded-br-none px-4 py-2.5 text-[13px] leading-snug text-white shadow-xl"
+            className="glass-modal mb-2 mr-2 max-w-[260px] rounded-2xl rounded-br-none border border-white/20 px-4 py-2.5 text-[13px] leading-snug text-white shadow-2xl backdrop-blur-xl"
           >
             {mood}
           </motion.div>
@@ -106,10 +131,22 @@ export default function Avatar() {
 
       <motion.div
         ref={ref}
-        animate={{ y: [0, -10, 0], rotate: [0, 1, 0] }}
-        transition={{ duration: 4.5, repeat: Infinity, ease: "easeInOut" }}
-        className="pointer-events-auto relative h-60 w-44 cursor-pointer sm:h-80 sm:w-56 lg:h-[26rem] lg:w-72"
+        onClick={handleAvatarClick}
+        animate={
+          isJumping
+            ? { y: [0, -32, 0], scale: [1, 1.12, 0.94, 1] }
+            : { y: [0, -10, 0], rotate: [0, 1, 0] }
+        }
+        transition={
+          isJumping
+            ? { duration: 0.5, ease: "easeOut" }
+            : { duration: 4.5, repeat: Infinity, ease: "easeInOut" }
+        }
+        whileHover={{ scale: 1.05 }}
+        whileTap={{ scale: 0.92 }}
+        className="pointer-events-auto relative h-48 w-36 cursor-pointer select-none sm:h-80 sm:w-56 lg:h-[26rem] lg:w-72"
         style={{ perspective: 400 }}
+        title="Klik aku untuk interaksi!"
       >
         <div className="absolute inset-0 rounded-full bg-primary-container/30 blur-2xl" />
         <motion.div

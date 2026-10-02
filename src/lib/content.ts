@@ -343,22 +343,31 @@ export const projects: Project[] = [
     accent: "amber",
   },
   {
-    id: "project-two",
-    name: "Nama Proyek #2",
-    tagline: "Ringkasan singkat satu baris tentang proyek ini.",
+    id: "inka-erp",
+    name: "Enterprise ERP System — PT. INKA",
+    tagline: "Sistem ERP perusahaan manufaktur kereta api terbesar di Asia Tenggara.",
     description:
-      "Ganti deskripsi ini dengan cerita singkat tentang masalah yang diselesaikan, keputusan desain yang menarik, dan hasil akhirnya.",
-    tech: ["React", "Node.js"],
+      "Pengembangan dan pemeliharaan aplikasi web ERP berbasis Laravel untuk mendukung operasional PT. INKA (Persero). Mencakup perancangan antarmuka user-friendly, optimasi modul sistem, debugging & troubleshooting, serta kolaborasi lintas divisi untuk memastikan efisiensi operasional pengguna akhir.",
+    tech: ["Laravel", "PHP", "MySQL", "REST API", "Blade"],
     accent: "violet",
   },
   {
-    id: "project-three",
-    name: "Nama Proyek #3",
-    tagline: "Ringkasan singkat satu baris tentang proyek ini.",
+    id: "bangkit-android",
+    name: "Bangkit Capstone — Android Mobile App",
+    tagline: "Aplikasi Android skala industri hasil pelatihan intensif Google, Tokopedia, Gojek & Traveloka.",
     description:
-      "Ganti deskripsi ini dengan cerita singkat tentang masalah yang diselesaikan, keputusan desain yang menarik, dan hasil akhirnya.",
-    tech: ["TypeScript", "Tailwind CSS"],
+      "Membangun aplikasi Android secara bertahap dari level Beginner hingga Intermediate sebagai bagian dari program Bangkit Academy 2023. Menerapkan Kotlin, Jetpack Compose, MVVM Clean Architecture, dan integrasi RESTful API. Menekankan prinsip SOLID Paradigm dan kualitas kode yang terukur.",
+    tech: ["Kotlin", "Jetpack Compose", "Android Studio", "Retrofit", "MVVM"],
     accent: "cyan",
+  },
+  {
+    id: "web-competition",
+    name: "Company Profile Website — Juara 2",
+    tagline: "Website profil perusahaan responsif pemenang Web Competition HIMATIFTA UNTAG Surabaya.",
+    description:
+      "Merancang dan mengembangkan website profil perusahaan responsif minimal 3 halaman dalam kompetisi web tingkat regional. Berkolaborasi dalam tim untuk mengimplementasikan antarmuka yang adaptif, interaktif, dan memenuhi standar aksesibilitas. Berhasil meraih Juara 2 dari peserta se-Surabaya.",
+    tech: ["JavaScript", "CSS3", "HTML5", "Responsive Design"],
+    accent: "amber",
   },
 ];
 
@@ -406,14 +415,40 @@ export const caseStudies: CaseStudy[] = [
     tags: ["Next.js", "Framer Motion", "Zustand", "Design System"],
   },
   {
-    id: "project-two-story",
-    projectId: "project-two",
-    title: "Ganti judul ini sesuai case study project #2",
-    problem: "Ceritakan masalah nyata yang project ini selesaikan — buat siapa, dan kenapa penting.",
+    id: "inka-erp-story",
+    projectId: "inka-erp",
+    title: "Belajar apa dari mengerjakan ERP perusahaan BUMN skala besar?",
+    problem:
+      "PT. INKA adalah produsen kereta api terbesar di Asia Tenggara. Sistem ERP yang digunakan harus menangani operasional lintas divisi dengan data yang kompleks dan pengguna dari berbagai latar belakang teknis. Tantangannya: bagaimana membangun fitur baru tanpa merusak modul lain yang sudah berjalan, sekaligus membuat antarmuka yang mudah dipakai oleh pengguna non-teknis?",
     approach:
-      "Jelaskan keputusan desain/teknis yang menarik: kenapa stack itu, trade-off apa yang diambil, bagian mana yang paling menantang.",
-    result: "Tutup dengan hasil terukur kalau ada (lebih cepat, lebih banyak konversi, dll) atau pelajaran yang didapat.",
-    tags: ["React", "Node.js"],
+      "Bergabung sebagai IT Intern dan langsung terlibat di development cycle nyata. Setiap fitur baru diawali dengan pemahaman kebutuhan pengguna akhir, lalu dirancang antarmukanya sebelum masuk ke koding. Debugging dilakukan secara sistematis dengan menelusuri log dan isolasi modul. Komunikasi rutin dengan tim lintas fungsi jadi kunci agar implementasi sesuai kebutuhan bisnis.",
+    result:
+      "Berhasil mengoptimalkan beberapa modul sistem yang sebelumnya memiliki bottleneck performa. Antarmuka yang dirancang ulang terbukti lebih intuitif berdasarkan feedback pengguna. Pengalaman ini mengajarkan pentingnya dokumentasi kode dan komunikasi teknis yang jelas dalam tim besar.",
+    tags: ["Laravel", "PHP", "ERP", "Team Collaboration", "System Optimization"],
+  },
+  {
+    id: "bangkit-android-story",
+    projectId: "bangkit-android",
+    title: "Dari nol ke Intermediate Android Developer dalam 6 bulan di Bangkit Academy.",
+    problem:
+      "Bangkit Academy adalah program intensif 6 bulan yang dirancang Google, Tokopedia, Gojek, dan Traveloka untuk mencetak developer siap industri. Tantangannya bukan sekadar belajar syntax Kotlin, tapi memahami cara membangun aplikasi yang benar-benar scalable, maintainable, dan sesuai standar industri dalam waktu yang sangat terbatas.",
+    approach:
+      "Mulai dari fundamental Kotlin modern, lalu secara bertahap membangun pemahaman tentang Jetpack Compose, MVVM Clean Architecture, dan integrasi REST API dengan Retrofit. Setiap materi langsung dipraktikkan dalam proyek nyata. Prinsip SOLID diterapkan konsisten agar kode mudah diuji dan dikembangkan.",
+    result:
+      "Berhasil menyelesaikan program dengan status lulus dan memperoleh sertifikasi resmi Bangkit Academy. Capstone Project tim berhasil dibangun dan dipresentasikan kepada panel reviewer dari Google dan mitra industri.",
+    tags: ["Kotlin", "Jetpack Compose", "Clean Architecture", "SOLID", "Teamwork"],
+  },
+  {
+    id: "web-competition-story",
+    projectId: "web-competition",
+    title: "Juara 2 Web Competition: Pelajaran dari kompetisi pertama.",
+    problem:
+      "Kompetisi Web HIMATIFTA UNTAG Surabaya mengharuskan peserta membangun website profil perusahaan responsif minimal 3 halaman dalam waktu terbatas. Tantangannya: bagaimana membuat website yang tidak hanya fungsional tapi juga secara visual unggul dan memberikan user experience yang baik?",
+    approach:
+      "Tim langsung menyepakati pembagian tugas yang jelas. Kami prioritaskan mobile-first responsive design karena juri akan menguji di berbagai perangkat. Setiap halaman diiterasi beberapa kali berdasarkan saling review antar anggota tim.",
+    result:
+      "Berhasil meraih Juara 2 dari seluruh peserta kompetisi. Pengalaman ini menjadi fondasi penting dalam memahami kolaborasi tim, manajemen waktu dalam tekanan, dan cara membuat keputusan desain yang cepat namun tepat.",
+    tags: ["JavaScript", "CSS3", "Responsive Design", "Team Collaboration"],
   },
 ];
 

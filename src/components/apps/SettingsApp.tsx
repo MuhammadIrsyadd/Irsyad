@@ -59,6 +59,8 @@ function Toggle({
 export default function SettingsApp() {
   const accent = useSystemStore((s) => s.accent);
   const setAccent = useSystemStore((s) => s.setAccent);
+  const theme = useSystemStore((s) => s.theme);
+  const toggleTheme = useSystemStore((s) => s.toggleTheme);
   const soundEnabled = useSystemStore((s) => s.soundEnabled);
   const toggleSound = useSystemStore((s) => s.toggleSound);
   const wallpaperId = useSystemStore((s) => s.wallpaperId);
@@ -78,6 +80,27 @@ export default function SettingsApp() {
           <span className="px-1 font-mono-ui text-[10px] font-semibold uppercase tracking-widest text-white/40">
             Appearance
           </span>
+
+          {/* Theme Mode Toggle */}
+          <div className="flex items-center justify-between rounded-xl border border-white/10 bg-white/5 px-3.5 py-3">
+            <div className="flex items-center gap-2.5">
+              <span className="material-symbols-outlined text-white/70">
+                {theme === "dark" ? "dark_mode" : "light_mode"}
+              </span>
+              <div className="flex flex-col">
+                <span className="text-[13px] text-white">Theme Mode</span>
+                <span className="text-[11px] text-white/50">
+                  {theme === "dark" ? "Dark Mode (Default)" : "Light Mode (Cerah)"}
+                </span>
+              </div>
+            </div>
+            <Toggle
+              checked={theme === "light"}
+              onChange={toggleTheme}
+              label="Toggle Dark and Light Mode"
+            />
+          </div>
+
           <div className="rounded-xl border border-white/10 bg-white/5 px-3.5 py-3">
             <span className="mb-2.5 block text-[13px] text-white">Accent Color</span>
             <div className="flex gap-3">

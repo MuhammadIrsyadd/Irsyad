@@ -100,6 +100,13 @@ export const useSystemStore = create<SystemState>((set, get) => ({
       const next = s.theme === "dark" ? "light" : "dark";
       if (typeof document !== "undefined") {
         document.documentElement.setAttribute("data-theme", next);
+        if (next === "light") {
+          document.documentElement.classList.remove("dark");
+          document.documentElement.classList.add("light");
+        } else {
+          document.documentElement.classList.remove("light");
+          document.documentElement.classList.add("dark");
+        }
       }
       return { theme: next };
     }),

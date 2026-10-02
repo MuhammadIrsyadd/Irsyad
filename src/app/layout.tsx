@@ -25,19 +25,16 @@ export const metadata: Metadata = {
   description:
     "Hi, namaku Irsyad. Kenalan lebih dekat yuk sama aku! Klik, jelajah, dan buka tiap 'app' untuk kenal aku lebih jauh.",
   icons: {
-    icon: [
-      { url: "/logo.png?v=3" },
-      { url: "/favicon.ico?v=3" },
-    ],
-    shortcut: "/logo.png?v=3",
-    apple: "/logo.png?v=3",
+    icon: "/images/MI.png",
+    shortcut: "/images/MI.png",
+    apple: "/images/MI.png",
   },
   openGraph: {
     title: "Muh Irsyad",
     description:
       "Hi, namaku Irsyad. Kenalan lebih dekat yuk sama aku! Klik, jelajah, dan buka tiap 'app' untuk kenal aku lebih jauh.",
     type: "website",
-    images: ["/logo.png"],
+    images: ["/images/MI.png"],
   },
 };
 
@@ -56,9 +53,9 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
       className={`${geistSans.variable} ${jetbrainsMono.variable} ${kanit.variable} h-full antialiased dark`}
     >
       <head>
-        <link rel="icon" type="image/png" href="/logo.png?v=3" />
-        <link rel="shortcut icon" href="/favicon.ico?v=3" />
-        <link rel="apple-touch-icon" href="/logo.png?v=3" />
+        <link rel="icon" type="image/png" href="/images/MI.png" />
+        <link rel="shortcut icon" type="image/png" href="/images/MI.png" />
+        <link rel="apple-touch-icon" href="/images/MI.png" />
         <link rel="preconnect" href="https://fonts.googleapis.com" />
         <link rel="preconnect" href="https://fonts.gstatic.com" crossOrigin="anonymous" />
         <link

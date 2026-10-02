@@ -24,6 +24,11 @@ export default function LoginScreen() {
 
   function handleUnlock() {
     if (unlocking) return;
+    try {
+      sessionStorage.setItem("porto_has_booted", "true");
+    } catch {
+      // ignore
+    }
     setUnlocking(true);
     setTimeout(unlock, 550);
   }

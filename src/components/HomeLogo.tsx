@@ -42,9 +42,9 @@ export default function HomeLogo() {
         <div className="absolute inset-0 rounded-2xl bg-[var(--accent-500)]/10 opacity-0 blur-md transition-opacity group-hover:opacity-100" />
 
         <img
-          src="/logo.png?v=3"
+          src="/images/MI.png"
           alt="Logo"
-          className="relative z-10 h-full w-full object-contain drop-shadow-[0_2px_8px_rgba(0,0,0,0.5)] transition-transform duration-300 group-hover:scale-105"
+          className="relative z-10 h-full w-full rounded-xl object-cover drop-shadow-[0_2px_8px_rgba(0,0,0,0.5)] transition-transform duration-300 group-hover:scale-105"
         />
       </motion.button>
     </div>
