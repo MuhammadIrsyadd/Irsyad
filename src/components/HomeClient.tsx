@@ -1,5 +1,6 @@
 "use client";
 
+import { useEffect } from "react";
 import { AnimatePresence, motion } from "framer-motion";
 import Wallpaper from "@/components/Wallpaper";
 import BootScreen from "@/components/BootScreen";
@@ -12,6 +13,15 @@ import { useIsMobile } from "@/hooks/use-media-query";
 export default function HomeClient() {
   const bootStage = useSystemStore((s) => s.bootStage);
   const isMobile = useIsMobile();
+
+  useEffect(() => {
+    try {
+      const savedTheme = localStorage.getItem("porto_theme");
+      if (savedTheme === "light" || savedTheme === "dark") {
+        useSystemStore.getState().setTheme(savedTheme);
+      }
+    } catch {}
+  }, []);
 
   return (
     <main className="relative h-full w-full">

@@ -98,22 +98,36 @@
   --accent-glow: rgba(251, 106, 83, 0.45);
 }
 
-/*
-  Light mode only re-tints the desktop environment (wallpaper mood +
-  background). The glass window/dock/menu-bar/modal chrome intentionally
-  stays on the dark-glass palette in both modes: every piece of UI copy
-  in this app is authored as white-on-dark (per the Liquid Glass OS
-  design system, which only ever specs a dark-glass surface), so
-  flipping those surfaces to a light fill made the text unreadable.
-  Keeping chrome dark keeps text legible while still giving the toggle
-  a real, visible effect on the desktop's mood.
-*/
-:root[data-theme="light"] {
-  color-scheme: dark;
-  --color-background: #2a2438;
-  --wallpaper-a: #3d3556;
-  --wallpaper-b: #7a4f8f;
-  --wallpaper-c: #3f7a8c;
+:root[data-theme="light"],
+html.light {
+  color-scheme: light;
+  --color-background: #f1f4f9;
+  --color-surface: #ffffff;
+  --color-surface-dim: #e4e7ed;
+  --color-surface-bright: #ffffff;
+  --color-surface-container-lowest: #ffffff;
+  --color-surface-container-low: #f5f7fa;
+  --color-surface-container: #ebeff5;
+  --color-surface-container-high: #e2e6ee;
+  --color-surface-container-highest: #d9dee7;
+  --color-on-surface: #1e2028;
+  --color-on-surface-variant: #525866;
+  --color-inverse-surface: #1e2028;
+  --color-inverse-on-surface: #f1f3f7;
+  --color-outline: #8c93a3;
+  --color-outline-variant: #c4c9d4;
+  --color-surface-variant: #e2e6ee;
+  --color-on-background: #1e2028;
+
+  --color-glass-specular: rgba(255, 255, 255, 0.7);
+  --color-glass-specular-subtle: rgba(255, 255, 255, 0.4);
+  --color-glass-fill-dark: rgba(255, 255, 255, 0.82);
+  --color-glass-fill-light: rgba(255, 255, 255, 0.94);
+  --color-dock-fill: rgba(255, 255, 255, 0.6);
+
+  --wallpaper-a: #dbeafe;
+  --wallpaper-b: #fce7f3;
+  --wallpaper-c: #e0e7ff;
 }
 
 @theme inline {
@@ -400,4 +414,179 @@ body {
   -webkit-background-clip: text;
   background-clip: text;
   -webkit-text-fill-color: transparent;
+}
+
+/* ========================================================
+   LIGHT THEME OVERRIDES (macOS Light Mode)
+   ======================================================== */
+:root[data-theme="light"] .glass-menubar,
+html.light .glass-menubar {
+  background: rgba(255, 255, 255, 0.82) !important;
+  backdrop-filter: blur(20px) saturate(180%) !important;
+  -webkit-backdrop-filter: blur(20px) saturate(180%) !important;
+  border-bottom: 1px solid rgba(0, 0, 0, 0.08) !important;
+  box-shadow: 0 2px 12px rgba(0, 0, 0, 0.04) !important;
+  color: #1a1d24 !important;
+}
+
+:root[data-theme="light"] .glass-menubar img[alt="Apple logo"],
+html.light .glass-menubar img[alt="Apple logo"] {
+  filter: brightness(0) !important;
+}
+
+:root[data-theme="light"] .glass-dock,
+html.light .glass-dock {
+  background: rgba(255, 255, 255, 0.65) !important;
+  backdrop-filter: blur(24px) saturate(190%) !important;
+  -webkit-backdrop-filter: blur(24px) saturate(190%) !important;
+  border: 1px solid rgba(255, 255, 255, 0.85) !important;
+  box-shadow:
+    inset 0 1px 1px 0 rgba(255, 255, 255, 0.9),
+    0 16px 40px rgba(0, 0, 0, 0.12) !important;
+}
+
+:root[data-theme="light"] .glass-modal,
+html.light .glass-modal {
+  background: rgba(255, 255, 255, 0.94) !important;
+  backdrop-filter: blur(34px) saturate(190%) !important;
+  -webkit-backdrop-filter: blur(34px) saturate(190%) !important;
+  border: 1px solid rgba(0, 0, 0, 0.1) !important;
+  box-shadow: 0 24px 64px -10px rgba(0, 0, 0, 0.2) !important;
+  color: #1a1d24 !important;
+}
+
+:root[data-theme="light"] .glass-window:not([data-window-id="terminal"]),
+html.light .glass-window:not([data-window-id="terminal"]) {
+  background: rgba(248, 250, 254, 0.92) !important;
+  backdrop-filter: blur(30px) saturate(170%) !important;
+  -webkit-backdrop-filter: blur(30px) saturate(170%) !important;
+  border: 1px solid rgba(0, 0, 0, 0.12) !important;
+  box-shadow: 0 16px 44px -8px rgba(0, 0, 0, 0.18) !important;
+  color: #1a1d24 !important;
+}
+
+:root[data-theme="light"] .glass-window.is-focused:not([data-window-id="terminal"]),
+html.light .glass-window.is-focused:not([data-window-id="terminal"]) {
+  background: rgba(255, 255, 255, 0.96) !important;
+  box-shadow:
+    0 24px 60px -8px rgba(0, 0, 0, 0.22),
+    0 0 0 1px rgba(0, 0, 0, 0.1) !important;
+}
+
+/* Light text color remapping inside light containers */
+:root[data-theme="light"] .glass-menubar .text-white,
+:root[data-theme="light"] .glass-modal .text-white,
+:root[data-theme="light"] .glass-window:not([data-window-id="terminal"]) .text-white,
+html.light .glass-menubar .text-white,
+html.light .glass-modal .text-white,
+html.light .glass-window:not([data-window-id="terminal"]) .text-white {
+  color: #1a1d24 !important;
+}
+
+:root[data-theme="light"] .glass-menubar [class*="text-white/90"],
+:root[data-theme="light"] .glass-modal [class*="text-white/90"],
+:root[data-theme="light"] .glass-window:not([data-window-id="terminal"]) [class*="text-white/90"],
+html.light .glass-menubar [class*="text-white/90"],
+html.light .glass-modal [class*="text-white/90"],
+html.light .glass-window:not([data-window-id="terminal"]) [class*="text-white/90"] {
+  color: rgba(26, 29, 36, 0.92) !important;
+}
+
+:root[data-theme="light"] .glass-menubar [class*="text-white/80"],
+:root[data-theme="light"] .glass-modal [class*="text-white/80"],
+:root[data-theme="light"] .glass-window:not([data-window-id="terminal"]) [class*="text-white/80"],
+html.light .glass-menubar [class*="text-white/80"],
+html.light .glass-modal [class*="text-white/80"],
+html.light .glass-window:not([data-window-id="terminal"]) [class*="text-white/80"] {
+  color: rgba(26, 29, 36, 0.82) !important;
+}
+
+:root[data-theme="light"] .glass-menubar [class*="text-white/70"],
+:root[data-theme="light"] .glass-modal [class*="text-white/70"],
+:root[data-theme="light"] .glass-window:not([data-window-id="terminal"]) [class*="text-white/70"],
+html.light .glass-menubar [class*="text-white/70"],
+html.light .glass-modal [class*="text-white/70"],
+html.light .glass-window:not([data-window-id="terminal"]) [class*="text-white/70"] {
+  color: rgba(26, 29, 36, 0.72) !important;
+}
+
+:root[data-theme="light"] .glass-menubar [class*="text-white/60"],
+:root[data-theme="light"] .glass-modal [class*="text-white/60"],
+:root[data-theme="light"] .glass-window:not([data-window-id="terminal"]) [class*="text-white/60"],
+html.light .glass-menubar [class*="text-white/60"],
+html.light .glass-modal [class*="text-white/60"],
+html.light .glass-window:not([data-window-id="terminal"]) [class*="text-white/60"] {
+  color: rgba(26, 29, 36, 0.6) !important;
+}
+
+:root[data-theme="light"] .glass-menubar [class*="text-white/50"],
+:root[data-theme="light"] .glass-modal [class*="text-white/50"],
+:root[data-theme="light"] .glass-window:not([data-window-id="terminal"]) [class*="text-white/50"],
+html.light .glass-menubar [class*="text-white/50"],
+html.light .glass-modal [class*="text-white/50"],
+html.light .glass-window:not([data-window-id="terminal"]) [class*="text-white/50"] {
+  color: rgba(26, 29, 36, 0.52) !important;
+}
+
+:root[data-theme="light"] .glass-menubar [class*="text-white/40"],
+:root[data-theme="light"] .glass-modal [class*="text-white/40"],
+:root[data-theme="light"] .glass-window:not([data-window-id="terminal"]) [class*="text-white/40"],
+html.light .glass-menubar [class*="text-white/40"],
+html.light .glass-modal [class*="text-white/40"],
+html.light .glass-window:not([data-window-id="terminal"]) [class*="text-white/40"] {
+  color: rgba(26, 29, 36, 0.42) !important;
+}
+
+:root[data-theme="light"] .glass-menubar [class*="border-white/10"],
+:root[data-theme="light"] .glass-modal [class*="border-white/10"],
+:root[data-theme="light"] .glass-window:not([data-window-id="terminal"]) [class*="border-white/10"],
+html.light .glass-menubar [class*="border-white/10"],
+html.light .glass-modal [class*="border-white/10"],
+html.light .glass-window:not([data-window-id="terminal"]) [class*="border-white/10"] {
+  border-color: rgba(0, 0, 0, 0.08) !important;
+}
+
+:root[data-theme="light"] .glass-menubar [class*="border-white/15"],
+:root[data-theme="light"] .glass-modal [class*="border-white/15"],
+:root[data-theme="light"] .glass-window:not([data-window-id="terminal"]) [class*="border-white/15"],
+html.light .glass-menubar [class*="border-white/15"],
+html.light .glass-modal [class*="border-white/15"],
+html.light .glass-window:not([data-window-id="terminal"]) [class*="border-white/15"] {
+  border-color: rgba(0, 0, 0, 0.12) !important;
+}
+
+:root[data-theme="light"] .glass-menubar [class*="border-white/20"],
+:root[data-theme="light"] .glass-modal [class*="border-white/20"],
+:root[data-theme="light"] .glass-window:not([data-window-id="terminal"]) [class*="border-white/20"],
+html.light .glass-menubar [class*="border-white/20"],
+html.light .glass-modal [class*="border-white/20"],
+html.light .glass-window:not([data-window-id="terminal"]) [class*="border-white/20"] {
+  border-color: rgba(0, 0, 0, 0.15) !important;
+}
+
+:root[data-theme="light"] .glass-menubar [class*="bg-white/5"],
+:root[data-theme="light"] .glass-modal [class*="bg-white/5"],
+:root[data-theme="light"] .glass-window:not([data-window-id="terminal"]) [class*="bg-white/5"],
+html.light .glass-menubar [class*="bg-white/5"],
+html.light .glass-modal [class*="bg-white/5"],
+html.light .glass-window:not([data-window-id="terminal"]) [class*="bg-white/5"] {
+  background-color: rgba(0, 0, 0, 0.035) !important;
+}
+
+:root[data-theme="light"] .glass-menubar [class*="bg-white/10"],
+:root[data-theme="light"] .glass-modal [class*="bg-white/10"],
+:root[data-theme="light"] .glass-window:not([data-window-id="terminal"]) [class*="bg-white/10"],
+html.light .glass-menubar [class*="bg-white/10"],
+html.light .glass-modal [class*="bg-white/10"],
+html.light .glass-window:not([data-window-id="terminal"]) [class*="bg-white/10"] {
+  background-color: rgba(0, 0, 0, 0.06) !important;
+}
+
+:root[data-theme="light"] .glass-window:not([data-window-id="terminal"]) [class*="bg-black/20"],
+:root[data-theme="light"] .glass-window:not([data-window-id="terminal"]) [class*="bg-black/30"],
+:root[data-theme="light"] .glass-window:not([data-window-id="terminal"]) [class*="bg-black/40"],
+html.light .glass-window:not([data-window-id="terminal"]) [class*="bg-black/20"],
+html.light .glass-window:not([data-window-id="terminal"]) [class*="bg-black/30"],
+html.light .glass-window:not([data-window-id="terminal"]) [class*="bg-black/40"] {
+  background-color: rgba(0, 0, 0, 0.04) !important;
 }

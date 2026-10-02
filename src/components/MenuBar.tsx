@@ -126,13 +126,21 @@ export default function MenuBar() {
           {/* Direct Dark / Light Toggle */}
           <button
             onClick={toggleTheme}
-            className="flex items-center gap-1.5 rounded-full border border-white/15 bg-white/10 px-2.5 py-1 text-white/90 backdrop-blur-md transition-all hover:bg-white/20 active:scale-95"
+            className={`flex items-center gap-1.5 rounded-full border px-2.5 py-1 backdrop-blur-md transition-all active:scale-95 ${
+              theme === "light"
+                ? "border-amber-500/30 bg-amber-400/20 text-neutral-900 hover:bg-amber-400/30"
+                : "border-white/15 bg-white/10 text-white/90 hover:bg-white/20"
+            }`}
             title={`Ganti ke ${theme === "dark" ? "Light Mode" : "Dark Mode"}`}
           >
-            <span className="material-symbols-outlined text-[17px] text-amber-300">
+            <span
+              className={`material-symbols-outlined text-[17px] ${
+                theme === "light" ? "text-amber-600" : "text-amber-300"
+              }`}
+            >
               {theme === "dark" ? "light_mode" : "dark_mode"}
             </span>
-            <span className="hidden text-[11px] font-medium sm:inline">
+            <span className="hidden text-[11px] font-semibold sm:inline">
               {theme === "dark" ? "Light" : "Dark"}
             </span>
           </button>

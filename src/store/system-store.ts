@@ -34,6 +34,7 @@ type SystemState = {
   setBootStage: (stage: BootStage) => void;
   unlock: () => void;
   lock: () => void;
+  setTheme: (theme: "dark" | "light") => void;
   toggleTheme: () => void;
   setAccent: (accent: AccentColor) => void;
   toggleSound: () => void;
@@ -95,21 +96,26 @@ export const useSystemStore = create<SystemState>((set, get) => ({
     if (get().soundEnabled) sound.close();
     set({ bootStage: "login", spotlightOpen: false, hoveredApp: null });
   },
-  toggleTheme: () =>
-    set((s) => {
-      const next = s.theme === "dark" ? "light" : "dark";
-      if (typeof document !== "undefined") {
-        document.documentElement.setAttribute("data-theme", next);
-        if (next === "light") {
-          document.documentElement.classList.remove("dark");
-          document.documentElement.classList.add("light");
-        } else {
-          document.documentElement.classList.remove("light");
-          document.documentElement.classList.add("dark");
-        }
+  setTheme: (theme) => {
+    if (typeof document !== "undefined") {
+      document.documentElement.setAttribute("data-theme", theme);
+      if (theme === "light") {
+        document.documentElement.classList.remove("dark");
+        document.documentElement.classList.add("light");
+      } else {
+        document.documentElement.classList.remove("light");
+        document.documentElement.classList.add("dark");
       }
-      return { theme: next };
-    }),
+    }
+    try {
+      localStorage.setItem("porto_theme", theme);
+    } catch {}
+    set({ theme });
+  },
+  toggleTheme: () => {
+    const next = get().theme === "dark" ? "light" : "dark";
+    get().setTheme(next);
+  },
   setAccent: (accent) => {
     if (typeof document !== "undefined") {
       document.documentElement.setAttribute("data-accent", accent);
