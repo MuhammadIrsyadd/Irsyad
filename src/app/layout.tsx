@@ -21,20 +21,27 @@ const kanit = Kanit({
 
 export const metadata: Metadata = {
   metadataBase: new URL(process.env.NEXT_PUBLIC_SITE_URL || "https://muhirsyad.dev"),
-  title: "Muh Irsyad",
+  title: "Muh Irsyad — Portfolio OS",
   description:
-    "Hi, namaku Irsyad. Kenalan lebih dekat yuk sama aku! Klik, jelajah, dan buka tiap 'app' untuk kenal aku lebih jauh.",
+    "Hi, namaku Irsyad. Kenalan lebih dekat yuk sama aku! Simulasi desktop macOS Liquid Glass. Klik, jelajah, dan buka tiap 'app' untuk kenal aku lebih jauh.",
+  manifest: "/manifest.json",
   icons: {
-    icon: "/images/MI.png",
-    shortcut: "/images/MI.png",
-    apple: "/images/MI.png",
+    icon: [
+      { url: "/favicon.svg", type: "image/svg+xml" },
+      { url: "/favicon-32x32.png", sizes: "32x32", type: "image/png" },
+      { url: "/favicon-16x16.png", sizes: "16x16", type: "image/png" },
+    ],
+    shortcut: "/favicon.svg",
+    apple: [
+      { url: "/apple-touch-icon.png", sizes: "180x180", type: "image/png" },
+    ],
   },
   openGraph: {
-    title: "Muh Irsyad",
+    title: "Muh Irsyad — Portfolio OS",
     description:
-      "Hi, namaku Irsyad. Kenalan lebih dekat yuk sama aku! Klik, jelajah, dan buka tiap 'app' untuk kenal aku lebih jauh.",
+      "Hi, namaku Irsyad. Kenalan lebih dekat yuk sama aku! Simulasi desktop macOS Liquid Glass. Klik, jelajah, dan buka tiap 'app' untuk kenal aku lebih jauh.",
     type: "website",
-    images: ["/images/MI.png"],
+    images: ["/apple-touch-icon.png"],
   },
 };
 
@@ -53,9 +60,11 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
       className={`${geistSans.variable} ${jetbrainsMono.variable} ${kanit.variable} h-full antialiased dark`}
     >
       <head>
-        <link rel="icon" type="image/png" href="/images/MI.png" />
-        <link rel="shortcut icon" type="image/png" href="/images/MI.png" />
-        <link rel="apple-touch-icon" href="/images/MI.png" />
+        <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
+        <link rel="icon" type="image/png" sizes="32x32" href="/favicon-32x32.png" />
+        <link rel="icon" type="image/png" sizes="16x16" href="/favicon-16x16.png" />
+        <link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png" />
+        <link rel="manifest" href="/manifest.json" />
         <link rel="preconnect" href="https://fonts.googleapis.com" />
         <link rel="preconnect" href="https://fonts.gstatic.com" crossOrigin="anonymous" />
         <link
