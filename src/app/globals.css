@@ -119,49 +119,15 @@ html.light {
   --color-surface-variant: #e2e6ee;
   --color-on-background: #1e2028;
 
-  /* Accent defaults for light mode (rich, readable on white) */
-  --accent-300: #92400e;
-  --accent-400: #b45309;
-  --accent-500: #d97a06;
-  --accent-600: #92400e;
-  --accent-glow: rgba(217, 122, 6, 0.3);
-
   --color-glass-specular: rgba(255, 255, 255, 0.7);
   --color-glass-specular-subtle: rgba(255, 255, 255, 0.4);
-  --color-glass-fill-dark: rgba(255, 255, 255, 0.85);
-  --color-glass-fill-light: rgba(255, 255, 255, 0.95);
-  --color-dock-fill: rgba(255, 255, 255, 0.65);
+  --color-glass-fill-dark: rgba(255, 255, 255, 0.82);
+  --color-glass-fill-light: rgba(255, 255, 255, 0.94);
+  --color-dock-fill: rgba(255, 255, 255, 0.6);
 
   --wallpaper-a: #dbeafe;
   --wallpaper-b: #fce7f3;
   --wallpaper-c: #e0e7ff;
-}
-
-:root[data-theme="light"][data-accent="violet"],
-html.light[data-accent="violet"] {
-  --accent-300: #5b21b6;
-  --accent-400: #7c3aed;
-  --accent-500: #6d28d9;
-  --accent-600: #5b21b6;
-  --accent-glow: rgba(109, 40, 217, 0.3);
-}
-
-:root[data-theme="light"][data-accent="cyan"],
-html.light[data-accent="cyan"] {
-  --accent-300: #0e7490;
-  --accent-400: #0284c7;
-  --accent-500: #0369a1;
-  --accent-600: #075985;
-  --accent-glow: rgba(3, 105, 161, 0.3);
-}
-
-:root[data-theme="light"][data-accent="coral"],
-html.light[data-accent="coral"] {
-  --accent-300: #9a3412;
-  --accent-400: #c2410c;
-  --accent-500: #ea580c;
-  --accent-600: #c2410c;
-  --accent-glow: rgba(234, 88, 12, 0.3);
 }
 
 @theme inline {
@@ -455,12 +421,12 @@ body {
    ======================================================== */
 :root[data-theme="light"] .glass-menubar,
 html.light .glass-menubar {
-  background: rgba(255, 255, 255, 0.85) !important;
+  background: rgba(255, 255, 255, 0.82) !important;
   backdrop-filter: blur(20px) saturate(180%) !important;
   -webkit-backdrop-filter: blur(20px) saturate(180%) !important;
   border-bottom: 1px solid rgba(0, 0, 0, 0.08) !important;
   box-shadow: 0 2px 12px rgba(0, 0, 0, 0.04) !important;
-  color: #111318 !important;
+  color: #1a1d24 !important;
 }
 
 :root[data-theme="light"] .glass-menubar img[alt="Apple logo"],
@@ -470,7 +436,7 @@ html.light .glass-menubar img[alt="Apple logo"] {
 
 :root[data-theme="light"] .glass-dock,
 html.light .glass-dock {
-  background: rgba(255, 255, 255, 0.68) !important;
+  background: rgba(255, 255, 255, 0.65) !important;
   backdrop-filter: blur(24px) saturate(190%) !important;
   -webkit-backdrop-filter: blur(24px) saturate(190%) !important;
   border: 1px solid rgba(255, 255, 255, 0.85) !important;
@@ -481,255 +447,154 @@ html.light .glass-dock {
 
 :root[data-theme="light"] .glass-modal,
 html.light .glass-modal {
-  background: rgba(255, 255, 255, 0.95) !important;
+  background: rgba(255, 255, 255, 0.94) !important;
   backdrop-filter: blur(34px) saturate(190%) !important;
   -webkit-backdrop-filter: blur(34px) saturate(190%) !important;
   border: 1px solid rgba(0, 0, 0, 0.1) !important;
-  box-shadow: 0 24px 64px -10px rgba(0, 0, 0, 0.18) !important;
-  color: #111318 !important;
+  box-shadow: 0 24px 64px -10px rgba(0, 0, 0, 0.2) !important;
+  color: #1a1d24 !important;
 }
 
 :root[data-theme="light"] .glass-window:not([data-window-id="terminal"]),
 html.light .glass-window:not([data-window-id="terminal"]) {
-  background: rgba(250, 252, 255, 0.94) !important;
+  background: rgba(248, 250, 254, 0.92) !important;
   backdrop-filter: blur(30px) saturate(170%) !important;
   -webkit-backdrop-filter: blur(30px) saturate(170%) !important;
   border: 1px solid rgba(0, 0, 0, 0.12) !important;
-  box-shadow: 0 16px 44px -8px rgba(0, 0, 0, 0.16) !important;
-  color: #111318 !important;
+  box-shadow: 0 16px 44px -8px rgba(0, 0, 0, 0.18) !important;
+  color: #1a1d24 !important;
 }
 
 :root[data-theme="light"] .glass-window.is-focused:not([data-window-id="terminal"]),
 html.light .glass-window.is-focused:not([data-window-id="terminal"]) {
-  background: #ffffff !important;
+  background: rgba(255, 255, 255, 0.96) !important;
   box-shadow:
-    0 24px 60px -8px rgba(0, 0, 0, 0.2),
+    0 24px 60px -8px rgba(0, 0, 0, 0.22),
     0 0 0 1px rgba(0, 0, 0, 0.1) !important;
 }
 
-/* Base text color inside all light containers */
-:root[data-theme="light"] .glass-menubar,
-:root[data-theme="light"] .glass-modal,
-:root[data-theme="light"] .glass-window:not([data-window-id="terminal"]),
-html.light .glass-menubar,
-html.light .glass-modal,
-html.light .glass-window:not([data-window-id="terminal"]) {
-  color: #111318;
+/* Light text color remapping inside light containers */
+:root[data-theme="light"] .glass-menubar .text-white,
+:root[data-theme="light"] .glass-modal .text-white,
+:root[data-theme="light"] .glass-window:not([data-window-id="terminal"]) .text-white,
+html.light .glass-menubar .text-white,
+html.light .glass-modal .text-white,
+html.light .glass-window:not([data-window-id="terminal"]) .text-white {
+  color: #1a1d24 !important;
 }
 
-/* 1. UNIVERSAL text-white REMAPPING — matches any text-white or opacity variant */
-:root[data-theme="light"] .glass-menubar [class*="text-white"],
-:root[data-theme="light"] .glass-modal [class*="text-white"],
-:root[data-theme="light"] .glass-window:not([data-window-id="terminal"]) [class*="text-white"],
-html.light .glass-menubar [class*="text-white"],
-html.light .glass-modal [class*="text-white"],
-html.light .glass-window:not([data-window-id="terminal"]) [class*="text-white"] {
-  color: #111318 !important;
+:root[data-theme="light"] .glass-menubar [class*="text-white/90"],
+:root[data-theme="light"] .glass-modal [class*="text-white/90"],
+:root[data-theme="light"] .glass-window:not([data-window-id="terminal"]) [class*="text-white/90"],
+html.light .glass-menubar [class*="text-white/90"],
+html.light .glass-modal [class*="text-white/90"],
+html.light .glass-window:not([data-window-id="terminal"]) [class*="text-white/90"] {
+  color: rgba(26, 29, 36, 0.92) !important;
 }
 
-/* 2. SPECIFIC OPACITY TIERS (high contrast & clear hierarchy) */
-/* 80% - 95%: Primary body & subheads */
-:root[data-theme="light"] .glass-menubar [class*="text-white/9"],
-:root[data-theme="light"] .glass-menubar [class*="text-white/8"],
-:root[data-theme="light"] .glass-modal [class*="text-white/9"],
-:root[data-theme="light"] .glass-modal [class*="text-white/8"],
-:root[data-theme="light"] .glass-window:not([data-window-id="terminal"]) [class*="text-white/9"],
-:root[data-theme="light"] .glass-window:not([data-window-id="terminal"]) [class*="text-white/8"],
-html.light .glass-menubar [class*="text-white/9"],
-html.light .glass-menubar [class*="text-white/8"],
-html.light .glass-modal [class*="text-white/9"],
-html.light .glass-modal [class*="text-white/8"],
-html.light .glass-window:not([data-window-id="terminal"]) [class*="text-white/9"],
-html.light .glass-window:not([data-window-id="terminal"]) [class*="text-white/8"] {
-  color: #1e293b !important;
+:root[data-theme="light"] .glass-menubar [class*="text-white/80"],
+:root[data-theme="light"] .glass-modal [class*="text-white/80"],
+:root[data-theme="light"] .glass-window:not([data-window-id="terminal"]) [class*="text-white/80"],
+html.light .glass-menubar [class*="text-white/80"],
+html.light .glass-modal [class*="text-white/80"],
+html.light .glass-window:not([data-window-id="terminal"]) [class*="text-white/80"] {
+  color: rgba(26, 29, 36, 0.82) !important;
 }
 
-/* 70% - 75%: Secondary body & descriptions */
-:root[data-theme="light"] .glass-menubar [class*="text-white/7"],
-:root[data-theme="light"] .glass-modal [class*="text-white/7"],
-:root[data-theme="light"] .glass-window:not([data-window-id="terminal"]) [class*="text-white/7"],
-html.light .glass-menubar [class*="text-white/7"],
-html.light .glass-modal [class*="text-white/7"],
-html.light .glass-window:not([data-window-id="terminal"]) [class*="text-white/7"] {
-  color: #334155 !important;
+:root[data-theme="light"] .glass-menubar [class*="text-white/70"],
+:root[data-theme="light"] .glass-modal [class*="text-white/70"],
+:root[data-theme="light"] .glass-window:not([data-window-id="terminal"]) [class*="text-white/70"],
+html.light .glass-menubar [class*="text-white/70"],
+html.light .glass-modal [class*="text-white/70"],
+html.light .glass-window:not([data-window-id="terminal"]) [class*="text-white/70"] {
+  color: rgba(26, 29, 36, 0.72) !important;
 }
 
-/* 50% - 60%: Metadata, captions, secondary info */
-:root[data-theme="light"] .glass-menubar [class*="text-white/6"],
-:root[data-theme="light"] .glass-menubar [class*="text-white/5"],
-:root[data-theme="light"] .glass-modal [class*="text-white/6"],
-:root[data-theme="light"] .glass-modal [class*="text-white/5"],
-:root[data-theme="light"] .glass-window:not([data-window-id="terminal"]) [class*="text-white/6"],
-:root[data-theme="light"] .glass-window:not([data-window-id="terminal"]) [class*="text-white/5"],
-html.light .glass-menubar [class*="text-white/6"],
-html.light .glass-menubar [class*="text-white/5"],
-html.light .glass-modal [class*="text-white/6"],
-html.light .glass-modal [class*="text-white/5"],
-html.light .glass-window:not([data-window-id="terminal"]) [class*="text-white/6"],
-html.light .glass-window:not([data-window-id="terminal"]) [class*="text-white/5"] {
-  color: #475569 !important;
+:root[data-theme="light"] .glass-menubar [class*="text-white/60"],
+:root[data-theme="light"] .glass-modal [class*="text-white/60"],
+:root[data-theme="light"] .glass-window:not([data-window-id="terminal"]) [class*="text-white/60"],
+html.light .glass-menubar [class*="text-white/60"],
+html.light .glass-modal [class*="text-white/60"],
+html.light .glass-window:not([data-window-id="terminal"]) [class*="text-white/60"] {
+  color: rgba(26, 29, 36, 0.6) !important;
 }
 
-/* 30% - 40%: Labels, subtle hints, section super-titles (uppercase) */
-:root[data-theme="light"] .glass-menubar [class*="text-white/4"],
-:root[data-theme="light"] .glass-menubar [class*="text-white/3"],
-:root[data-theme="light"] .glass-modal [class*="text-white/4"],
-:root[data-theme="light"] .glass-modal [class*="text-white/3"],
-:root[data-theme="light"] .glass-window:not([data-window-id="terminal"]) [class*="text-white/4"],
-:root[data-theme="light"] .glass-window:not([data-window-id="terminal"]) [class*="text-white/3"],
-html.light .glass-menubar [class*="text-white/4"],
-html.light .glass-menubar [class*="text-white/3"],
-html.light .glass-modal [class*="text-white/4"],
-html.light .glass-modal [class*="text-white/3"],
-html.light .glass-window:not([data-window-id="terminal"]) [class*="text-white/4"],
-html.light .glass-window:not([data-window-id="terminal"]) [class*="text-white/3"] {
-  color: #64748b !important;
+:root[data-theme="light"] .glass-menubar [class*="text-white/50"],
+:root[data-theme="light"] .glass-modal [class*="text-white/50"],
+:root[data-theme="light"] .glass-window:not([data-window-id="terminal"]) [class*="text-white/50"],
+html.light .glass-menubar [class*="text-white/50"],
+html.light .glass-modal [class*="text-white/50"],
+html.light .glass-window:not([data-window-id="terminal"]) [class*="text-white/50"] {
+  color: rgba(26, 29, 36, 0.52) !important;
 }
 
-/* 3. INPUT FIELDS & PLACEHOLDERS IN LIGHT CONTAINERS */
-:root[data-theme="light"] .glass-window:not([data-window-id="terminal"]) input,
-:root[data-theme="light"] .glass-window:not([data-window-id="terminal"]) textarea,
-:root[data-theme="light"] .glass-modal input,
-:root[data-theme="light"] .glass-modal textarea,
-html.light .glass-window:not([data-window-id="terminal"]) input,
-html.light .glass-window:not([data-window-id="terminal"]) textarea,
-html.light .glass-modal input,
-html.light .glass-modal textarea {
-  color: #111318 !important;
+:root[data-theme="light"] .glass-menubar [class*="text-white/40"],
+:root[data-theme="light"] .glass-modal [class*="text-white/40"],
+:root[data-theme="light"] .glass-window:not([data-window-id="terminal"]) [class*="text-white/40"],
+html.light .glass-menubar [class*="text-white/40"],
+html.light .glass-modal [class*="text-white/40"],
+html.light .glass-window:not([data-window-id="terminal"]) [class*="text-white/40"] {
+  color: rgba(26, 29, 36, 0.42) !important;
 }
 
-:root[data-theme="light"] .glass-window:not([data-window-id="terminal"]) input::placeholder,
-:root[data-theme="light"] .glass-window:not([data-window-id="terminal"]) textarea::placeholder,
-:root[data-theme="light"] .glass-modal input::placeholder,
-:root[data-theme="light"] .glass-modal textarea::placeholder,
-html.light .glass-window:not([data-window-id="terminal"]) input::placeholder,
-html.light .glass-window:not([data-window-id="terminal"]) textarea::placeholder,
-html.light .glass-modal input::placeholder,
-html.light .glass-modal textarea::placeholder {
-  color: #64748b !important;
+:root[data-theme="light"] .glass-menubar [class*="border-white/10"],
+:root[data-theme="light"] .glass-modal [class*="border-white/10"],
+:root[data-theme="light"] .glass-window:not([data-window-id="terminal"]) [class*="border-white/10"],
+html.light .glass-menubar [class*="border-white/10"],
+html.light .glass-modal [class*="border-white/10"],
+html.light .glass-window:not([data-window-id="terminal"]) [class*="border-white/10"] {
+  border-color: rgba(0, 0, 0, 0.08) !important;
 }
 
-:root[data-theme="light"] .glass-window:not([data-window-id="terminal"]) input[class*="bg-black"],
-:root[data-theme="light"] .glass-window:not([data-window-id="terminal"]) textarea[class*="bg-black"],
-html.light .glass-window:not([data-window-id="terminal"]) input[class*="bg-black"],
-html.light .glass-window:not([data-window-id="terminal"]) textarea[class*="bg-black"] {
-  background-color: rgba(0, 0, 0, 0.04) !important;
+:root[data-theme="light"] .glass-menubar [class*="border-white/15"],
+:root[data-theme="light"] .glass-modal [class*="border-white/15"],
+:root[data-theme="light"] .glass-window:not([data-window-id="terminal"]) [class*="border-white/15"],
+html.light .glass-menubar [class*="border-white/15"],
+html.light .glass-modal [class*="border-white/15"],
+html.light .glass-window:not([data-window-id="terminal"]) [class*="border-white/15"] {
   border-color: rgba(0, 0, 0, 0.12) !important;
 }
 
-/* 4. COLOR ACCENTS IN LIGHT CONTAINERS (Rich, deep colors on white) */
-:root[data-theme="light"] .glass-window:not([data-window-id="terminal"]) [class*="text-amber-300"],
-:root[data-theme="light"] .glass-window:not([data-window-id="terminal"]) [class*="text-amber-400"],
-:root[data-theme="light"] .glass-modal [class*="text-amber-300"],
-:root[data-theme="light"] .glass-modal [class*="text-amber-400"],
-html.light .glass-window:not([data-window-id="terminal"]) [class*="text-amber-300"],
-html.light .glass-window:not([data-window-id="terminal"]) [class*="text-amber-400"],
-html.light .glass-modal [class*="text-amber-300"],
-html.light .glass-modal [class*="text-amber-400"] {
-  color: #b45309 !important;
+:root[data-theme="light"] .glass-menubar [class*="border-white/20"],
+:root[data-theme="light"] .glass-modal [class*="border-white/20"],
+:root[data-theme="light"] .glass-window:not([data-window-id="terminal"]) [class*="border-white/20"],
+html.light .glass-menubar [class*="border-white/20"],
+html.light .glass-modal [class*="border-white/20"],
+html.light .glass-window:not([data-window-id="terminal"]) [class*="border-white/20"] {
+  border-color: rgba(0, 0, 0, 0.15) !important;
 }
 
-:root[data-theme="light"] .glass-window:not([data-window-id="terminal"]) [class*="text-cyan-300"],
-:root[data-theme="light"] .glass-window:not([data-window-id="terminal"]) [class*="text-cyan-400"],
-:root[data-theme="light"] .glass-modal [class*="text-cyan-300"],
-:root[data-theme="light"] .glass-modal [class*="text-cyan-400"],
-html.light .glass-window:not([data-window-id="terminal"]) [class*="text-cyan-300"],
-html.light .glass-window:not([data-window-id="terminal"]) [class*="text-cyan-400"],
-html.light .glass-modal [class*="text-cyan-300"],
-html.light .glass-modal [class*="text-cyan-400"] {
-  color: #0e7490 !important;
+:root[data-theme="light"] .glass-menubar [class*="bg-white/5"],
+:root[data-theme="light"] .glass-modal [class*="bg-white/5"],
+:root[data-theme="light"] .glass-window:not([data-window-id="terminal"]) [class*="bg-white/5"],
+html.light .glass-menubar [class*="bg-white/5"],
+html.light .glass-modal [class*="bg-white/5"],
+html.light .glass-window:not([data-window-id="terminal"]) [class*="bg-white/5"] {
+  background-color: rgba(0, 0, 0, 0.035) !important;
 }
 
-:root[data-theme="light"] .glass-window:not([data-window-id="terminal"]) [class*="text-purple-300"],
-:root[data-theme="light"] .glass-window:not([data-window-id="terminal"]) [class*="text-purple-400"],
-:root[data-theme="light"] .glass-modal [class*="text-purple-300"],
-:root[data-theme="light"] .glass-modal [class*="text-purple-400"],
-html.light .glass-window:not([data-window-id="terminal"]) [class*="text-purple-300"],
-html.light .glass-window:not([data-window-id="terminal"]) [class*="text-purple-400"],
-html.light .glass-modal [class*="text-purple-300"],
-html.light .glass-modal [class*="text-purple-400"] {
-  color: #7c3aed !important;
+:root[data-theme="light"] .glass-menubar [class*="bg-white/10"],
+:root[data-theme="light"] .glass-modal [class*="bg-white/10"],
+:root[data-theme="light"] .glass-window:not([data-window-id="terminal"]) [class*="bg-white/10"],
+html.light .glass-menubar [class*="bg-white/10"],
+html.light .glass-modal [class*="bg-white/10"],
+html.light .glass-window:not([data-window-id="terminal"]) [class*="bg-white/10"] {
+  background-color: rgba(0, 0, 0, 0.06) !important;
 }
 
-:root[data-theme="light"] .glass-window:not([data-window-id="terminal"]) [class*="text-rose-300"],
-:root[data-theme="light"] .glass-window:not([data-window-id="terminal"]) [class*="text-rose-400"],
-:root[data-theme="light"] .glass-modal [class*="text-rose-300"],
-:root[data-theme="light"] .glass-modal [class*="text-rose-400"],
-html.light .glass-window:not([data-window-id="terminal"]) [class*="text-rose-300"],
-html.light .glass-window:not([data-window-id="terminal"]) [class*="text-rose-400"],
-html.light .glass-modal [class*="text-rose-300"],
-html.light .glass-modal [class*="text-rose-400"] {
-  color: #c2410c !important;
-}
-
-:root[data-theme="light"] .glass-window:not([data-window-id="terminal"]) [class*="text-emerald-300"],
-:root[data-theme="light"] .glass-window:not([data-window-id="terminal"]) [class*="text-emerald-400"],
-:root[data-theme="light"] .glass-modal [class*="text-emerald-300"],
-:root[data-theme="light"] .glass-modal [class*="text-emerald-400"],
-html.light .glass-window:not([data-window-id="terminal"]) [class*="text-emerald-300"],
-html.light .glass-window:not([data-window-id="terminal"]) [class*="text-emerald-400"],
-html.light .glass-modal [class*="text-emerald-300"],
-html.light .glass-modal [class*="text-emerald-400"] {
-  color: #047857 !important;
-}
-
-/* 5. BACKGROUNDS & SURFACES IN LIGHT CONTAINERS */
 :root[data-theme="light"] .glass-window:not([data-window-id="terminal"]) [class*="bg-black/20"],
 :root[data-theme="light"] .glass-window:not([data-window-id="terminal"]) [class*="bg-black/30"],
 :root[data-theme="light"] .glass-window:not([data-window-id="terminal"]) [class*="bg-black/40"],
 html.light .glass-window:not([data-window-id="terminal"]) [class*="bg-black/20"],
 html.light .glass-window:not([data-window-id="terminal"]) [class*="bg-black/30"],
 html.light .glass-window:not([data-window-id="terminal"]) [class*="bg-black/40"] {
-  background-color: rgba(0, 0, 0, 0.035) !important;
+  background-color: rgba(0, 0, 0, 0.04) !important;
 }
 
-:root[data-theme="light"] .glass-window:not([data-window-id="terminal"]) [class*="bg-white/5"],
-:root[data-theme="light"] .glass-window:not([data-window-id="terminal"]) [class*="bg-white/8"],
-:root[data-theme="light"] .glass-window:not([data-window-id="terminal"]) [class*="bg-white/10"],
-:root[data-theme="light"] .glass-modal [class*="bg-white/5"],
-:root[data-theme="light"] .glass-modal [class*="bg-white/10"],
-html.light .glass-window:not([data-window-id="terminal"]) [class*="bg-white/5"],
-html.light .glass-window:not([data-window-id="terminal"]) [class*="bg-white/8"],
-html.light .glass-window:not([data-window-id="terminal"]) [class*="bg-white/10"],
-html.light .glass-modal [class*="bg-white/5"],
-html.light .glass-modal [class*="bg-white/10"] {
-  background-color: rgba(0, 0, 0, 0.035) !important;
-}
-
-/* Card gradient overrides in light mode */
-:root[data-theme="light"] .glass-window:not([data-window-id="terminal"]) [class*="bg-gradient-to-br"],
-html.light .glass-window:not([data-window-id="terminal"]) [class*="bg-gradient-to-br"] {
-  background-image: none !important;
-  background-color: rgba(0, 0, 0, 0.03) !important;
-}
-
-/* 6. BORDERS IN LIGHT CONTAINERS */
-:root[data-theme="light"] .glass-menubar [class*="border-white"],
-:root[data-theme="light"] .glass-modal [class*="border-white"],
-:root[data-theme="light"] .glass-window:not([data-window-id="terminal"]) [class*="border-white"],
-html.light .glass-menubar [class*="border-white"],
-html.light .glass-modal [class*="border-white"],
-html.light .glass-window:not([data-window-id="terminal"]) [class*="border-white"] {
-  border-color: rgba(0, 0, 0, 0.08) !important;
-}
-
-/* 7. HOVER STATES IN LIGHT CONTAINERS */
-:root[data-theme="light"] .glass-window:not([data-window-id="terminal"]) [class*="hover:bg-white"]:hover,
-:root[data-theme="light"] .glass-menubar [class*="hover:bg-white"]:hover,
-:root[data-theme="light"] .glass-modal [class*="hover:bg-white"]:hover,
-html.light .glass-window:not([data-window-id="terminal"]) [class*="hover:bg-white"]:hover,
-html.light .glass-menubar [class*="hover:bg-white"]:hover,
-html.light .glass-modal [class*="hover:bg-white"]:hover {
-  background-color: rgba(0, 0, 0, 0.06) !important;
-}
-
-/* 8. DESKTOP ICON LABELS IN LIGHT MODE */
 :root[data-theme="light"] .desktop-icon-label,
 html.light .desktop-icon-label {
-  color: #0f172a !important;
-  background-color: rgba(255, 255, 255, 0.72) !important;
-  backdrop-filter: blur(8px) !important;
-  -webkit-backdrop-filter: blur(8px) !important;
-  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.12) !important;
-  border: 1px solid rgba(255, 255, 255, 0.7) !important;
+  color: #1a1d24 !important;
+  background-color: rgba(255, 255, 255, 0.65) !important;
+  backdrop-filter: blur(12px) !important;
+  box-shadow: 0 1px 4px rgba(0, 0, 0, 0.12) !important;
 }

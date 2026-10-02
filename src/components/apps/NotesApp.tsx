@@ -4,39 +4,87 @@ import { useState } from "react";
 import { AnimatePresence, motion } from "framer-motion";
 import AppFrame from "@/components/AppFrame";
 import { caseStudies, projects } from "@/lib/content";
+import { useSystemStore } from "@/store/system-store";
 
 export default function NotesApp() {
   const [activeId, setActiveId] = useState<string | null>(caseStudies[0]?.id ?? null);
   const active = caseStudies.find((c) => c.id === activeId) ?? null;
+  const theme = useSystemStore((s) => s.theme);
+  const isLight = theme === "light";
 
   return (
     <AppFrame
       id="notes"
       title="Notes — Case Studies"
-      icon={<span className="material-symbols-outlined text-[15px] text-amber-300">sticky_note_2</span>}
+      icon={
+        <span
+          className={`material-symbols-outlined text-[15px] ${
+            isLight ? "text-amber-600" : "text-amber-300"
+          }`}
+        >
+          sticky_note_2
+        </span>
+      }
       minWidth={480}
     >
       <div className="grid h-full grid-cols-1 md:grid-cols-[220px_1fr]">
         {/* Note list */}
-        <aside className="flex flex-col gap-1 overflow-y-auto border-r border-white/10 bg-black/20 p-3">
-          <span className="mb-1 px-2 font-mono-ui text-[10px] font-semibold uppercase tracking-wider text-white/40">
+        <aside
+          className={`flex flex-col gap-1 overflow-y-auto border-r p-3 transition-colors ${
+            isLight
+              ? "border-black/10 bg-black/[0.03]"
+              : "border-white/10 bg-black/20"
+          }`}
+        >
+          <span
+            className={`mb-1 px-2 font-mono-ui text-[10px] font-semibold uppercase tracking-wider ${
+              isLight ? "text-neutral-500" : "text-white/40"
+            }`}
+          >
             Semua Catatan
           </span>
           {caseStudies.map((c) => {
             const project = projects.find((p) => p.id === c.projectId);
+            const isSelected = activeId === c.id;
             return (
               <button
                 key={c.id}
                 onClick={() => setActiveId(c.id)}
-                className={`flex flex-col gap-1 rounded-xl px-3 py-2.5 text-left transition-colors ${
-                  activeId === c.id
-                    ? "border border-[var(--accent-400)]/30 bg-gradient-to-r from-[var(--accent-500)]/25 to-[var(--accent-500)]/5"
+                className={`flex flex-col gap-1 rounded-xl px-3 py-2.5 text-left transition-all ${
+                  isSelected
+                    ? isLight
+                      ? "border border-amber-500/40 bg-amber-500/15 shadow-sm"
+                      : "border border-[var(--accent-400)]/30 bg-gradient-to-r from-[var(--accent-500)]/25 to-[var(--accent-500)]/5"
+                    : isLight
+                    ? "border border-transparent hover:bg-black/5"
                     : "border border-transparent hover:bg-white/10"
                 }`}
               >
-                <span className="text-[12px] font-medium leading-snug text-white">{c.title}</span>
+                <span
+                  className={`text-[12px] leading-snug ${
+                    isSelected
+                      ? isLight
+                        ? "font-semibold text-amber-950"
+                        : "font-medium text-white"
+                      : isLight
+                      ? "font-medium text-neutral-800"
+                      : "font-medium text-white"
+                  }`}
+                >
+                  {c.title}
+                </span>
                 {project && (
-                  <span className="text-[10px] text-white/40">{project.name}</span>
+                  <span
+                    className={`text-[10px] ${
+                      isSelected && isLight
+                        ? "font-medium text-amber-800/80"
+                        : isLight
+                        ? "text-neutral-500"
+                        : "text-white/40"
+                    }`}
+                  >
+                    {project.name}
+                  </span>
                 )}
               </button>
             );
@@ -57,15 +105,29 @@ export default function NotesApp() {
               >
                 <div className="mx-auto flex max-w-xl flex-col gap-5">
                   <div>
-                    <span className="font-mono-ui text-[11px] uppercase tracking-widest text-[var(--accent-400)]">
+                    <span
+                      className={`font-mono-ui text-[11px] font-semibold uppercase tracking-widest ${
+                        isLight ? "text-amber-700" : "text-[var(--accent-400)]"
+                      }`}
+                    >
                       Case Study
                     </span>
-                    <h1 className="mt-1 text-xl font-bold text-white sm:text-2xl">{active.title}</h1>
+                    <h1
+                      className={`mt-1 text-xl font-bold sm:text-2xl ${
+                        isLight ? "text-neutral-900" : "text-white"
+                      }`}
+                    >
+                      {active.title}
+                    </h1>
                     <div className="mt-2 flex flex-wrap gap-1.5">
                       {active.tags.map((t) => (
                         <span
                           key={t}
-                          className="rounded-full border border-white/15 bg-white/10 px-2.5 py-0.5 text-[10px] text-white/70"
+                          className={`rounded-full border px-2.5 py-0.5 text-[10px] ${
+                            isLight
+                              ? "border-black/10 bg-black/5 font-medium text-neutral-700"
+                              : "border-white/15 bg-white/10 text-white/70"
+                          }`}
                         >
                           {t}
                         </span>
@@ -78,14 +140,31 @@ export default function NotesApp() {
                     { label: "Pendekatan", icon: "route", body: active.approach },
                     { label: "Hasil", icon: "flag", body: active.result },
                   ].map((section) => (
-                    <div key={section.label} className="rounded-xl border border-white/10 bg-white/5 p-4">
-                      <div className="mb-1.5 flex items-center gap-2 text-[var(--accent-300)]">
+                    <div
+                      key={section.label}
+                      className={`rounded-xl border p-4 transition-colors ${
+                        isLight
+                          ? "border-black/10 bg-white/90 shadow-sm"
+                          : "border-white/10 bg-white/5"
+                      }`}
+                    >
+                      <div
+                        className={`mb-1.5 flex items-center gap-2 ${
+                          isLight ? "text-amber-800" : "text-[var(--accent-300)]"
+                        }`}
+                      >
                         <span className="material-symbols-outlined text-[16px]">{section.icon}</span>
-                        <span className="text-[11px] font-semibold uppercase tracking-wide">
+                        <span className="text-[11px] font-bold uppercase tracking-wide">
                           {section.label}
                         </span>
                       </div>
-                      <p className="text-[13px] leading-relaxed text-white/75">{section.body}</p>
+                      <p
+                        className={`text-[13px] leading-relaxed ${
+                          isLight ? "font-normal text-neutral-800" : "text-white/75"
+                        }`}
+                      >
+                        {section.body}
+                      </p>
                     </div>
                   ))}
                 </div>

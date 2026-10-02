@@ -26,17 +26,37 @@ type TabId = (typeof tabs)[number]["id"];
 export default function FinderApp() {
   const [tab, setTab] = useState<TabId>("overview");
   const openApp = useSystemStore((s) => s.openApp);
+  const theme = useSystemStore((s) => s.theme);
+  const isLight = theme === "light";
 
   return (
     <AppFrame
       id="finder"
       title="Finder — About Me & Resume"
-      icon={<span className="material-symbols-outlined icon-fill text-[15px] text-amber-400">folder_shared</span>}
+      icon={
+        <span
+          className={`material-symbols-outlined icon-fill text-[15px] ${
+            isLight ? "text-amber-600" : "text-amber-400"
+          }`}
+        >
+          folder_shared
+        </span>
+      }
     >
       <div className="grid h-full grid-cols-1 md:grid-cols-[190px_1fr]">
-        <aside className="flex flex-col justify-between border-r border-white/10 bg-black/20 p-3">
+        <aside
+          className={`flex flex-col justify-between border-r p-3 transition-colors ${
+            isLight
+              ? "border-black/10 bg-black/[0.03]"
+              : "border-white/10 bg-black/20"
+          }`}
+        >
           <div className="flex flex-col gap-1">
-            <span className="mb-1 px-2 font-mono-ui text-[10px] font-semibold uppercase tracking-wider text-white/40">
+            <span
+              className={`mb-1 px-2 font-mono-ui text-[10px] font-semibold uppercase tracking-wider ${
+                isLight ? "text-neutral-500" : "text-white/40"
+              }`}
+            >
               Navigation
             </span>
             {tabs.map((t) => (
@@ -45,7 +65,11 @@ export default function FinderApp() {
                 onClick={() => setTab(t.id)}
                 className={`flex items-center gap-2.5 rounded-xl px-3 py-2 text-left text-[12px] transition-all ${
                   tab === t.id
-                    ? "border border-[var(--accent-400)]/30 bg-gradient-to-r from-[var(--accent-500)]/25 to-[var(--accent-500)]/5 font-semibold text-[var(--accent-300)]"
+                    ? isLight
+                      ? "border border-amber-500/40 bg-amber-500/15 font-semibold text-amber-950 shadow-sm"
+                      : "border border-[var(--accent-400)]/30 bg-gradient-to-r from-[var(--accent-500)]/25 to-[var(--accent-500)]/5 font-semibold text-[var(--accent-300)]"
+                    : isLight
+                    ? "text-neutral-700 hover:bg-black/5 hover:text-neutral-900"
                     : "text-white/70 hover:bg-white/10 hover:text-white"
                 }`}
               >
@@ -55,14 +79,32 @@ export default function FinderApp() {
             ))}
           </div>
 
-          <div className="mt-4 flex items-center gap-2 rounded-xl border-t border-white/10 bg-black/20 p-2.5 pt-3">
+          <div
+            className={`mt-4 flex items-center gap-2 rounded-xl border p-2.5 pt-3 transition-colors ${
+              isLight
+                ? "border-black/10 bg-black/[0.02]"
+                : "border-white/10 bg-black/20"
+            }`}
+          >
             <span className="relative flex h-2.5 w-2.5">
               <span className="absolute inline-flex h-full w-full animate-ping rounded-full bg-terminal-green opacity-75" />
               <span className="relative inline-flex h-2.5 w-2.5 rounded-full bg-terminal-green" />
             </span>
             <div className="flex flex-col leading-tight">
-              <span className="text-[10px] font-medium text-white/90">{profile.availability}</span>
-              <span className="text-[9px] text-white/50">Liquid Glass OS</span>
+              <span
+                className={`text-[10px] font-medium ${
+                  isLight ? "text-neutral-800" : "text-white/90"
+                }`}
+              >
+                {profile.availability}
+              </span>
+              <span
+                className={`text-[9px] ${
+                  isLight ? "text-neutral-500" : "text-white/50"
+                }`}
+              >
+                Liquid Glass OS
+              </span>
             </div>
           </div>
         </aside>
