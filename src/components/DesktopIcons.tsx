@@ -34,7 +34,7 @@ function DesktopIcon({
         )}
         <span className="material-symbols-outlined icon-fill text-3xl">{icon}</span>
       </div>
-      <span className="rounded px-1.5 py-0.5 text-center text-[12px] tracking-tight text-white/90 drop-shadow-md group-hover:bg-[var(--accent-500)] group-hover:text-black">
+      <span className="desktop-icon-label rounded px-1.5 py-0.5 text-center text-[12px] font-medium tracking-tight text-white/90 drop-shadow-md transition-colors group-hover:bg-[var(--accent-500)] group-hover:text-black">
         {label}
       </span>
     </button>
