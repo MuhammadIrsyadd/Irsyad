@@ -154,7 +154,7 @@ export default function LoginScreen() {
               src="/images/avatar.png"
               alt="Muh Irsyad"
               draggable={false}
-              className="block h-auto max-h-[55vh] w-full object-contain select-none drop-shadow-[0_16px_40px_rgba(0,0,0,0.7)]"
+              className="block h-auto max-h-[100vh] w-full object-contain select-none drop-shadow-[0_16px_40px_rgba(0,0,0,0.7)]"
             />
           </FadeIn>
         </div>
