@@ -111,7 +111,7 @@ export default function LoginScreen() {
           <span className="tabular-nums drop-shadow-[0_2px_8px_rgba(0,0,0,0.5)]">{time}</span>
         </FadeIn>
 
-        {/* Wordmark */}
+        {/* Wordmark (Full-Width edge-to-edge, no empty space on the right) */}
         <div className="overflow-hidden">
           <FadeIn as="h1" delay={0.15} y={40}>
             <span className="hero-heading mt-6 block w-full whitespace-nowrap text-[13vw] font-black uppercase leading-none tracking-tight drop-shadow-[0_8px_30px_rgba(0,0,0,0.6)] sm:mt-4 sm:text-[13.5vw] md:-mt-5 md:text-[14vw] lg:text-[15vw]">
@@ -154,7 +154,7 @@ export default function LoginScreen() {
               src="/images/avatar.png"
               alt="Muh Irsyad"
               draggable={false}
-              className="block h-auto max-h-[58vh] sm:max-h-[62vh] w-full object-contain select-none drop-shadow-[0_16px_40px_rgba(0,0,0,0.7)]"
+              className="block h-auto max-h-[58vh] sm:max-h-[100vh] w-full object-contain select-none drop-shadow-[0_16px_40px_rgba(0,0,0,0.7)]"
             />
           </FadeIn>
         </div>
