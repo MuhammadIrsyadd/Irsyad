@@ -36,13 +36,13 @@ export default function HomeLogo() {
         whileTap={{ scale: 0.94 }}
         title="Buka Finder / About Me"
         aria-label="Logo Portofolio"
-        className="group relative flex h-12 w-12 sm:h-15 sm:w-15 items-center justify-center rounded-2xl border border-white/15 bg-black/40 p-2 shadow-2xl backdrop-blur-xl transition-colors hover:border-[var(--accent-400)]/40 hover:bg-black/60"
+        className="group relative flex h-12 w-12 sm:h-15 sm:w-15 items-center justify-center rounded-2xl border border-white/15 bg-white p-2 shadow-2xl backdrop-blur-xl transition-colors hover:border-[var(--accent-400)]/40 hover:bg-white"
       >
         {/* Subtle glowing halo */}
         <div className="absolute inset-0 rounded-2xl bg-[var(--accent-500)]/10 opacity-0 blur-md transition-opacity group-hover:opacity-100" />
 
         <img
-          src="/images/MI.png"
+          src="/images/MI-black.png"
           alt="Logo"
           className="relative z-10 h-full w-full rounded-xl object-cover drop-shadow-[0_2px_8px_rgba(0,0,0,0.5)] transition-transform duration-300 group-hover:scale-105"
         />
