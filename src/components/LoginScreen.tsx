@@ -111,10 +111,10 @@ export default function LoginScreen() {
           <span className="tabular-nums drop-shadow-[0_2px_8px_rgba(0,0,0,0.5)]">{time}</span>
         </FadeIn>
 
-        {/* Wordmark */}
+        {/* Wordmark (Scaled to fit full-width for Hi, i'm Muh. irsyad without clipping) */}
         <div className="overflow-hidden">
           <FadeIn as="h1" delay={0.15} y={40}>
-            <span className="hero-heading mt-6 block w-full whitespace-nowrap text-[13vw] font-black uppercase leading-none tracking-tight drop-shadow-[0_8px_30px_rgba(0,0,0,0.6)] sm:mt-4 sm:text-[13.5vw] md:-mt-5 md:text-[14vw] lg:text-[15vw]">
+            <span className="hero-heading mt-6 block w-full whitespace-nowrap text-[8.8vw] font-black uppercase leading-none tracking-tighter drop-shadow-[0_8px_30px_rgba(0,0,0,0.6)] sm:mt-4 sm:text-[9.2vw] md:-mt-5 md:text-[9.6vw] lg:text-[10vw]">
               Hi, i&rsquo;m Muh. irsyad
             </span>
           </FadeIn>
@@ -146,15 +146,15 @@ export default function LoginScreen() {
           </FadeIn>
         </div>
 
-        {/* Portrait Avatar (Static & Steady - Compact Size) */}
-        <div className="pointer-events-none absolute left-1/2 top-1/2 z-10 w-[200px] -translate-x-1/2 -translate-y-1/2 sm:top-auto sm:bottom-0 sm:w-[260px] sm:translate-y-0 md:w-[320px] lg:w-[380px]">
+        {/* Portrait Avatar (Grounded at bottom edge & nicely proportioned) */}
+        <div className="pointer-events-none absolute bottom-0 left-1/2 z-10 w-[220px] -translate-x-1/2 sm:w-[280px] md:w-[340px] lg:w-[400px]">
           <FadeIn delay={0.6} y={30}>
             {/* eslint-disable-next-line @next/next/no-img-element */}
             <img
               src="/images/avatar.png"
               alt="Muh Irsyad"
               draggable={false}
-              className="block h-auto max-h-[100vh] w-full object-contain select-none drop-shadow-[0_16px_40px_rgba(0,0,0,0.7)]"
+              className="block h-auto max-h-[58vh] sm:max-h-[62vh] w-full object-contain select-none drop-shadow-[0_16px_40px_rgba(0,0,0,0.7)]"
             />
           </FadeIn>
         </div>
