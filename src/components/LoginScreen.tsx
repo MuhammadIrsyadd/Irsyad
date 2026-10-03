@@ -146,15 +146,15 @@ export default function LoginScreen() {
           </FadeIn>
         </div>
 
-        {/* Portrait Avatar (Static & Steady) */}
-        <div className="pointer-events-none absolute left-1/2 top-1/2 z-10 w-[280px] -translate-x-1/2 -translate-y-1/2 sm:top-auto sm:bottom-0 sm:w-[360px] sm:translate-y-0 md:w-[440px] lg:w-[520px]">
+        {/* Portrait Avatar (Static & Steady - Compact Size) */}
+        <div className="pointer-events-none absolute left-1/2 top-1/2 z-10 w-[200px] -translate-x-1/2 -translate-y-1/2 sm:top-auto sm:bottom-0 sm:w-[260px] sm:translate-y-0 md:w-[320px] lg:w-[380px]">
           <FadeIn delay={0.6} y={30}>
             {/* eslint-disable-next-line @next/next/no-img-element */}
             <img
               src="/images/avatar.png"
               alt="Muh Irsyad"
               draggable={false}
-              className="block h-auto w-full select-none drop-shadow-[0_20px_50px_rgba(0,0,0,0.7)]"
+              className="block h-auto max-h-[55vh] w-full object-contain select-none drop-shadow-[0_16px_40px_rgba(0,0,0,0.7)]"
             />
           </FadeIn>
         </div>
