@@ -111,10 +111,10 @@ export default function LoginScreen() {
           <span className="tabular-nums drop-shadow-[0_2px_8px_rgba(0,0,0,0.5)]">{time}</span>
         </FadeIn>
 
-        {/* Wordmark (Scaled to fit full-width for Hi, i'm Muh. irsyad without clipping) */}
+        {/* Wordmark (Full-Width edge-to-edge, no empty space on the right) */}
         <div className="overflow-hidden">
           <FadeIn as="h1" delay={0.15} y={40}>
-            <span className="hero-heading mt-6 block w-full whitespace-nowrap text-[8.8vw] font-black uppercase leading-none tracking-tighter drop-shadow-[0_8px_30px_rgba(0,0,0,0.6)] sm:mt-4 sm:text-[9.2vw] md:-mt-5 md:text-[9.6vw] lg:text-[10vw]">
+            <span className="hero-heading mt-6 block w-full whitespace-nowrap text-[10.8vw] font-black uppercase leading-none tracking-tight drop-shadow-[0_8px_30px_rgba(0,0,0,0.6)] sm:mt-4 sm:text-[11.2vw] md:-mt-5 md:text-[11.6vw] lg:text-[11.9vw] xl:text-[12.1vw]">
               Hi, i&rsquo;m Muh. irsyad
             </span>
           </FadeIn>
