@@ -115,7 +115,7 @@ export default function LoginScreen() {
         <div className="overflow-hidden">
           <FadeIn as="h1" delay={0.15} y={40}>
             <span className="hero-heading mt-6 block w-full whitespace-nowrap text-[13vw] font-black uppercase leading-none tracking-tight drop-shadow-[0_8px_30px_rgba(0,0,0,0.6)] sm:mt-4 sm:text-[13.5vw] md:-mt-5 md:text-[14vw] lg:text-[15vw]">
-              Hi, i&rsquo;m irsyad
+              Hi, i&rsquo;m Muh. irsyad
             </span>
           </FadeIn>
         </div>
