@@ -40,10 +40,10 @@ export default function BootScreen() {
       >
         {/* eslint-disable-next-line @next/next/no-img-element */}
         <img
-          src="/images/MI-black.png"
+          src="/images/logo-white.png"
           alt="Muh Irsyad"
           draggable={false}
-          className="h-24 w-24 object-contain mix-blend-screen drop-shadow-[0_0_35px_rgba(255,255,255,0.3)]"
+          className="h-24 w-24 object-contain drop-shadow-[0_0_35px_rgba(255,255,255,0.3)]"
         />
       </motion.div>
       <div className="h-1.5 w-56 overflow-hidden rounded-full bg-white/20">
