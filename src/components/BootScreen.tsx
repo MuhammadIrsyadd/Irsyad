@@ -26,16 +26,20 @@ export default function BootScreen() {
         <iframe
           src="https://my.spline.design/scripthello-P7ql64eoqdvvTay6PFZdADyL/"
           title="3D Spline Background"
-          className="h-full w-full border-0 block"
+          className="absolute border-0 block"
           style={{
+            top: "-30px",
+            left: "0",
             width: "100%",
-            height: "100%",
+            height: "calc(100% + 75px)",
             filter: "invert(1)",
             transform: "translateZ(0)",
           }}
           allow="autoplay; fullscreen"
           loading="eager"
         />
+        {/* Solid corner mask to guarantee 100% concealment of Spline watermark */}
+        <div className="pointer-events-none absolute bottom-0 right-0 z-10 h-24 w-52 bg-black" />
       </div>
 
       {/* Top spacer (leaves the entire center clear for 3D White "Hello") */}
