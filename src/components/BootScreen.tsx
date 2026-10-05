@@ -29,22 +29,26 @@ export default function BootScreen() {
   return (
     <motion.div
       exit={{ opacity: 0 }}
-      transition={{ duration: 0.4 }}
-      className="fixed inset-0 z-[9999] flex flex-col items-center justify-center gap-6 bg-black"
+      transition={{ duration: 0.45 }}
+      className="fixed inset-0 z-[9999] flex flex-col items-center justify-center gap-10 bg-black select-none"
     >
       <motion.div
-        initial={{ scale: 0.85, opacity: 0 }}
+        initial={{ scale: 0.88, opacity: 0 }}
         animate={{ scale: 1, opacity: 1 }}
-        transition={{ duration: 0.5 }}
-        className="flex h-20 w-20 items-center justify-center rounded-2xl bg-gradient-to-br from-amber-400 to-amber-600 shadow-[0_0_40px_rgba(245,158,11,0.5)]"
+        transition={{ duration: 0.7, ease: [0.16, 1, 0.3, 1] }}
+        className="relative flex items-center justify-center"
       >
-        <span className="material-symbols-outlined icon-fill text-4xl text-black">
-          diamond
-        </span>
+        {/* eslint-disable-next-line @next/next/no-img-element */}
+        <img
+          src="/images/MI-black.png"
+          alt="Muh Irsyad"
+          draggable={false}
+          className="h-24 w-24 object-contain mix-blend-screen drop-shadow-[0_0_35px_rgba(255,255,255,0.3)]"
+        />
       </motion.div>
-      <div className="h-1.5 w-52 overflow-hidden rounded-full bg-white/10">
+      <div className="h-1.5 w-56 overflow-hidden rounded-full bg-white/20">
         <motion.div
-          className="h-full rounded-full bg-white/80"
+          className="h-full rounded-full bg-white"
           style={{ width: `${progress}%` }}
         />
       </div>
