@@ -1,19 +1,45 @@
 "use client";
 
-import { useEffect } from "react";
+import { useState, useEffect, useRef, useCallback } from "react";
 import { motion } from "framer-motion";
 import { useSystemStore } from "@/store/system-store";
 
 export default function BootScreen() {
   const setBootStage = useSystemStore((s) => s.setBootStage);
+  const [sceneReady, setSceneReady] = useState(false);
+  const sceneReadyRef = useRef(false);
+
+  const handleIframeLoad = useCallback(() => {
+    if (!sceneReadyRef.current) {
+      sceneReadyRef.current = true;
+      setSceneReady(true);
+    }
+  }, []);
 
   useEffect(() => {
-    const timer = setTimeout(() => {
-      setBootStage("login");
-    }, 3500);
+    // Fallback: jika iframe onLoad tidak terpanggil dalam 1.4s, mulai animasi
+    const fallbackTimer = setTimeout(() => {
+      if (!sceneReadyRef.current) {
+        sceneReadyRef.current = true;
+        setSceneReady(true);
+      }
+    }, 1400);
 
-    return () => clearTimeout(timer);
-  }, [setBootStage]);
+    return () => clearTimeout(fallbackTimer);
+  }, []);
+
+  useEffect(() => {
+    if (!sceneReady) return;
+
+    // Durasi animasi stroke tulisan 3D "Hello" di Spline adalah 3.0s (3000ms).
+    // Diberi jeda istirahat 650ms setelah kata "Hello" selesai ditulis utuh,
+    // total 3650ms sebelum transisi masuk ke login screen.
+    const completionTimer = setTimeout(() => {
+      setBootStage("login");
+    }, 3650);
+
+    return () => clearTimeout(completionTimer);
+  }, [sceneReady, setBootStage]);
 
   return (
     <motion.div
@@ -26,6 +52,7 @@ export default function BootScreen() {
         <iframe
           src="https://my.spline.design/scripthello-P7ql64eoqdvvTay6PFZdADyL/"
           title="3D Spline Background"
+          onLoad={handleIframeLoad}
           className="absolute border-0 block"
           style={{
             top: "-30px",
@@ -63,12 +90,16 @@ export default function BootScreen() {
           />
         </motion.div>
 
-        {/* Sleek macOS boot progress bar (Smooth GPU animated) */}
+        {/* Sleek macOS boot progress bar (Synchronized exactly to 3D Hello writing duration) */}
         <div className="h-1.5 w-60 sm:w-72 overflow-hidden rounded-full bg-white/20 shadow-lg backdrop-blur-md">
           <motion.div
-            initial={{ width: "8%" }}
-            animate={{ width: "100%" }}
-            transition={{ duration: 3.2, ease: [0.16, 1, 0.3, 1] }}
+            initial={{ width: "6%" }}
+            animate={{ width: sceneReady ? "100%" : "22%" }}
+            transition={
+              sceneReady
+                ? { duration: 3.0, ease: [0.16, 1, 0.3, 1] }
+                : { duration: 1.4, ease: "easeOut" }
+            }
             className="h-full rounded-full bg-white shadow-[0_0_12px_rgba(255,255,255,0.85)]"
           />
         </div>
