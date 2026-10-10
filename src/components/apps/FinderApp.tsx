@@ -144,11 +144,20 @@ export default function FinderApp() {
                     <p className="text-xs leading-relaxed text-white/75">{profile.tagline}</p>
                     <div className="flex flex-wrap items-center justify-center gap-2.5 pt-1 sm:justify-start">
                       <Magnet padding={30} magnetStrength={6}>
+                        <button
+                          onClick={() => openApp("safari")}
+                          className="inline-flex items-center gap-1.5 rounded-xl bg-gradient-to-r from-[var(--accent-500)] to-[var(--accent-600)] px-3.5 py-1.5 text-xs font-semibold text-black shadow-[0_4px_16px_var(--accent-glow)] transition-transform active:scale-95 hover:brightness-110"
+                        >
+                          <span className="material-symbols-outlined text-sm font-bold">explore</span>
+                          Lihat Proyek
+                        </button>
+                      </Magnet>
+                      <Magnet padding={30} magnetStrength={6}>
                         <a
                           href="/resume.pdf"
                           target="_blank"
                           rel="noreferrer"
-                          className="inline-flex items-center gap-1.5 rounded-xl bg-gradient-to-r from-[var(--accent-500)] to-[var(--accent-600)] px-3.5 py-1.5 text-xs font-semibold text-black shadow-[0_4px_16px_var(--accent-glow)] transition-transform active:scale-95"
+                          className="inline-flex items-center gap-1.5 rounded-xl border border-white/15 bg-white/10 px-3.5 py-1.5 text-xs font-medium text-white transition-transform active:scale-95 hover:bg-white/15"
                         >
                           <span className="material-symbols-outlined text-sm font-bold">download</span>
                           Download CV

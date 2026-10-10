@@ -30,6 +30,7 @@ type SystemState = {
   hoveredApp: AppId | null;
   wallpaperId: string;
   dockOrder: AppId[];
+  activeSafariProject: string | null;
 
   setBootStage: (stage: BootStage) => void;
   unlock: () => void;
@@ -42,6 +43,8 @@ type SystemState = {
   setHoveredApp: (id: AppId | null) => void;
   setWallpaper: (id: string) => void;
   setDockOrder: (order: AppId[]) => void;
+  setActiveSafariProject: (id: string | null) => void;
+  openSafariProject: (projectId: string) => void;
 
   openApp: (id: AppId) => void;
   closeApp: (id: AppId) => void;
@@ -89,6 +92,7 @@ export const useSystemStore = create<SystemState>((set, get) => ({
   hoveredApp: null,
   wallpaperId: "wallpaper1", // default; falls back to the first discovered wallpaper if missing
   dockOrder: appOrder,
+  activeSafariProject: null,
 
   setBootStage: (stage) => set({ bootStage: stage }),
   unlock: () => set({ bootStage: "desktop" }),
@@ -132,6 +136,11 @@ export const useSystemStore = create<SystemState>((set, get) => ({
   setHoveredApp: (id) => set({ hoveredApp: id }),
   setWallpaper: (id) => set({ wallpaperId: id }),
   setDockOrder: (order) => set({ dockOrder: order }),
+  setActiveSafariProject: (id) => set({ activeSafariProject: id }),
+  openSafariProject: (projectId) => {
+    get().openApp("safari");
+    set({ activeSafariProject: projectId });
+  },
 
   openApp: (id) => {
     const nextZ = get().topZ + 1;

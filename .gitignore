@@ -43,3 +43,7 @@ next-env.d.ts
 
 # markdown docs (kept local only)
 *.md
+
+# IDE / extensions
+.continue/
+

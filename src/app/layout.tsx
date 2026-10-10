@@ -20,7 +20,7 @@ const kanit = Kanit({
 });
 
 export const metadata: Metadata = {
-  metadataBase: new URL(process.env.NEXT_PUBLIC_SITE_URL || "https://muhirsyad.dev"),
+  metadataBase: new URL(process.env.NEXT_PUBLIC_SITE_URL || "https://muhirsyad.my.id"),
   title: "Muh Irsyad — Portfolio OS",
   description:
     "Hi, namaku Irsyad. Kenalan lebih dekat yuk sama aku! Simulasi desktop macOS Liquid Glass. Klik, jelajah, dan buka tiap 'app' untuk kenal aku lebih jauh.",

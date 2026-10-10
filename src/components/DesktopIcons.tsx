@@ -11,18 +11,18 @@ function DesktopIcon({
   iconClass,
   label,
   badge,
-  onDoubleClick,
+  onClick,
 }: {
   icon: string;
   iconClass: string;
   label: string;
   badge?: string;
-  onDoubleClick: () => void;
+  onClick: () => void;
 }) {
   return (
     <button
-      onDoubleClick={onDoubleClick}
-      className="group flex w-24 flex-col items-center gap-1.5 rounded-xl p-2 transition-colors hover:bg-white/10"
+      onClick={onClick}
+      className="group flex w-24 flex-col items-center gap-1.5 rounded-xl p-2 transition-all hover:bg-white/10 active:scale-95"
     >
       <div
         className={`relative flex h-16 w-16 items-center justify-center rounded-xl border shadow-2xl transition-transform group-hover:scale-105 ${iconClass}`}
@@ -53,19 +53,19 @@ export default function DesktopIcons() {
           iconClass="bg-black/40 border-white/15 text-amber-400"
           label="Resume.pdf"
           badge="CV"
-          onDoubleClick={() => window.open("/resume.pdf", "_blank")}
+          onClick={() => window.open("/resume.pdf", "_blank")}
         />
         <DesktopIcon
           icon="folder"
           iconClass="bg-amber-500/20 border-amber-400/30 text-amber-400"
           label="Projects/"
-          onDoubleClick={() => openApp("safari")}
+          onClick={() => openApp("safari")}
         />
         <DesktopIcon
           icon="connect_without_contact"
           iconClass="bg-[var(--accent-500)]/20 border-[var(--accent-400)]/30 text-[var(--accent-400)]"
           label="Connect"
-          onDoubleClick={() => setSocialsOpen(true)}
+          onClick={() => setSocialsOpen(true)}
         />
       </div>
 

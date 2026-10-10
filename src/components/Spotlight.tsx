@@ -11,6 +11,7 @@ export default function Spotlight() {
   const open = useSystemStore((s) => s.spotlightOpen);
   const setOpen = useSystemStore((s) => s.setSpotlightOpen);
   const openApp = useSystemStore((s) => s.openApp);
+  const openSafariProject = useSystemStore((s) => s.openSafariProject);
   const lock = useSystemStore((s) => s.lock);
   const toggleSound = useSystemStore((s) => s.toggleSound);
   const [query, setQuery] = useState("");
@@ -61,9 +62,15 @@ export default function Spotlight() {
       openAppHit("notes", "Notes — Case Studies", "sticky_note_2"),
       openAppHit("photos", "Photos", "photo_library"),
       openAppHit("settings", "Settings", "settings"),
-      ...projects.map((p) =>
-        openAppHit("safari", `Project: ${p.name}`, "web_asset")
-      ),
+      ...projects.map((p) => ({
+        label: `Project: ${p.name}`,
+        hint: "Buka di Safari",
+        icon: "explore",
+        onSelect: () => {
+          openSafariProject(p.id);
+          setOpen(false);
+        },
+      })),
       ...caseStudies.map((c) => openAppHit("notes", `Case Study: ${c.title}`, "sticky_note_2")),
       ...skills.map((s) => openAppHit("terminal", `Skill: ${s.category}`, "code")),
       actionHit("Lock Screen", "lock", "Aksi", lock),
@@ -76,7 +83,7 @@ export default function Spotlight() {
     if (!query.trim()) return base.slice(0, 6);
     const q = query.toLowerCase();
     return base.filter((h) => h.label.toLowerCase().includes(q)).slice(0, 8);
-  }, [query, openApp, setOpen, lock, toggleSound]);
+  }, [query, openApp, openSafariProject, setOpen, lock, toggleSound]);
 
   return (
     <AnimatePresence>

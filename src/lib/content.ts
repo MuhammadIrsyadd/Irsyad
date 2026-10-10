@@ -329,18 +329,96 @@ export type Project = {
   tech: string[];
   url?: string;
   repo?: string;
-  accent: "amber" | "violet" | "cyan";
+  accent: "amber" | "violet" | "cyan" | "emerald" | "rose";
+  image?: string;
+  category?: string;
 };
 
 export const projects: Project[] = [
   {
+    id: "tarot",
+    name: "Arcana Mystica — Tarot Divination",
+    tagline: "Modern Digital Divination & Tarot Exploration Platform",
+    description:
+      "Platform ramalan modern interaktif yang memadukan simbolisme klasik dengan antarmuka digital yang estetik dan imersif. Menghadirkan fitur Bacaan Harian (Daily Reading), beragam tebaran kartu (Spreads), ensiklopedia makna kartu lengkap, jurnal refleksi pribadi, serta penyejajaran kosmik dan rasi zodiak.",
+    tech: ["Next.js", "React", "Tailwind CSS", "Framer Motion", "Lucide Icons"],
+    url: "https://tarot.muhirsyad.my.id",
+    accent: "violet",
+    image: "/images/projects/tarot.png",
+    category: "Interactive Web",
+  },
+  {
+    id: "gigizi",
+    name: "GIGIZI — Nutrisi di Ujung Jari",
+    tagline: "Kalkulator Nutrisi & Dapur Digital Makanan Khas Indonesia",
+    description:
+      "Aplikasi kalkulator dan edukasi gizi praktis yang disesuaikan dengan makanan lokal Indonesia (Warteg, Tempe, Rendang, dll.). Menghadirkan penghitungan kalori & makronutrien real-time, rekomendasi kebutuhan harian personal, fitur komparasi 'Battle Gizi', dan ensiklopedia khasiat 'Apotek Alami'.",
+    tech: ["Next.js", "TypeScript", "Tailwind CSS", "PWA", "Web Vitals"],
+    url: "https://gigizi.muhirsyad.my.id",
+    accent: "emerald",
+    image: "/images/projects/gigizi.png",
+    category: "Health & Utility",
+  },
+  {
+    id: "2048",
+    name: "QuadFuse 2048 ARCADE",
+    tagline: "Cyberpunk / Synthwave Edition of the Classic 2048 Puzzle",
+    description:
+      "Game puzzle angka 2048 dengan nuansa retro Synthwave & Cyberpunk arcade. Dilengkapi kontrol sentuh (swipe) halus dan keyboard (WASD / Panah), fitur Undo langkah, pelacak timer & gerakan, efek suara audio sintetis via Web Audio API, serta papan peringkat (Leaderboard) lokal tersimpan.",
+    tech: ["React", "TypeScript", "Tailwind CSS", "Web Audio API", "LocalStorage"],
+    url: "https://2048.muhirsyad.my.id",
+    accent: "cyan",
+    image: "/images/projects/2048.png",
+    category: "Web Arcade Game",
+  },
+  {
+    id: "brickbreaker",
+    name: "Retro Bounce: The 25th Chamber",
+    tagline: "Neon Retro Brick Breaker Arcade with 25 Stages",
+    description:
+      "Game arkade penghancur bata klasik bergaya retro modern dengan 25 level penuh tantangan. Dibangun berbasis Canvas 2D dengan simulasi fisika pantulan bola, partikel ledakan neon dinamis, variasi ketahanan bata, audio sintetis multi-frekuensi, dan pencatat rekor Hi-Score.",
+    tech: ["React", "HTML5 Canvas 2D", "Web Audio API", "Game Physics"],
+    url: "https://brickbreaker.muhirsyad.my.id",
+    accent: "rose",
+    image: "/images/projects/brickbreaker.png",
+    category: "Web Arcade Game",
+  },
+  {
+    id: "penalty",
+    name: "PenaltyZone — Soccer Penalty Shootout",
+    tagline: "Interactive 2.5D Soccer Penalty Simulator",
+    description:
+      "Mini-game adu tendangan penalti sepak bola interaktif dengan mekanisme geser arah tendangan (swipe-to-shoot) ke gawang. Dilengkapi simulasi kiper dinamis, animasi penonton interaktif (crowd simulation), pelacak skor & sisa percobaan, serta sistem evaluasi bintang akhir permainan.",
+    tech: ["Vanilla JavaScript", "HTML5 Canvas", "Physics Engine", "CSS Animations"],
+    url: "https://penalty.muhirsyad.my.id",
+    accent: "emerald",
+    image: "/images/projects/penalty.png",
+    category: "Mini-Game",
+  },
+  {
+    id: "skyrise",
+    name: "SKYRISE — Tower Stacker",
+    tagline: "Build Your Legacy, One Floor at a Time",
+    description:
+      "Game arkade vertikal menyusun lantai gedung bertingkat yang menguji ketepatan ritme dan konsentrasi. Mengusung mekanisme pemotongan balok otomatis saat posisi tidak presisi, pengganda poin combo streaks, pencatat rekor tinggi lantai, dan efek audio interaktif.",
+    tech: ["Vite", "React", "TypeScript", "Tailwind CSS", "Tabler Icons"],
+    url: "https://skyrise.muhirsyad.my.id",
+    accent: "amber",
+    image: "/images/projects/skyrise.png",
+    category: "Web Arcade Game",
+  },
+  {
     id: "liquid-glass-os",
     name: "Liquid Glass Portfolio OS",
-    tagline: "Portofolio ini sendiri — simulasi desktop macOS.",
+    tagline: "Simulasi desktop macOS interaktif — website portofolio ini.",
     description:
-      "Website portofolio yang dibungkus sebagai desktop environment lengkap dengan window system, dock magnify, dan material liquid glass. Dibangun dari nol dengan Next.js, Framer Motion, dan Zustand.",
+      "Website portofolio yang dibungkus sebagai desktop environment lengkap dengan window system, dock magnify, terminal CLI interaktif, Spotlight search (Ctrl+K), dan material liquid glass aurora. Dibangun dari nol dengan Next.js, Framer Motion, dan Zustand.",
     tech: ["Next.js", "TypeScript", "Tailwind CSS", "Framer Motion", "Zustand"],
+    url: "https://muhirsyad.my.id",
+    repo: "https://github.com/MuhammadIrsyadd/Irsyad",
     accent: "amber",
+    image: "/images/projects/portfolio.png",
+    category: "Portfolio & OS Simulator",
   },
   {
     id: "inka-erp",
@@ -350,6 +428,7 @@ export const projects: Project[] = [
       "Pengembangan dan pemeliharaan aplikasi web ERP berbasis Laravel untuk mendukung operasional PT. INKA (Persero). Mencakup perancangan antarmuka user-friendly, optimasi modul sistem, debugging & troubleshooting, serta kolaborasi lintas divisi untuk memastikan efisiensi operasional pengguna akhir.",
     tech: ["Laravel", "PHP", "MySQL", "REST API", "Blade"],
     accent: "violet",
+    category: "Enterprise System",
   },
   {
     id: "bangkit-android",
@@ -359,6 +438,7 @@ export const projects: Project[] = [
       "Membangun aplikasi Android secara bertahap dari level Beginner hingga Intermediate sebagai bagian dari program Bangkit Academy 2023. Menerapkan Kotlin, Jetpack Compose, MVVM Clean Architecture, dan integrasi RESTful API. Menekankan prinsip SOLID Paradigm dan kualitas kode yang terukur.",
     tech: ["Kotlin", "Jetpack Compose", "Android Studio", "Retrofit", "MVVM"],
     accent: "cyan",
+    category: "Mobile App",
   },
   {
     id: "web-competition",
@@ -368,6 +448,7 @@ export const projects: Project[] = [
       "Merancang dan mengembangkan website profil perusahaan responsif minimal 3 halaman dalam kompetisi web tingkat regional. Berkolaborasi dalam tim untuk mengimplementasikan antarmuka yang adaptif, interaktif, dan memenuhi standar aksesibilitas. Berhasil meraih Juara 2 dari peserta se-Surabaya.",
     tech: ["JavaScript", "CSS3", "HTML5", "Responsive Design"],
     accent: "amber",
+    category: "Web Competition",
   },
 ];
 
