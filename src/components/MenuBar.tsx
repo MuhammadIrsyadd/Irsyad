@@ -2,7 +2,8 @@
 
 import { useEffect, useState } from "react";
 import { AnimatePresence, motion } from "framer-motion";
-import { useSystemStore } from "@/store/system-store";
+import { appOrder, useSystemStore } from "@/store/system-store";
+import { getAppMeta } from "@/lib/apps";
 import { profile } from "@/lib/content";
 import ControlCenter from "@/components/ControlCenter";
 
@@ -33,6 +34,12 @@ export default function MenuBar() {
   const theme = useSystemStore((s) => s.theme);
   const toggleTheme = useSystemStore((s) => s.toggleTheme);
   const lock = useSystemStore((s) => s.lock);
+  // Name of the frontmost window, shown bold next to the logo like macOS.
+  const activeApp = useSystemStore((s) =>
+    appOrder.find(
+      (id) => s.windows[id].isOpen && !s.windows[id].isMinimized && s.windows[id].zIndex === s.topZ
+    )
+  );
 
   const dateLabel = now
     ? now.toLocaleString("id-ID", {
@@ -62,48 +69,63 @@ export default function MenuBar() {
               className="flex items-center gap-2 rounded px-2 py-1 font-semibold text-white transition-colors hover:bg-white/10"
             >
               <img
-                src="/images/face.png"
+                src="/images/face.webp"
                 alt="Logo"
                 className="h-6 w-6 rounded-full object-cover"
               />
-              <span className="hidden sm:inline">{profile.name}</span>
+              <span className="hidden whitespace-nowrap sm:inline">{profile.name}</span>
             </button>
-            {appleMenuOpen && (
-              <motion.div
-                initial={{ opacity: 0, y: -6, scale: 0.98 }}
-                animate={{ opacity: 1, y: 0, scale: 1 }}
-                exit={{ opacity: 0, y: -6, scale: 0.98 }}
-                transition={{ duration: 0.15 }}
-                onMouseLeave={() => setAppleMenuOpen(false)}
-                className="glass-modal absolute left-0 top-12 w-60 rounded-xl p-2 shadow-2xl"
-              >
-                {appleMenuLinks.map((item) => (
-                  <button
-                    key={item.label}
-                    onClick={() => {
-                      if ("target" in item && item.target) openApp(item.target);
-                      else if (item.href) window.open(item.href, item.external ? "_blank" : "_self");
-                      setAppleMenuOpen(false);
-                    }}
-                    className="flex w-full items-center justify-between rounded-lg px-3 py-2 text-left text-[13px] text-white/85 transition-colors hover:bg-white/10 hover:text-white"
-                  >
-                    {item.label}
-                  </button>
-                ))}
-                <div className="my-1.5 h-px bg-white/10" />
-                <button
-                  onClick={() => {
-                    setAppleMenuOpen(false);
-                    lock();
-                  }}
-                  className="flex w-full items-center gap-2 rounded-lg px-3 py-2 text-left text-[13px] text-white/85 transition-colors hover:bg-white/10 hover:text-white"
+            <AnimatePresence>
+              {appleMenuOpen && (
+                <motion.div
+                  initial={{ opacity: 0, y: -6, scale: 0.98 }}
+                  animate={{ opacity: 1, y: 0, scale: 1 }}
+                  exit={{ opacity: 0, y: -6, scale: 0.98 }}
+                  transition={{ type: "spring", stiffness: 420, damping: 30 }}
+                  style={{ transformOrigin: "top left" }}
+                  onMouseLeave={() => setAppleMenuOpen(false)}
+                  className="glass-modal absolute left-0 top-12 w-60 rounded-xl p-2 shadow-2xl"
                 >
-                  <span className="material-symbols-outlined text-[16px]">lock</span>
-                  Lock Screen
-                </button>
-              </motion.div>
-            )}
+                  {appleMenuLinks.map((item) => (
+                    <button
+                      key={item.label}
+                      onClick={() => {
+                        if ("target" in item && item.target) openApp(item.target);
+                        else if (item.href) window.open(item.href, item.external ? "_blank" : "_self");
+                        setAppleMenuOpen(false);
+                      }}
+                      className="flex w-full items-center justify-between rounded-lg px-3 py-2 text-left text-[13px] text-white/85 transition-colors hover:bg-white/10 hover:text-white"
+                    >
+                      {item.label}
+                    </button>
+                  ))}
+                  <div className="my-1.5 h-px bg-white/10" />
+                  <button
+                    onClick={() => {
+                      setAppleMenuOpen(false);
+                      lock();
+                    }}
+                    className="flex w-full items-center gap-2 rounded-lg px-3 py-2 text-left text-[13px] text-white/85 transition-colors hover:bg-white/10 hover:text-white"
+                  >
+                    <span className="material-symbols-outlined text-[16px]">lock</span>
+                    Lock Screen
+                  </button>
+                </motion.div>
+              )}
+            </AnimatePresence>
           </div>
+          <AnimatePresence mode="wait" initial={false}>
+            <motion.span
+              key={activeApp ?? "desktop"}
+              initial={{ opacity: 0, y: 6, filter: "blur(4px)" }}
+              animate={{ opacity: 1, y: 0, filter: "blur(0px)" }}
+              exit={{ opacity: 0, y: -6, filter: "blur(4px)" }}
+              transition={{ duration: 0.18 }}
+              className="hidden whitespace-nowrap font-semibold text-white xl:inline"
+            >
+              {activeApp ? getAppMeta(activeApp).label : "Desktop"}
+            </motion.span>
+          </AnimatePresence>
           <nav className="hidden items-center gap-4 font-normal text-white/70 md:flex">
             {["File", "Edit", "View", "Go", "Window", "Help"].map((m) => (
               <span key={m} className="cursor-default transition-colors hover:text-white">

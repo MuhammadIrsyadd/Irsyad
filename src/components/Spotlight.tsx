@@ -15,6 +15,7 @@ export default function Spotlight() {
   const lock = useSystemStore((s) => s.lock);
   const toggleSound = useSystemStore((s) => s.toggleSound);
   const [query, setQuery] = useState("");
+  const [selected, setSelected] = useState(0);
 
   useEffect(() => {
     function onKey(e: KeyboardEvent) {
@@ -29,8 +30,12 @@ export default function Spotlight() {
   }, [open, setOpen]);
 
   useEffect(() => {
-    // eslint-disable-next-line react-hooks/set-state-in-effect -- reset transient UI state when the palette closes
-    if (!open) setQuery("");
+    if (!open) {
+      /* eslint-disable react-hooks/set-state-in-effect -- reset transient UI state when the palette closes */
+      setQuery("");
+      setSelected(0);
+      /* eslint-enable react-hooks/set-state-in-effect */
+    }
   }, [open]);
 
   const hits = useMemo<Hit[]>(() => {
@@ -108,7 +113,22 @@ export default function Spotlight() {
               <input
                 autoFocus
                 value={query}
-                onChange={(e) => setQuery(e.target.value)}
+                onChange={(e) => {
+                  setQuery(e.target.value);
+                  setSelected(0);
+                }}
+                onKeyDown={(e) => {
+                  if (e.key === "ArrowDown" || e.key === "ArrowUp") {
+                    e.preventDefault();
+                    const step = e.key === "ArrowDown" ? 1 : -1;
+                    setSelected((i) => (i + step + hits.length) % Math.max(hits.length, 1));
+                  } else if (e.key === "Enter") {
+                    hits[Math.min(selected, hits.length - 1)]?.onSelect();
+                  }
+                }}
+                role="combobox"
+                aria-expanded
+                aria-controls="spotlight-results"
                 placeholder="Cari project, skill, atau app..."
                 className="flex-1 bg-transparent text-[15px] text-white placeholder:text-white/40 focus:outline-none"
               />
@@ -116,23 +136,36 @@ export default function Spotlight() {
                 Esc
               </span>
             </div>
-            <div className="max-h-72 overflow-y-auto p-1.5">
+            <div id="spotlight-results" role="listbox" className="max-h-72 overflow-y-auto p-1.5">
               {hits.length === 0 && (
                 <div className="px-3 py-6 text-center text-[12px] text-white/40">
                   Tidak ada hasil.
                 </div>
               )}
-              {hits.map((h) => (
+              {hits.map((h, i) => (
                 <button
                   key={h.label}
+                  role="option"
+                  aria-selected={i === selected}
                   onClick={h.onSelect}
-                  className="flex w-full items-center gap-3 rounded-xl px-3 py-2 text-left transition-colors hover:bg-white/10"
+                  onMouseEnter={() => setSelected(i)}
+                  className="relative flex w-full items-center gap-3 rounded-xl px-3 py-2 text-left"
                 >
-                  <span className="material-symbols-outlined text-[18px] text-primary">
+                  {i === selected && (
+                    <motion.span
+                      layoutId="spotlight-highlight"
+                      transition={{ type: "spring", stiffness: 520, damping: 38 }}
+                      className="absolute inset-0 rounded-xl border border-[var(--accent-400)]/25 bg-[var(--accent-500)]/15"
+                    />
+                  )}
+                  <span className="material-symbols-outlined relative text-[18px] text-primary">
                     {h.icon}
                   </span>
-                  <span className="flex-1 text-[13px] text-white/90">{h.label}</span>
-                  <span className="text-[11px] text-white/40">{h.hint}</span>
+                  <span className="relative flex-1 text-[13px] text-white/90">{h.label}</span>
+                  <span className="relative text-[11px] text-white/40">
+                    {i === selected ? "↵ " : ""}
+                    {h.hint}
+                  </span>
                 </button>
               ))}
             </div>

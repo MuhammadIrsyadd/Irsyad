@@ -1,5 +1,6 @@
 import type { Metadata, Viewport } from "next";
 import { Geist, JetBrains_Mono, Kanit } from "next/font/google";
+import { ICON_FONT_URL } from "@/lib/icon-font";
 import "./globals.css";
 
 const geistSans = Geist({
@@ -10,13 +11,16 @@ const geistSans = Geist({
 const jetbrainsMono = JetBrains_Mono({
   variable: "--font-jetbrains-mono",
   subsets: ["latin"],
+  // Only used for small UI labels and the Terminal; no need to block first paint.
+  preload: false,
 });
 
-// Display face for the lock screen hero (the "Hi, i'm irsyad" wordmark).
+// Display face for the lock screen hero (the "Hi, i'm irsyad" wordmark) and
+// the desktop clock widget — only the weights actually used are shipped.
 const kanit = Kanit({
   variable: "--font-kanit",
   subsets: ["latin"],
-  weight: ["300", "400", "500", "600", "700", "800", "900"],
+  weight: ["300", "500", "600", "900"],
 });
 
 export const metadata: Metadata = {
@@ -67,11 +71,8 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
         <link rel="manifest" href="/manifest.json" />
         <link rel="preconnect" href="https://fonts.googleapis.com" />
         <link rel="preconnect" href="https://fonts.gstatic.com" crossOrigin="anonymous" />
-        <link
-          rel="stylesheet"
-          href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@20..48,100..700,0..1,-50..200"
-          crossOrigin="anonymous"
-        />
+        {/* Icon font subset to just the glyphs used in src/ (~80KB instead of ~4MB) */}
+        <link rel="stylesheet" href={ICON_FONT_URL} crossOrigin="anonymous" />
       </head>
       <body className="h-full min-h-full overflow-hidden bg-background text-on-surface">
         {children}

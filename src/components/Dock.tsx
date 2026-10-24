@@ -4,15 +4,16 @@ import { useEffect, useRef, useState } from "react";
 import {
   motion,
   Reorder,
+  useAnimate,
   useMotionValue,
   useSpring,
   useTransform,
   type MotionValue,
 } from "framer-motion";
-import { toPng } from "html-to-image";
 import { getAppMeta } from "@/lib/apps";
 import { sound } from "@/lib/sound";
 import { useSystemStore, type AppId } from "@/store/system-store";
+import { preloadApp } from "@/components/apps/OpenApps";
 
 const ICON_BASE = 58;
 const ICON_MAX = 88;
@@ -58,7 +59,10 @@ function DockIcon({
     let cancelled = false;
     const node = document.querySelector<HTMLElement>(`[data-window-id="${id}"]`);
     if (!node) return;
-    toPng(node, { pixelRatio: 0.35, cacheBust: false, skipFonts: true })
+    // html-to-image is only needed for this hover preview, so it is fetched
+    // the first time someone peeks instead of shipping with the dock.
+    import("html-to-image")
+      .then(({ toPng }) => toPng(node, { pixelRatio: 0.35, cacheBust: false, skipFonts: true }))
       .then((url) => {
         if (!cancelled) setPreview(url);
       })
@@ -82,6 +86,20 @@ function DockIcon({
     [ICON_BASE, ICON_MAX, ICON_BASE]
   );
   const width = useSpring(widthSync, { mass: 0.15, stiffness: 220, damping: 16 });
+
+  // macOS launch bounce: the icon hops when its app goes from closed to open.
+  const [bounceScope, animateBounce] = useAnimate<HTMLSpanElement>();
+  const wasOpen = useRef(isOpen);
+  useEffect(() => {
+    if (isOpen && !wasOpen.current && bounceScope.current) {
+      animateBounce(
+        bounceScope.current,
+        { y: [0, -20, 0, -8, 0] },
+        { duration: 0.85, times: [0, 0.3, 0.55, 0.75, 1], ease: "easeOut" }
+      );
+    }
+    wasOpen.current = isOpen;
+  }, [isOpen, animateBounce, bounceScope]);
 
   function handleClick() {
     const w = windows[id];
@@ -131,7 +149,10 @@ function DockIcon({
         ref={ref}
         style={{ width, height: width }}
         onClick={handleClick}
-        onHoverStart={() => setHoveredApp(id)}
+        onHoverStart={() => {
+          setHoveredApp(id);
+          preloadApp(id);
+        }}
         onHoverEnd={() => setHoveredApp(null)}
         title={label}
         whileTap={{ scale: 0.88 }}
@@ -145,7 +166,8 @@ function DockIcon({
           {label}
         </span>
         <span
-          className={`flex h-full w-full items-center justify-center rounded-[16px] bg-gradient-to-b ${gradient} border border-white/25 shadow-[0_6px_18px_rgba(0,0,0,0.45)]`}
+          ref={bounceScope}
+          className={`app-icon-gloss relative flex h-full w-full items-center justify-center rounded-[16px] bg-gradient-to-b ${gradient} border border-white/25 shadow-[0_6px_18px_rgba(0,0,0,0.45)]`}
         >
           <span
             className={`material-symbols-outlined icon-fill ${iconColor}`}

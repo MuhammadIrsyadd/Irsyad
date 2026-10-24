@@ -154,7 +154,7 @@ export default function Avatar() {
           className="relative h-full w-full"
         >
           <motion.img
-            src="/images/avatar.png"
+            src="/images/avatar.webp"
             alt="Avatar 3D karakter developer, memakai kacamata hitam"
             className="h-full w-full object-contain drop-shadow-[0_16px_24px_rgba(0,0,0,0.6)]"
             style={{ scaleY: blink ? 0.96 : 1 }}

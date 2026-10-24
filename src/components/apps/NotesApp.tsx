@@ -50,18 +50,23 @@ export default function NotesApp() {
               <button
                 key={c.id}
                 onClick={() => setActiveId(c.id)}
-                className={`flex flex-col gap-1 rounded-xl px-3 py-2.5 text-left transition-all ${
-                  isSelected
-                    ? isLight
-                      ? "border border-amber-500/40 bg-amber-500/15 shadow-sm"
-                      : "border border-[var(--accent-400)]/30 bg-gradient-to-r from-[var(--accent-500)]/25 to-[var(--accent-500)]/5"
-                    : isLight
-                    ? "border border-transparent hover:bg-black/5"
-                    : "border border-transparent hover:bg-white/10"
+                className={`relative flex flex-col gap-1 rounded-xl border border-transparent px-3 py-2.5 text-left transition-colors ${
+                  isSelected ? "" : isLight ? "hover:bg-black/5" : "hover:bg-white/10"
                 }`}
               >
+                {isSelected && (
+                  <motion.span
+                    layoutId="notes-selection"
+                    transition={{ type: "spring", stiffness: 420, damping: 34 }}
+                    className={`absolute -inset-px rounded-xl border ${
+                      isLight
+                        ? "border-amber-500/40 bg-amber-500/15 shadow-sm"
+                        : "border-[var(--accent-400)]/30 bg-gradient-to-r from-[var(--accent-500)]/25 to-[var(--accent-500)]/5"
+                    }`}
+                  />
+                )}
                 <span
-                  className={`text-[12px] leading-snug ${
+                  className={`relative text-[12px] leading-snug ${
                     isSelected
                       ? isLight
                         ? "font-semibold text-amber-950"
@@ -75,7 +80,7 @@ export default function NotesApp() {
                 </span>
                 {project && (
                   <span
-                    className={`text-[10px] ${
+                    className={`relative text-[10px] ${
                       isSelected && isLight
                         ? "font-medium text-amber-800/80"
                         : isLight

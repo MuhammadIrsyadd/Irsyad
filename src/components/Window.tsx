@@ -185,28 +185,32 @@ export default function Window({
         onDoubleClick={() => toggleMaximizeApp(id)}
         className="relative flex h-[46px] shrink-0 cursor-default items-center justify-between border-b border-white/10 bg-gradient-to-b from-white/10 to-transparent px-4 select-none"
       >
-        <div className="flex items-center gap-2.5">
-          <button
-            aria-label="Close"
-            title="Close"
-            onPointerDown={(e) => e.stopPropagation()}
-            onClick={() => closeApp(id)}
-            className="h-3.5 w-3.5 rounded-full bg-traffic-close shadow-[0_0_6px_rgba(255,95,86,0.6)] transition-transform hover:brightness-110 active:scale-90"
-          />
-          <button
-            aria-label="Minimize"
-            title="Minimize"
-            onPointerDown={(e) => e.stopPropagation()}
-            onClick={() => minimizeApp(id)}
-            className="h-3.5 w-3.5 rounded-full bg-traffic-minimize shadow-[0_0_6px_rgba(255,189,46,0.6)] transition-transform hover:brightness-110 active:scale-90"
-          />
-          <button
-            aria-label="Zoom"
-            title="Zoom"
-            onPointerDown={(e) => e.stopPropagation()}
-            onClick={() => toggleMaximizeApp(id)}
-            className="h-3.5 w-3.5 rounded-full bg-traffic-maximize shadow-[0_0_6px_rgba(39,201,63,0.6)] transition-transform hover:brightness-110 active:scale-90"
-          />
+        <div className="traffic-lights flex items-center gap-2.5">
+          {[
+            { label: "Close", onClick: () => closeApp(id), color: "bg-traffic-close shadow-[0_0_6px_rgba(255,95,86,0.6)]", glyph: "M4 4l6 6M10 4l-6 6" },
+            { label: "Minimize", onClick: () => minimizeApp(id), color: "bg-traffic-minimize shadow-[0_0_6px_rgba(255,189,46,0.6)]", glyph: "M3.5 7h7" },
+            {
+              label: "Zoom",
+              onClick: () => toggleMaximizeApp(id),
+              color: "bg-traffic-maximize shadow-[0_0_6px_rgba(39,201,63,0.6)]",
+              glyph: w.isMaximized ? "M7.5 2.5v4h4M6.5 11.5v-4h-4" : "M3 7h8M7 3v8",
+            },
+          ].map((b) => (
+            <button
+              key={b.label}
+              aria-label={b.label}
+              title={b.label}
+              onPointerDown={(e) => e.stopPropagation()}
+              onClick={b.onClick}
+              className={`flex h-3.5 w-3.5 items-center justify-center rounded-full transition-transform hover:brightness-110 active:scale-90 ${b.color} ${
+                isFocused ? "" : "traffic-dim"
+              }`}
+            >
+              <svg viewBox="0 0 14 14" className="traffic-glyph h-2.5 w-2.5 text-black/60" aria-hidden>
+                <path d={b.glyph} stroke="currentColor" strokeWidth="1.6" strokeLinecap="round" fill="none" />
+              </svg>
+            </button>
+          ))}
         </div>
 
         <div className="absolute left-1/2 flex -translate-x-1/2 items-center gap-2 text-white/90">

@@ -1,10 +1,13 @@
 "use client";
 
-import { useEffect, useRef, useState, type ReactNode } from "react";
+import { useEffect, useRef, type ReactNode } from "react";
 
 // Mouse-following "magnetic" hover: while the cursor is within `padding`
 // px of the element's edge, the element drifts toward it by
 // (distance / magnetStrength); it eases back to rest when the cursor leaves.
+// The transform is written straight to the DOM once per animation frame —
+// no React state — so a page full of magnets doesn't re-render on every
+// mouse move.
 export default function Magnet({
   children,
   padding = 100,
@@ -21,43 +24,54 @@ export default function Magnet({
   className?: string;
 }) {
   const ref = useRef<HTMLDivElement>(null);
-  const [active, setActive] = useState(false);
-  const [pos, setPos] = useState({ x: 0, y: 0 });
+  const innerRef = useRef<HTMLDivElement>(null);
 
   useEffect(() => {
-    function onMove(e: MouseEvent) {
+    if (window.matchMedia("(pointer: coarse), (prefers-reduced-motion: reduce)").matches) return;
+
+    let frame = 0;
+    let active = false;
+    let lastX = 0;
+    let lastY = 0;
+
+    function apply() {
+      frame = 0;
       const el = ref.current;
-      if (!el) return;
+      const inner = innerRef.current;
+      if (!el || !inner) return;
       const { left, top, width, height } = el.getBoundingClientRect();
       const cx = left + width / 2;
       const cy = top + height / 2;
-      const dx = Math.abs(cx - e.clientX);
-      const dy = Math.abs(cy - e.clientY);
+      const inside =
+        Math.abs(cx - lastX) < width / 2 + padding && Math.abs(cy - lastY) < height / 2 + padding;
 
-      if (dx < width / 2 + padding && dy < height / 2 + padding) {
-        setActive(true);
-        setPos({
-          x: (e.clientX - cx) / magnetStrength,
-          y: (e.clientY - cy) / magnetStrength,
-        });
-      } else {
-        setActive(false);
-        setPos({ x: 0, y: 0 });
+      if (inside) {
+        active = true;
+        inner.style.transition = activeTransition;
+        inner.style.transform = `translate3d(${(lastX - cx) / magnetStrength}px, ${(lastY - cy) / magnetStrength}px, 0)`;
+      } else if (active) {
+        active = false;
+        inner.style.transition = inactiveTransition;
+        inner.style.transform = "translate3d(0, 0, 0)";
       }
     }
-    window.addEventListener("mousemove", onMove);
-    return () => window.removeEventListener("mousemove", onMove);
-  }, [padding, magnetStrength]);
+
+    function onMove(e: MouseEvent) {
+      lastX = e.clientX;
+      lastY = e.clientY;
+      if (!frame) frame = requestAnimationFrame(apply);
+    }
+
+    window.addEventListener("mousemove", onMove, { passive: true });
+    return () => {
+      window.removeEventListener("mousemove", onMove);
+      cancelAnimationFrame(frame);
+    };
+  }, [padding, magnetStrength, activeTransition, inactiveTransition]);
 
   return (
     <div ref={ref} className={className} style={{ position: "relative", display: "inline-block" }}>
-      <div
-        style={{
-          transform: `translate3d(${pos.x}px, ${pos.y}px, 0)`,
-          transition: active ? activeTransition : inactiveTransition,
-          willChange: "transform",
-        }}
-      >
+      <div ref={innerRef} style={{ transform: "translate3d(0, 0, 0)" }}>
         {children}
       </div>
     </div>

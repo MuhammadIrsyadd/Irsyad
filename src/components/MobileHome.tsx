@@ -1,17 +1,11 @@
 "use client";
 
 import { useEffect, useState } from "react";
-import { AnimatePresence } from "framer-motion";
+import { motion } from "framer-motion";
 import { appRegistry } from "@/lib/apps";
 import { useSystemStore } from "@/store/system-store";
 import { profile } from "@/lib/content";
-import FinderApp from "@/components/apps/FinderApp";
-import TerminalApp from "@/components/apps/TerminalApp";
-import SafariApp from "@/components/apps/SafariApp";
-import MailApp from "@/components/apps/MailApp";
-import NotesApp from "@/components/apps/NotesApp";
-import PhotosApp from "@/components/apps/PhotosApp";
-import SettingsApp from "@/components/apps/SettingsApp";
+import OpenApps, { preloadApp } from "@/components/apps/OpenApps";
 import Avatar from "@/components/Avatar";
 import IdleScreensaver from "@/components/IdleScreensaver";
 import HomeLogo from "@/components/HomeLogo";
@@ -29,7 +23,6 @@ function useClock() {
 
 export default function MobileHome() {
   const now = useClock();
-  const windows = useSystemStore((s) => s.windows);
   const openApp = useSystemStore((s) => s.openApp);
   const lock = useSystemStore((s) => s.lock);
 
@@ -55,28 +48,36 @@ export default function MobileHome() {
       <div className="flex h-full flex-col items-center justify-center gap-8 px-8 pt-11">
         <div className="flex flex-col items-center gap-2 text-center">
           <div className="h-24 w-24 overflow-hidden rounded-2xl border border-white/20 shadow-2xl">
-            <img src="/images/avatar.png" alt="" className="h-full w-full object-cover object-top" />
+            <img src="/images/avatar.webp" alt="" className="h-full w-full object-cover object-top" />
           </div>
           <span className="text-xl font-semibold text-white">{profile.name}</span>
           <span className="text-[14px] text-[var(--accent-300)]">{profile.role}</span>
         </div>
 
         <div className="grid w-full max-w-xs grid-cols-3 gap-6">
-          {appRegistry.map((app) => (
-            <button
+          {appRegistry.map((app, i) => (
+            <motion.button
               key={app.id}
+              initial={{ opacity: 0, y: 18, scale: 0.85 }}
+              animate={{ opacity: 1, y: 0, scale: 1 }}
+              transition={{ type: "spring", stiffness: 320, damping: 22, delay: 0.1 + i * 0.045 }}
+              whileTap={{ scale: 0.9 }}
+              onPointerDown={() => preloadApp(app.id)}
               onClick={() => openApp(app.id)}
-              className="flex flex-col items-center gap-2 active:scale-95"
+              className="flex flex-col items-center gap-2"
             >
               <span
-                className={`flex h-16 w-16 items-center justify-center rounded-2xl bg-gradient-to-b ${app.gradient} border border-white/25 shadow-[0_6px_18px_rgba(0,0,0,0.45)]`}
+                className={`app-icon-gloss relative flex h-16 w-16 items-center justify-center overflow-hidden rounded-2xl bg-gradient-to-b ${app.gradient} border border-white/25 shadow-[0_6px_18px_rgba(0,0,0,0.45)]`}
               >
-                <span className={`material-symbols-outlined icon-fill text-3xl ${app.iconColor}`}>
+                <span
+                  className={`material-symbols-outlined icon-fill relative ${app.iconColor}`}
+                  style={{ fontSize: "32px" }}
+                >
                   {app.icon}
                 </span>
               </span>
               <span className="text-[13px] text-white/85">{app.label}</span>
-            </button>
+            </motion.button>
           ))}
         </div>
 
@@ -89,15 +90,7 @@ export default function MobileHome() {
       <Avatar />
       <IdleScreensaver />
 
-      <AnimatePresence>
-        {windows.finder.isOpen && <FinderApp key="finder" />}
-        {windows.terminal.isOpen && <TerminalApp key="terminal" />}
-        {windows.safari.isOpen && <SafariApp key="safari" />}
-        {windows.mail.isOpen && <MailApp key="mail" />}
-        {windows.notes.isOpen && <NotesApp key="notes" />}
-        {windows.photos.isOpen && <PhotosApp key="photos" />}
-        {windows.settings.isOpen && <SettingsApp key="settings" />}
-      </AnimatePresence>
+      <OpenApps />
     </div>
   );
 }

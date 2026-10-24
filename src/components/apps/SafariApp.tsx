@@ -169,20 +169,29 @@ export default function SafariApp() {
               <button
                 key={p.id}
                 onClick={() => select(p.id)}
-                className={`flex shrink-0 items-center gap-2 rounded-lg border px-3 py-1.5 font-mono-ui text-[11px] transition-all ${
+                className={`relative flex shrink-0 items-center gap-2 rounded-lg border border-transparent px-3 py-1.5 font-mono-ui text-[11px] transition-colors ${
                   isActive
                     ? isLight
-                      ? "border-black/15 bg-white text-neutral-900 shadow-sm font-semibold"
-                      : "border-white/15 bg-white/10 text-white font-medium"
+                      ? "text-neutral-900 font-semibold"
+                      : "text-white font-medium"
                     : isLight
-                    ? "border-transparent text-neutral-600 hover:bg-black/5 hover:text-neutral-900"
-                    : "border-transparent text-white/50 hover:bg-white/5 hover:text-white/80"
+                    ? "text-neutral-600 hover:bg-black/5 hover:text-neutral-900"
+                    : "text-white/50 hover:bg-white/5 hover:text-white/80"
                 }`}
               >
-                <span className={`h-1.5 w-1.5 rounded-full ${a.dot}`} />
-                <span className="max-w-[130px] truncate">{p.name}</span>
+                {isActive && (
+                  <motion.span
+                    layoutId="safari-active-tab"
+                    transition={{ type: "spring", stiffness: 420, damping: 34 }}
+                    className={`absolute -inset-px rounded-lg border ${
+                      isLight ? "border-black/15 bg-white shadow-sm" : "border-white/15 bg-white/10"
+                    }`}
+                  />
+                )}
+                <span className={`relative h-1.5 w-1.5 rounded-full ${a.dot}`} />
+                <span className="relative max-w-[130px] truncate">{p.name}</span>
                 {p.url && (
-                  <span className="h-1 w-1 rounded-full bg-emerald-400" title="Live Deploy" />
+                  <span className="relative h-1 w-1 rounded-full bg-emerald-400" title="Live Deploy" />
                 )}
               </button>
             );

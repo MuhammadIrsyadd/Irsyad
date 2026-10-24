@@ -344,7 +344,7 @@ export const projects: Project[] = [
     tech: ["Next.js", "React", "Tailwind CSS", "Framer Motion", "Lucide Icons"],
     url: "https://tarot.muhirsyad.my.id",
     accent: "violet",
-    image: "/images/projects/tarot.png",
+    image: "/images/projects/tarot.webp",
     category: "Interactive Web",
   },
   {
@@ -356,7 +356,7 @@ export const projects: Project[] = [
     tech: ["Next.js", "TypeScript", "Tailwind CSS", "PWA", "Web Vitals"],
     url: "https://gigizi.muhirsyad.my.id",
     accent: "emerald",
-    image: "/images/projects/gigizi.png",
+    image: "/images/projects/gigizi.webp",
     category: "Health & Utility",
   },
   {
@@ -368,7 +368,7 @@ export const projects: Project[] = [
     tech: ["React", "TypeScript", "Tailwind CSS", "Web Audio API", "LocalStorage"],
     url: "https://2048.muhirsyad.my.id",
     accent: "cyan",
-    image: "/images/projects/2048.png",
+    image: "/images/projects/2048.webp",
     category: "Web Arcade Game",
   },
   {
@@ -380,7 +380,7 @@ export const projects: Project[] = [
     tech: ["React", "HTML5 Canvas 2D", "Web Audio API", "Game Physics"],
     url: "https://brickbreaker.muhirsyad.my.id",
     accent: "rose",
-    image: "/images/projects/brickbreaker.png",
+    image: "/images/projects/brickbreaker.webp",
     category: "Web Arcade Game",
   },
   {
@@ -392,7 +392,7 @@ export const projects: Project[] = [
     tech: ["Vanilla JavaScript", "HTML5 Canvas", "Physics Engine", "CSS Animations"],
     url: "https://penalty.muhirsyad.my.id",
     accent: "emerald",
-    image: "/images/projects/penalty.png",
+    image: "/images/projects/penalty.webp",
     category: "Mini-Game",
   },
   {
@@ -404,7 +404,7 @@ export const projects: Project[] = [
     tech: ["Vite", "React", "TypeScript", "Tailwind CSS", "Tabler Icons"],
     url: "https://skyrise.muhirsyad.my.id",
     accent: "amber",
-    image: "/images/projects/skyrise.png",
+    image: "/images/projects/skyrise.webp",
     category: "Web Arcade Game",
   },
   {
@@ -417,7 +417,7 @@ export const projects: Project[] = [
     url: "https://muhirsyad.my.id",
     repo: "https://github.com/MuhammadIrsyadd/Irsyad",
     accent: "amber",
-    image: "/images/projects/portfolio.png",
+    image: "/images/projects/portfolio.webp",
     category: "Portfolio & OS Simulator",
   },
   {

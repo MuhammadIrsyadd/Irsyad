@@ -598,3 +598,142 @@ html.light .desktop-icon-label {
   backdrop-filter: blur(12px) !important;
   box-shadow: 0 1px 4px rgba(0, 0, 0, 0.12) !important;
 }
+
+/* ========================================================
+   POLISH LAYER — widgets, icon gloss, focus, micro-motion
+   ======================================================== */
+
+/* Keyboard focus that matches the accent instead of the browser default */
+:where(button, a, input, textarea, [role="button"]):focus-visible {
+  outline: 2px solid var(--accent-400);
+  outline-offset: 2px;
+  border-radius: 10px;
+}
+
+/* Desktop widgets: lighter blur than windows — they're always on screen */
+.glass-widget {
+  background: color-mix(in srgb, var(--color-glass-fill-dark) 70%, transparent);
+  backdrop-filter: blur(16px) saturate(170%);
+  -webkit-backdrop-filter: blur(16px) saturate(170%);
+  border: 1px solid rgba(255, 255, 255, 0.14);
+  box-shadow:
+    inset 0 1px 0 0 rgba(255, 255, 255, 0.14),
+    0 18px 40px -12px rgba(0, 0, 0, 0.55);
+}
+
+.widget-time {
+  background: linear-gradient(180deg, #f4f7fb 0%, #9fb0bf 100%);
+  -webkit-background-clip: text;
+  background-clip: text;
+  -webkit-text-fill-color: transparent;
+}
+
+.widget-sweep {
+  transform-origin: left center;
+  animation: widget-fill 60s linear both;
+}
+
+.widget-progress {
+  transform-origin: left center;
+  animation: widget-fill linear both;
+}
+
+@keyframes widget-fill {
+  from {
+    transform: scaleX(0);
+  }
+  to {
+    transform: scaleX(1);
+  }
+}
+
+:root[data-theme="light"] .glass-widget,
+html.light .glass-widget {
+  background: rgba(255, 255, 255, 0.62);
+  border-color: rgba(255, 255, 255, 0.85);
+  box-shadow:
+    inset 0 1px 0 0 rgba(255, 255, 255, 0.9),
+    0 16px 36px -12px rgba(0, 0, 0, 0.18);
+}
+
+:root[data-theme="light"] .widget-time,
+html.light .widget-time {
+  background-image: linear-gradient(180deg, #1e2230 0%, #5a6478 100%);
+}
+
+:root[data-theme="light"] .glass-widget .text-white\/60,
+html.light .glass-widget .text-white\/60 {
+  color: rgba(26, 29, 36, 0.6);
+}
+
+:root[data-theme="light"] .glass-widget .bg-white\/10,
+html.light .glass-widget .bg-white\/10 {
+  background-color: rgba(0, 0, 0, 0.08);
+}
+
+/* Glossy specular sheen on app icons (dock + mobile home) */
+.app-icon-gloss::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  border-radius: inherit;
+  background: linear-gradient(
+    180deg,
+    rgba(255, 255, 255, 0.38) 0%,
+    rgba(255, 255, 255, 0.08) 42%,
+    transparent 52%,
+    rgba(0, 0, 0, 0.12) 100%
+  );
+  pointer-events: none;
+}
+
+/* Traffic-light glyphs only appear while hovering the group, like macOS */
+.traffic-lights .traffic-glyph {
+  opacity: 0;
+  transition: opacity 0.12s ease;
+}
+.traffic-lights:hover .traffic-glyph {
+  opacity: 1;
+}
+/* Background windows show neutral lights until hovered, like macOS */
+.traffic-lights:not(:hover) .traffic-dim {
+  background-color: rgba(255, 255, 255, 0.22);
+  box-shadow: none;
+}
+:root[data-theme="light"] .traffic-lights:not(:hover) .traffic-dim,
+html.light .traffic-lights:not(:hover) .traffic-dim {
+  background-color: rgba(0, 0, 0, 0.14);
+}
+
+/* Login wordmark: a slow specular sweep across the silver letters */
+.hero-heading-shine {
+  background:
+    linear-gradient(
+      100deg,
+      transparent 35%,
+      rgba(255, 255, 255, 0.55) 50%,
+      transparent 65%
+    ),
+    linear-gradient(180deg, #646973 0%, #bbccd7 100%);
+  background-size: 250% 100%, 100% 100%;
+  background-repeat: no-repeat;
+  -webkit-background-clip: text;
+  background-clip: text;
+  -webkit-text-fill-color: transparent;
+  animation: hero-shine 7s ease-in-out 1.2s infinite;
+}
+
+@keyframes hero-shine {
+  0% {
+    background-position: 130% 0, 0 0;
+  }
+  45%,
+  100% {
+    background-position: -30% 0, 0 0;
+  }
+}
+
+:root[data-theme="light"] .glass-widget .widget-day,
+html.light .glass-widget .widget-day {
+  color: var(--accent-600);
+}

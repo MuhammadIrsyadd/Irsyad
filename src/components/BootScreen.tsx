@@ -83,7 +83,7 @@ export default function BootScreen() {
         >
           {/* eslint-disable-next-line @next/next/no-img-element */}
           <img
-            src="/images/logo-white.png"
+            src="/images/logo-white.webp"
             alt="Muh Irsyad"
             draggable={false}
             className="h-14 w-14 sm:h-16 sm:w-16 object-contain drop-shadow-[0_0_25px_rgba(255,255,255,0.4)]"

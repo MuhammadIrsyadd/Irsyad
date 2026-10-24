@@ -32,6 +32,7 @@ export default function Wallpaper() {
           <motion.img
             key={wallpaper.id}
             src={wallpaper.src}
+            decoding="async"
             alt=""
             onError={() => setPhotoFailed(true)}
             initial={{ opacity: 0 }}
