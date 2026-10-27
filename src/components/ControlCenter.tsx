@@ -4,6 +4,8 @@ import { motion } from "framer-motion";
 import { useSystemStore, type AccentColor } from "@/store/system-store";
 import { useWallpapers } from "@/components/WallpaperProvider";
 import { sound } from "@/lib/sound";
+import SuryaMajapahit from "@/components/icons/SuryaMajapahit";
+import { useOnline } from "@/hooks/use-device-status";
 
 const accents: { id: AccentColor; label: string; colorClass: string }[] = [
   { id: "amber", label: "Amber", colorClass: "bg-amber-400" },
@@ -12,7 +14,8 @@ const accents: { id: AccentColor; label: string; colorClass: string }[] = [
   { id: "coral", label: "Coral", colorClass: "bg-rose-400" },
 ];
 
-export default function ControlCenter({ onClose }: { onClose: () => void }) {
+export default function ControlCenter() {
+  const online = useOnline();
   const accent = useSystemStore((s) => s.accent);
   const setAccent = useSystemStore((s) => s.setAccent);
   const soundEnabled = useSystemStore((s) => s.soundEnabled);
@@ -45,12 +48,12 @@ export default function ControlCenter({ onClose }: { onClose: () => void }) {
           {/* Wifi Card */}
           <div className="flex flex-col justify-between rounded-xl border border-white/10 bg-white/10 p-3">
             <div className="flex items-center justify-between">
-              <span className="material-symbols-outlined text-xl text-cyan-400">wifi</span>
-              <span className="h-2 w-2 rounded-full bg-emerald-400 shadow-[0_0_8px_rgba(52,211,153,0.8)]" />
+              <span className="material-symbols-outlined text-xl text-cyan-400">{online ? "wifi" : "wifi_off"}</span>
+              <span className={`h-2 w-2 rounded-full ${online ? "bg-emerald-400" : "bg-white/30"}`} />
             </div>
             <div className="mt-2 flex flex-col">
               <span className="text-[12px] font-semibold text-white">Wi-Fi</span>
-              <span className="text-[10px] text-white/60">Irsyad-5G (Online)</span>
+              <span className="text-[10px] text-white/60">{online ? "Terhubung" : "Offline"}</span>
             </div>
           </div>
 
@@ -71,12 +74,8 @@ export default function ControlCenter({ onClose }: { onClose: () => void }) {
               >
                 {soundEnabled ? "volume_up" : "volume_off"}
               </span>
-              <span
-                className={`text-[9px] font-mono-ui font-semibold uppercase ${
-                  soundEnabled ? "text-[var(--accent-300)]" : "text-white/40"
-                }`}
-              >
-                {soundEnabled ? "ON" : "OFF"}
+              <span className={`text-[10px] font-medium ${soundEnabled ? "text-[var(--accent-300)]" : "text-white/40"}`}>
+                {soundEnabled ? "Aktif" : "Mati"}
               </span>
             </div>
             <div className="mt-2 flex flex-col">
@@ -91,9 +90,7 @@ export default function ControlCenter({ onClose }: { onClose: () => void }) {
         {/* Display & Accent Section */}
         <div className="flex flex-col gap-2 rounded-xl border border-white/10 bg-white/5 p-3">
           <div className="flex items-center justify-between">
-            <span className="text-[11px] font-semibold uppercase tracking-wider text-white/50">
-              Tema & Aksen
-            </span>
+            <span className="text-[12px] font-semibold text-white/60">Tema & aksen</span>
             <button
               onClick={toggleTheme}
               className="flex items-center gap-1 rounded-lg border border-white/10 bg-white/10 px-2 py-0.5 text-[11px] text-white/80 hover:bg-white/20"
@@ -128,9 +125,7 @@ export default function ControlCenter({ onClose }: { onClose: () => void }) {
 
         {/* Wallpaper Picker */}
         <div className="flex flex-col gap-2 rounded-xl border border-white/10 bg-white/5 p-3">
-          <span className="text-[11px] font-semibold uppercase tracking-wider text-white/50">
-            Wallpaper Desktop
-          </span>
+          <span className="text-[12px] font-semibold text-white/60">Wallpaper</span>
           <div className="grid grid-cols-4 gap-2">
             {wallpapers.map((w) => {
               const isActive = wallpaperId === w.id;
@@ -151,13 +146,9 @@ export default function ControlCenter({ onClose }: { onClose: () => void }) {
           </div>
         </div>
 
-        {/* System info badge */}
-        <div className="flex items-center justify-between rounded-xl border border-white/10 bg-black/30 px-3 py-2 text-[11px] text-white/60">
-          <span className="flex items-center gap-1.5">
-            <span className="material-symbols-outlined text-[14px] text-amber-400">verified</span>
-            Portfolio OS v1.2
-          </span>
-          <span className="font-mono-ui text-[10px] text-white/40">Liquid Glass</span>
+        <div className="flex items-center gap-2 px-1 text-[11px] text-white/50">
+          <SuryaMajapahit className="h-4 w-4" color="#f2a94e" />
+          Portfolio OS
         </div>
       </div>
     </motion.div>

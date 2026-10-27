@@ -5,36 +5,27 @@ import { AnimatePresence, motion } from "framer-motion";
 import { useSystemStore } from "@/store/system-store";
 import { socials } from "@/lib/content";
 import { brandIcon } from "@/components/BrandIcon";
+import AppIcon, { type IconId } from "@/components/icons/AppIcon";
 
 function DesktopIcon({
-  icon,
-  iconClass,
+  iconId,
   label,
-  badge,
   onClick,
 }: {
-  icon: string;
-  iconClass: string;
+  iconId: IconId;
   label: string;
-  badge?: string;
   onClick: () => void;
 }) {
   return (
     <button
       onClick={onClick}
-      className="group flex w-24 flex-col items-center gap-1.5 rounded-xl p-2 transition-all hover:bg-white/10 active:scale-95"
+      className="group flex w-24 flex-col items-center gap-1.5 rounded-xl p-2 transition-colors hover:bg-white/[0.1] active:scale-95"
     >
-      <div
-        className={`relative flex h-16 w-16 items-center justify-center rounded-xl border shadow-2xl transition-transform group-hover:scale-105 ${iconClass}`}
-      >
-        {badge && (
-          <span className="absolute -top-1.5 left-1 rounded border border-amber-500/30 bg-amber-950/60 px-1 font-mono-ui text-[9px] font-bold text-amber-400">
-            {badge}
-          </span>
-        )}
-        <span className="material-symbols-outlined icon-fill text-3xl">{icon}</span>
-      </div>
-      <span className="rounded px-1.5 py-0.5 text-center text-[12px] tracking-tight text-white/90 drop-shadow-md group-hover:bg-[var(--accent-500)] group-hover:text-black">
+      <AppIcon
+        id={iconId}
+        className="h-16 w-16 drop-shadow-[0_8px_14px_rgba(0,0,0,0.45)] transition-transform group-hover:-translate-y-0.5"
+      />
+      <span className="desktop-icon-label rounded px-1.5 py-0.5 text-center text-[12px] tracking-tight text-white/90 drop-shadow-md group-hover:bg-[var(--accent-500)] group-hover:text-black">
         {label}
       </span>
     </button>
@@ -49,21 +40,17 @@ export default function DesktopIcons() {
     <>
       <div className="pointer-events-auto fixed left-4 top-16 z-10 hidden flex-col items-start gap-3 xl:flex">
         <DesktopIcon
-          icon="description"
-          iconClass="bg-black/40 border-white/15 text-amber-400"
+          iconId="resume"
           label="Resume.pdf"
-          badge="CV"
           onClick={() => window.open("/resume.pdf", "_blank")}
         />
         <DesktopIcon
-          icon="folder"
-          iconClass="bg-amber-500/20 border-amber-400/30 text-amber-400"
-          label="Projects/"
+          iconId="folder"
+          label="Projects"
           onClick={() => openApp("safari")}
         />
         <DesktopIcon
-          icon="connect_without_contact"
-          iconClass="bg-[var(--accent-500)]/20 border-[var(--accent-400)]/30 text-[var(--accent-400)]"
+          iconId="contact"
           label="Connect"
           onClick={() => setSocialsOpen(true)}
         />
@@ -112,7 +99,7 @@ export default function DesktopIcons() {
                       rel={filled ? "noreferrer" : undefined}
                       aria-disabled={!filled}
                       className={`flex items-center gap-3 rounded-xl border border-white/10 bg-white/5 p-3 transition-colors ${
-                        filled ? "hover:border-[var(--accent-400)]/40 hover:bg-white/10" : "opacity-50"
+                        filled ? "hover:border-[var(--accent-400)]/40 hover:bg-white/[0.1]" : "opacity-50"
                       }`}
                       onClick={(e) => {
                         if (!filled) e.preventDefault();

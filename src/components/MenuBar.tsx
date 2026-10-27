@@ -6,6 +6,8 @@ import { appOrder, useSystemStore } from "@/store/system-store";
 import { getAppMeta } from "@/lib/apps";
 import { profile } from "@/lib/content";
 import ControlCenter from "@/components/ControlCenter";
+import MenuBarMenus from "@/components/MenuBarMenus";
+import { batteryIcon, useBattery, useOnline } from "@/hooks/use-device-status";
 
 const appleMenuLinks = [
   { label: "About This Portfolio", target: "settings" as const },
@@ -34,6 +36,8 @@ export default function MenuBar() {
   const theme = useSystemStore((s) => s.theme);
   const toggleTheme = useSystemStore((s) => s.toggleTheme);
   const lock = useSystemStore((s) => s.lock);
+  const online = useOnline();
+  const battery = useBattery();
   // Name of the frontmost window, shown bold next to the logo like macOS.
   const activeApp = useSystemStore((s) =>
     appOrder.find(
@@ -66,7 +70,7 @@ export default function MenuBar() {
                 setAppleMenuOpen((v) => !v);
                 setControlCenterOpen(false);
               }}
-              className="flex items-center gap-2 rounded px-2 py-1 font-semibold text-white transition-colors hover:bg-white/10"
+              className="flex items-center gap-2 rounded px-2 py-1 font-semibold text-white transition-colors hover:bg-white/[0.1]"
             >
               <img
                 src="/images/face.webp"
@@ -94,7 +98,7 @@ export default function MenuBar() {
                         else if (item.href) window.open(item.href, item.external ? "_blank" : "_self");
                         setAppleMenuOpen(false);
                       }}
-                      className="flex w-full items-center justify-between rounded-lg px-3 py-2 text-left text-[13px] text-white/85 transition-colors hover:bg-white/10 hover:text-white"
+                      className="flex w-full items-center justify-between rounded-lg px-3 py-2 text-left text-[13px] text-white/85 transition-colors hover:bg-white/[0.1] hover:text-white"
                     >
                       {item.label}
                     </button>
@@ -105,7 +109,7 @@ export default function MenuBar() {
                       setAppleMenuOpen(false);
                       lock();
                     }}
-                    className="flex w-full items-center gap-2 rounded-lg px-3 py-2 text-left text-[13px] text-white/85 transition-colors hover:bg-white/10 hover:text-white"
+                    className="flex w-full items-center gap-2 rounded-lg px-3 py-2 text-left text-[13px] text-white/85 transition-colors hover:bg-white/[0.1] hover:text-white"
                   >
                     <span className="material-symbols-outlined text-[16px]">lock</span>
                     Lock Screen
@@ -126,13 +130,7 @@ export default function MenuBar() {
               {activeApp ? getAppMeta(activeApp).label : "Desktop"}
             </motion.span>
           </AnimatePresence>
-          <nav className="hidden items-center gap-4 font-normal text-white/70 md:flex">
-            {["File", "Edit", "View", "Go", "Window", "Help"].map((m) => (
-              <span key={m} className="cursor-default transition-colors hover:text-white">
-                {m}
-              </span>
-            ))}
-          </nav>
+          <MenuBarMenus />
         </div>
 
         <div className="relative flex items-center gap-2.5 sm:gap-3.5">
@@ -183,16 +181,29 @@ export default function MenuBar() {
             <span className="material-symbols-outlined text-[17px]">instant_mix</span>
           </button>
 
-          <span className="material-symbols-outlined hidden text-[18px] text-white/70 sm:inline">
-            wifi
+          <span
+            className="material-symbols-outlined hidden text-[18px] text-white/70 sm:inline"
+            title={online ? "Terhubung ke internet" : "Offline"}
+          >
+            {online ? "wifi" : "wifi_off"}
           </span>
 
-          <div className="hidden items-center gap-1.5 rounded-full border border-white/10 bg-white/10 px-2.5 py-1 sm:flex">
-            <span className="material-symbols-outlined icon-fill text-[17px] text-emerald-400">
-              battery_charging_80
-            </span>
-            <span className="font-medium text-white/90">98%</span>
-          </div>
+          {/* real battery where the browser exposes it; nothing fake otherwise */}
+          {battery && (
+            <div
+              className="hidden items-center gap-1 sm:flex"
+              title={battery.charging ? "Sedang mengisi daya" : "Baterai"}
+            >
+              <span
+                className={`material-symbols-outlined icon-fill text-[18px] ${
+                  battery.charging ? "text-emerald-400" : battery.level < 0.2 ? "text-red-400" : "text-white/80"
+                }`}
+              >
+                {batteryIcon(battery)}
+              </span>
+              <span className="font-medium tabular-nums text-white/90">{Math.round(battery.level * 100)}%</span>
+            </div>
+          )}
 
           <span className="whitespace-nowrap font-medium tracking-wide text-white/90">
             {dateLabel}
@@ -210,7 +221,7 @@ export default function MenuBar() {
           {/* Control Center Modal */}
           <AnimatePresence>
             {controlCenterOpen && (
-              <ControlCenter onClose={() => setControlCenterOpen(false)} />
+              <ControlCenter />
             )}
           </AnimatePresence>
         </div>

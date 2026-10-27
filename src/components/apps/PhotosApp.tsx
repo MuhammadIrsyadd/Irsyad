@@ -14,7 +14,6 @@ export default function PhotosApp() {
     <AppFrame
       id="photos"
       title="Photos"
-      icon={<span className="material-symbols-outlined text-[15px] text-rose-300">photo_library</span>}
       minWidth={480}
     >
       <div className="relative h-full overflow-y-auto p-4 sm:p-6">

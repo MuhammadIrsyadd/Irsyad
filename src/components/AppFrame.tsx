@@ -9,7 +9,6 @@ import type { AppId } from "@/store/system-store";
 export default function AppFrame({
   id,
   title,
-  icon,
   children,
   headerExtra,
   minWidth,
@@ -17,7 +16,6 @@ export default function AppFrame({
 }: {
   id: AppId;
   title: string;
-  icon?: ReactNode;
   children: ReactNode;
   headerExtra?: ReactNode;
   minWidth?: number;
@@ -27,7 +25,7 @@ export default function AppFrame({
 
   if (isMobile) {
     return (
-      <MobileAppSheet id={id} title={title} icon={icon}>
+      <MobileAppSheet id={id} title={title}>
         {children}
       </MobileAppSheet>
     );
@@ -37,7 +35,7 @@ export default function AppFrame({
     <Window
       id={id}
       title={title}
-      icon={icon}
+     
       headerExtra={headerExtra}
       minWidth={minWidth}
       minHeight={minHeight}

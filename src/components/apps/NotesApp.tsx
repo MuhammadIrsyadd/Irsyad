@@ -4,100 +4,57 @@ import { useState } from "react";
 import { AnimatePresence, motion } from "framer-motion";
 import AppFrame from "@/components/AppFrame";
 import { caseStudies, projects } from "@/lib/content";
-import { useSystemStore } from "@/store/system-store";
+
+// Styled after Apple Notes: a note list with previews on the left and a
+// plain page on the right — headings and paragraphs, tags as #hashtags,
+// no cards.
+
+const toHashtag = (t: string) => `#${t.toLowerCase().replace(/[^a-z0-9]+/g, "")}`;
 
 export default function NotesApp() {
   const [activeId, setActiveId] = useState<string | null>(caseStudies[0]?.id ?? null);
   const active = caseStudies.find((c) => c.id === activeId) ?? null;
-  const theme = useSystemStore((s) => s.theme);
-  const isLight = theme === "light";
+  const activeProject = active ? projects.find((p) => p.id === active.projectId) : undefined;
 
   return (
-    <AppFrame
-      id="notes"
-      title="Notes — Case Studies"
-      icon={
-        <span
-          className={`material-symbols-outlined text-[15px] ${
-            isLight ? "text-amber-600" : "text-amber-300"
-          }`}
-        >
-          sticky_note_2
-        </span>
-      }
-      minWidth={480}
-    >
-      <div className="grid h-full grid-cols-1 md:grid-cols-[220px_1fr]">
-        {/* Note list */}
-        <aside
-          className={`flex flex-col gap-1 overflow-y-auto border-r p-3 transition-colors ${
-            isLight
-              ? "border-black/10 bg-black/[0.03]"
-              : "border-white/10 bg-black/20"
-          }`}
-        >
-          <span
-            className={`mb-1 px-2 font-mono-ui text-[10px] font-semibold uppercase tracking-wider ${
-              isLight ? "text-neutral-500" : "text-white/40"
-            }`}
-          >
-            Semua Catatan
-          </span>
-          {caseStudies.map((c) => {
-            const project = projects.find((p) => p.id === c.projectId);
-            const isSelected = activeId === c.id;
-            return (
-              <button
-                key={c.id}
-                onClick={() => setActiveId(c.id)}
-                className={`relative flex flex-col gap-1 rounded-xl border border-transparent px-3 py-2.5 text-left transition-colors ${
-                  isSelected ? "" : isLight ? "hover:bg-black/5" : "hover:bg-white/10"
-                }`}
-              >
-                {isSelected && (
-                  <motion.span
-                    layoutId="notes-selection"
-                    transition={{ type: "spring", stiffness: 420, damping: 34 }}
-                    className={`absolute -inset-px rounded-xl border ${
-                      isLight
-                        ? "border-amber-500/40 bg-amber-500/15 shadow-sm"
-                        : "border-[var(--accent-400)]/30 bg-gradient-to-r from-[var(--accent-500)]/25 to-[var(--accent-500)]/5"
-                    }`}
-                  />
-                )}
-                <span
-                  className={`relative text-[12px] leading-snug ${
-                    isSelected
-                      ? isLight
-                        ? "font-semibold text-amber-950"
-                        : "font-medium text-white"
-                      : isLight
-                      ? "font-medium text-neutral-800"
-                      : "font-medium text-white"
-                  }`}
+    <AppFrame id="notes" title="Notes — Case Studies" minWidth={480}>
+      <div className="grid h-full grid-cols-1 md:grid-cols-[240px_1fr]">
+        <aside className="hairline flex flex-col overflow-y-auto border-r bg-black/20">
+          <div className="flex items-baseline justify-between px-4 pb-2 pt-3">
+            <span className="text-[13px] font-semibold text-white">Catatan</span>
+            <span className="text-[11px] text-white/50">{caseStudies.length} catatan</span>
+          </div>
+          <div className="flex flex-col px-2 pb-2">
+            {caseStudies.map((c) => {
+              const project = projects.find((p) => p.id === c.projectId);
+              const isSelected = activeId === c.id;
+              return (
+                <button
+                  key={c.id}
+                  onClick={() => setActiveId(c.id)}
+                  className="relative flex flex-col gap-0.5 rounded-lg px-3 py-2.5 text-left"
                 >
-                  {c.title}
-                </span>
-                {project && (
-                  <span
-                    className={`relative text-[10px] ${
-                      isSelected && isLight
-                        ? "font-medium text-amber-800/80"
-                        : isLight
-                        ? "text-neutral-500"
-                        : "text-white/40"
-                    }`}
-                  >
-                    {project.name}
+                  {isSelected && (
+                    <motion.span
+                      layoutId="notes-selection"
+                      transition={{ type: "spring", stiffness: 420, damping: 34 }}
+                      className="notes-selection absolute inset-0 rounded-lg"
+                    />
+                  )}
+                  <span className="relative line-clamp-2 text-[12.5px] font-semibold leading-snug text-white">
+                    {c.title}
                   </span>
-                )}
-              </button>
-            );
-          })}
+                  <span className="relative line-clamp-1 text-[11.5px] text-white/50">
+                    {project && <span className="text-white/70">{project.name.split(" — ")[0]} </span>}
+                    {c.problem}
+                  </span>
+                </button>
+              );
+            })}
+          </div>
         </aside>
 
-        {/* Note detail */}
-        <main className="relative overflow-hidden">
+        <main className="notes-paper relative overflow-hidden">
           <AnimatePresence mode="wait">
             {active && (
               <motion.article
@@ -106,72 +63,30 @@ export default function NotesApp() {
                 animate={{ opacity: 1, y: 0 }}
                 exit={{ opacity: 0, y: -8 }}
                 transition={{ duration: 0.25 }}
-                className="absolute inset-0 overflow-y-auto p-5 sm:p-7"
+                className="absolute inset-0 overflow-y-auto px-6 py-6 sm:px-10"
               >
-                <div className="mx-auto flex max-w-xl flex-col gap-5">
-                  <div>
-                    <span
-                      className={`font-mono-ui text-[11px] font-semibold uppercase tracking-widest ${
-                        isLight ? "text-amber-700" : "text-[var(--accent-400)]"
-                      }`}
-                    >
-                      Case Study
-                    </span>
-                    <h1
-                      className={`mt-1 text-xl font-bold sm:text-2xl ${
-                        isLight ? "text-neutral-900" : "text-white"
-                      }`}
-                    >
-                      {active.title}
-                    </h1>
-                    <div className="mt-2 flex flex-wrap gap-1.5">
-                      {active.tags.map((t) => (
-                        <span
-                          key={t}
-                          className={`rounded-full border px-2.5 py-0.5 text-[10px] ${
-                            isLight
-                              ? "border-black/10 bg-black/5 font-medium text-neutral-700"
-                              : "border-white/15 bg-white/10 text-white/70"
-                          }`}
-                        >
-                          {t}
-                        </span>
-                      ))}
-                    </div>
-                  </div>
+                <div className="mx-auto max-w-[62ch]">
+                  {activeProject && (
+                    <p className="mb-4 text-center text-[11px] text-white/50">Catatan untuk {activeProject.name}</p>
+                  )}
+                  <h1 className="text-[24px] font-bold leading-tight tracking-tight text-white">{active.title}</h1>
 
                   {[
-                    { label: "Masalah", icon: "help", body: active.problem },
-                    { label: "Pendekatan", icon: "route", body: active.approach },
-                    { label: "Hasil", icon: "flag", body: active.result },
+                    { label: "Masalah", body: active.problem },
+                    { label: "Pendekatan", body: active.approach },
+                    { label: "Hasil", body: active.result },
                   ].map((section) => (
-                    <div
-                      key={section.label}
-                      className={`rounded-xl border p-4 transition-colors ${
-                        isLight
-                          ? "border-black/10 bg-white/90 shadow-sm"
-                          : "border-white/10 bg-white/5"
-                      }`}
-                    >
-                      <div
-                        className={`mb-1.5 flex items-center gap-2 ${
-                          isLight ? "text-amber-800" : "text-[var(--accent-300)]"
-                        }`}
-                      >
-                        <span className="material-symbols-outlined text-[16px]">{section.icon}</span>
-                        <span className="text-[11px] font-bold uppercase tracking-wide">
-                          {section.label}
-                        </span>
-                      </div>
-                      <p
-                        className={`text-[13px] leading-relaxed ${
-                          isLight ? "font-normal text-neutral-800" : "text-white/75"
-                        }`}
-                      >
-                        {section.body}
-                      </p>
-                    </div>
+                    <section key={section.label} className="mt-6">
+                      <h2 className="text-[15px] font-semibold text-white">{section.label}</h2>
+                      <p className="mt-1.5 text-[13.5px] leading-[1.7] text-white/80">{section.body}</p>
+                    </section>
                   ))}
+
+                  <p className="mt-8 flex flex-wrap gap-x-2 gap-y-1 text-[12.5px] font-medium text-amber-500">
+                    {active.tags.map((t) => (
+                      <span key={t}>{toHashtag(t)}</span>
+                    ))}
+                  </p>
                 </div>
               </motion.article>
             )}

@@ -3,6 +3,7 @@
 import { useRef, useState, type ReactNode } from "react";
 import { motion, useDragControls } from "framer-motion";
 import { useSystemStore, type AppId } from "@/store/system-store";
+import AppIcon from "@/components/icons/AppIcon";
 
 const MENU_BAR_HEIGHT = 44;
 const DOCK_CLEARANCE = 120;
@@ -10,7 +11,6 @@ const DOCK_CLEARANCE = 120;
 export default function Window({
   id,
   title,
-  icon,
   children,
   headerExtra,
   minWidth = 340,
@@ -18,7 +18,6 @@ export default function Window({
 }: {
   id: AppId;
   title: string;
-  icon?: ReactNode;
   children: ReactNode;
   headerExtra?: ReactNode;
   minWidth?: number;
@@ -36,6 +35,15 @@ export default function Window({
   const startRect = useRef(w.rect);
   const resizeStart = useRef({ width: 0, height: 0, pointerX: 0, pointerY: 0 });
   const [isResizing, setIsResizing] = useState(false);
+  // True while the genie (minimize / restore) runs. Re-blurring a full
+  // window's backdrop on every frame of that flight is what made it stutter,
+  // so the glass turns solid for the duration and the blur comes back after.
+  const [genieActive, setGenieActive] = useState(false);
+  const [prevMinimized, setPrevMinimized] = useState(w.isMinimized);
+  if (prevMinimized !== w.isMinimized) {
+    setPrevMinimized(w.isMinimized);
+    setGenieActive(true);
+  }
   const isFocused = w.zIndex === topZ;
 
   function handleResizeStart(e: React.PointerEvent) {
@@ -78,14 +86,37 @@ export default function Window({
       }
     : w.rect;
 
-  const dockTarget = { x: viewportW / 2 - 20, y: viewportH - 24 };
+  // Where this app's icon sits in the dock — the genie pours the window
+  // into exactly that icon (falls back to the dock's centre).
+  const icon =
+    typeof document !== "undefined"
+      ? document.querySelector(`[data-dock-id="${id}"]`)?.getBoundingClientRect()
+      : undefined;
+  const dock = icon
+    ? { x: icon.left + icon.width / 2, y: icon.top + 6 }
+    : { x: viewportW / 2, y: viewportH - 30 };
+  // transformOrigin is bottom-centre, so put that point on the icon
+  const target = { x: dock.x - rect.width / 2, y: dock.y - rect.height };
 
-  // Distinct "genie" feel per action: minimize/close both suck the window
-  // toward the dock (scale + travel + a slight wobble + a soft dissolve
-  // blur), while open/restore/maximize use a snappier, slightly
-  // over-springy pop so resizing reads as a deliberate, weighted motion
-  // rather than a flat snap.
-  const genieTransition = { type: "spring" as const, stiffness: 260, damping: 22 };
+  // Genie: the window narrows into a funnel aimed at its icon while it is
+  // pulled down, then pours in. The funnel neck starts over the icon's
+  // horizontal position relative to the window and ends centred.
+  const RECT = "polygon(0% 0%, 100% 0%, 100% 100%, 0% 100%)";
+  const neck = Math.max(12, Math.min(88, ((dock.x - rect.x) / rect.width) * 100));
+  const genie = {
+    x: [rect.x, rect.x + (target.x - rect.x) * 0.3, target.x],
+    y: [rect.y, rect.y + (target.y - rect.y) * 0.55, target.y],
+    scaleX: [1, 0.8, 0.1],
+    scaleY: [1, 0.6, 0.05],
+    clipPath: [
+      RECT,
+      `polygon(0% 0%, 100% 0%, ${neck + 14}% 100%, ${neck - 14}% 100%)`,
+      "polygon(28% 0%, 72% 0%, 56% 100%, 44% 100%)",
+    ],
+    opacity: [1, 1, 0],
+  };
+  const genieTransition = { duration: 0.55, times: [0, 0.5, 1], ease: [0.5, 0, 0.9, 0.5] as const };
+  // open / restore / maximize: a snappy, slightly over-springy pop
   const popTransition = { type: "spring" as const, stiffness: 360, damping: 24 };
 
   return (
@@ -106,6 +137,7 @@ export default function Window({
         });
       }}
       onPointerDownCapture={() => focusApp(id)}
+      onAnimationComplete={() => genieActive && setGenieActive(false)}
       initial={{
         opacity: 0,
         scale: 0.8,
@@ -114,40 +146,32 @@ export default function Window({
         y: rect.y + 50,
         width: rect.width,
         height: rect.height,
-        filter: "blur(0px)",
+        clipPath: RECT,
       }}
       animate={
         w.isMinimized
-          ? {
-              opacity: 0,
-              scale: 0.1,
-              rotate: -8,
-              x: dockTarget.x,
-              y: dockTarget.y,
-              width: rect.width,
-              height: rect.height,
-              filter: "blur(4px)",
-              pointerEvents: "none",
-            }
+          ? { ...genie, rotate: 0, width: rect.width, height: rect.height, pointerEvents: "none" }
           : {
               opacity: 1,
               scale: 1,
+              scaleX: 1,
+              scaleY: 1,
               rotate: 0,
               x: rect.x,
               y: rect.y,
               width: rect.width,
               height: rect.height,
-              filter: "blur(0px)",
+              clipPath: RECT,
               pointerEvents: "auto",
+              // a clip-path would also clip the window's shadow, so drop it once settled
+              transitionEnd: { clipPath: "none" },
             }
       }
       exit={{
         opacity: 0,
         scale: 0.08,
-        rotate: 6,
-        x: dockTarget.x,
-        y: dockTarget.y,
-        filter: "blur(5px)",
+        x: target.x,
+        y: target.y,
         transition: { duration: 0.3, ease: [0.4, 0, 0.2, 1] },
       }}
       transition={
@@ -155,6 +179,7 @@ export default function Window({
           ? genieTransition
           : {
               default: popTransition,
+              clipPath: { duration: 0.3, ease: "easeOut" },
               // While actively dragging the resize handle, width/height
               // should track the cursor 1:1 — springing them in on every
               // pointermove would feel laggy instead of direct.
@@ -174,7 +199,7 @@ export default function Window({
       data-window-id={id}
       className={`glass-window pointer-events-auto flex flex-col overflow-hidden rounded-window ${
         isFocused ? "is-focused" : "opacity-95"
-      }`}
+      } ${genieActive || w.isMinimized ? "is-genie" : ""}`}
     >
       {/* Title bar */}
       <div
@@ -214,7 +239,7 @@ export default function Window({
         </div>
 
         <div className="absolute left-1/2 flex -translate-x-1/2 items-center gap-2 text-white/90">
-          {icon}
+          <AppIcon id={id} className="h-4 w-4" />
           <span className="text-[14px] font-medium tracking-tight">{title}</span>
         </div>
 

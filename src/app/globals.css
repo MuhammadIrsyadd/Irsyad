@@ -57,7 +57,7 @@
   /* Glass */
   --color-glass-specular: rgba(255, 255, 255, 0.28);
   --color-glass-specular-subtle: rgba(255, 255, 255, 0.12);
-  --color-glass-fill-dark: rgba(15, 17, 23, 0.72);
+  --color-glass-fill-dark: rgba(15, 17, 23, 0.82);
   --color-glass-fill-light: rgba(255, 255, 255, 0.65);
   --color-dock-fill: rgba(255, 255, 255, 0.1);
   --color-terminal-canvas: rgba(8, 10, 15, 0.88);
@@ -311,13 +311,15 @@ body {
 }
 
 .glass-sheet {
-  background: color-mix(in srgb, var(--color-surface-container-lowest) 96%, transparent);
+  background: var(--color-surface-container-lowest);
   backdrop-filter: blur(30px) saturate(180%);
   -webkit-backdrop-filter: blur(30px) saturate(180%);
 }
 
 .glass-modal {
-  background: color-mix(in srgb, var(--color-glass-fill-dark) 92%, transparent);
+  /* menus and dialogs sit over busy windows — keep them near-opaque so the
+     text underneath never bleeds through */
+  background: rgba(26, 28, 35, 0.95);
   backdrop-filter: blur(34px) saturate(210%);
   -webkit-backdrop-filter: blur(34px) saturate(210%);
   border: 1px solid rgba(255, 255, 255, 0.25);
@@ -604,7 +606,7 @@ html.light .desktop-icon-label {
    ======================================================== */
 
 /* Keyboard focus that matches the accent instead of the browser default */
-:where(button, a, input, textarea, [role="button"]):focus-visible {
+:where(button, a, [role="button"]):focus-visible {
   outline: 2px solid var(--accent-400);
   outline-offset: 2px;
   border-radius: 10px;
@@ -736,4 +738,86 @@ html.light .traffic-lights:not(:hover) .traffic-dim {
 :root[data-theme="light"] .glass-widget .widget-day,
 html.light .glass-widget .widget-day {
   color: var(--accent-600);
+}
+
+/* Accent-coloured text that stays readable on light glass too */
+.text-accent-ink {
+  color: var(--accent-300);
+}
+:root[data-theme="light"] .text-accent-ink,
+html.light .text-accent-ink {
+  color: var(--accent-600);
+}
+
+/* Hairline separators for native-looking list rows */
+.hairline {
+  border-color: rgba(255, 255, 255, 0.08);
+}
+:root[data-theme="light"] .hairline,
+html.light .hairline {
+  border-color: rgba(0, 0, 0, 0.08);
+}
+
+/* Time Machine: the starfield the snapshots float in */
+.timemachine-space {
+  background:
+    radial-gradient(ellipse 80% 60% at 50% 110%, rgba(240, 138, 62, 0.22), transparent 70%),
+    radial-gradient(1px 1px at 12% 18%, rgba(255, 255, 255, 0.7), transparent),
+    radial-gradient(1px 1px at 28% 62%, rgba(255, 255, 255, 0.5), transparent),
+    radial-gradient(1.5px 1.5px at 46% 26%, rgba(255, 255, 255, 0.6), transparent),
+    radial-gradient(1px 1px at 63% 12%, rgba(255, 255, 255, 0.5), transparent),
+    radial-gradient(1px 1px at 78% 44%, rgba(255, 255, 255, 0.6), transparent),
+    radial-gradient(1.5px 1.5px at 90% 20%, rgba(255, 255, 255, 0.5), transparent),
+    linear-gradient(180deg, #070a17 0%, #141128 60%, #2a1424 100%);
+}
+:root[data-theme="light"] .timemachine-space,
+html.light .timemachine-space {
+  background:
+    radial-gradient(ellipse 80% 60% at 50% 110%, rgba(240, 138, 62, 0.25), transparent 70%),
+    linear-gradient(180deg, #dfe7f3 0%, #eef1f7 70%, #f7ece4 100%);
+}
+.timemachine-card {
+  background: #1c1f27;
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  box-shadow: 0 24px 50px -18px rgba(0, 0, 0, 0.7);
+}
+:root[data-theme="light"] .timemachine-card,
+html.light .timemachine-card {
+  background: #ffffff;
+  border-color: rgba(0, 0, 0, 0.1);
+  box-shadow: 0 24px 50px -20px rgba(0, 0, 0, 0.25);
+}
+
+/* Notes: warm paper page and the yellow selection of Apple Notes */
+.notes-paper {
+  background: #1d1b18;
+}
+:root[data-theme="light"] .notes-paper,
+html.light .notes-paper {
+  background: #fffdf6;
+}
+.notes-selection {
+  background: rgba(245, 197, 66, 0.22);
+}
+:root[data-theme="light"] .notes-selection,
+html.light .notes-selection {
+  background: rgba(245, 197, 66, 0.4);
+}
+
+/* During the genie flight the glass goes solid: no backdrop re-blur and no
+   large shadow to recomposite on every frame. */
+.glass-window.is-genie,
+:root[data-theme="light"] .glass-window.is-genie,
+html.light .glass-window.is-genie {
+  backdrop-filter: none !important;
+  -webkit-backdrop-filter: none !important;
+  box-shadow: none !important;
+  will-change: transform, clip-path, opacity;
+}
+.glass-window.is-genie {
+  background: rgb(24, 26, 32) !important;
+}
+:root[data-theme="light"] .glass-window.is-genie:not([data-window-id="terminal"]),
+html.light .glass-window.is-genie:not([data-window-id="terminal"]) {
+  background: rgb(246, 248, 252) !important;
 }

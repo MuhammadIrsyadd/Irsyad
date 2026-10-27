@@ -3,16 +3,15 @@
 import type { ReactNode } from "react";
 import { motion } from "framer-motion";
 import { useSystemStore, type AppId } from "@/store/system-store";
+import AppIcon from "@/components/icons/AppIcon";
 
 export default function MobileAppSheet({
   id,
   title,
-  icon,
   children,
 }: {
   id: AppId;
   title: string;
-  icon?: ReactNode;
   children: ReactNode;
 }) {
   const w = useSystemStore((s) => s.windows[id]);
@@ -38,7 +37,7 @@ export default function MobileAppSheet({
           Home
         </button>
         <div className="flex items-center gap-1.5 text-white/90">
-          {icon}
+          <AppIcon id={id} className="h-4 w-4" />
           <span className="text-[13px] font-medium">{title}</span>
         </div>
         <div className="w-[68px]" />

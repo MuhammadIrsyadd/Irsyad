@@ -1,6 +1,7 @@
 "use client";
 
 import AppFrame from "@/components/AppFrame";
+import SuryaMajapahit from "@/components/icons/SuryaMajapahit";
 import { useSystemStore, type AccentColor } from "@/store/system-store";
 import { useCurrentWallpaper, useWallpapers } from "@/components/WallpaperProvider";
 
@@ -11,31 +12,22 @@ const accents: { id: AccentColor; label: string; className: string }[] = [
   { id: "coral", label: "Coral", className: "bg-rose-400" },
 ];
 
-const stack = [
-  "Next.js 16 (App Router)",
-  "TypeScript",
-  "Tailwind CSS v4",
-  "Framer Motion",
-  "Zustand",
-];
+const stack = ["Next.js 16 (App Router)", "TypeScript", "Tailwind CSS v4", "Framer Motion", "Zustand"];
 
-function Row({ children }: { children: React.ReactNode }) {
+// System Settings layout: quiet section titles over grouped, hairline-
+// separated rows.
+function Group({ title, children }: { title: string; children: React.ReactNode }) {
   return (
-    <div className="flex items-center justify-between rounded-xl border border-white/10 bg-white/5 px-3.5 py-3">
-      {children}
-    </div>
+    <section className="flex flex-col gap-1.5">
+      <h2 className="px-1 text-[12px] font-semibold text-white/60">{title}</h2>
+      <div className="hairline overflow-hidden rounded-xl border bg-white/5 [&>*+*]:border-t [&>*+*]:border-[rgba(127,127,127,0.2)]">
+        {children}
+      </div>
+    </section>
   );
 }
 
-function Toggle({
-  checked,
-  onChange,
-  label,
-}: {
-  checked: boolean;
-  onChange: () => void;
-  label: string;
-}) {
+function Toggle({ checked, onChange, label }: { checked: boolean; onChange: () => void; label: string }) {
   return (
     <button
       type="button"
@@ -44,7 +36,7 @@ function Toggle({
       aria-checked={checked}
       aria-label={label}
       className={`relative inline-flex h-6 w-11 shrink-0 appearance-none items-center rounded-full border-0 p-0 transition-colors ${
-        checked ? "bg-primary-container" : "bg-white/15"
+        checked ? "bg-[var(--accent-500)]" : "bg-white/15"
       }`}
     >
       <span
@@ -69,123 +61,76 @@ export default function SettingsApp() {
   const setWallpaper = useSystemStore((s) => s.setWallpaper);
 
   return (
-    <AppFrame
-      id="settings"
-      title="Settings"
-      icon={<span className="material-symbols-outlined text-[15px] text-white/70">settings</span>}
-      minWidth={380}
-    >
+    <AppFrame id="settings" title="Settings" minWidth={380}>
       <div className="flex flex-col gap-5 p-4 sm:p-5">
-        <section className="flex flex-col gap-2.5">
-          <span className="px-1 font-mono-ui text-[10px] font-semibold uppercase tracking-widest text-white/40">
-            Appearance
-          </span>
-
-          {/* Theme Mode Toggle */}
-          <div className="flex items-center justify-between rounded-xl border border-white/10 bg-white/5 px-3.5 py-3">
-            <div className="flex items-center gap-2.5">
-              <span className="material-symbols-outlined text-white/70">
-                {theme === "dark" ? "dark_mode" : "light_mode"}
+        <Group title="Tampilan">
+          <div className="flex items-center justify-between px-3.5 py-3">
+            <div className="flex flex-col">
+              <span className="text-[13px] text-white">Mode terang</span>
+              <span className="text-[11.5px] text-white/50">
+                {theme === "dark" ? "Sekarang mode gelap (default)" : "Sekarang mode terang"}
               </span>
-              <div className="flex flex-col">
-                <span className="text-[13px] text-white">Theme Mode</span>
-                <span className="text-[11px] text-white/50">
-                  {theme === "dark" ? "Dark Mode (Default)" : "Light Mode (Cerah)"}
-                </span>
-              </div>
             </div>
-            <Toggle
-              checked={theme === "light"}
-              onChange={toggleTheme}
-              label="Toggle Dark and Light Mode"
-            />
+            <Toggle checked={theme === "light"} onChange={toggleTheme} label="Ganti mode terang dan gelap" />
           </div>
 
-          <div className="rounded-xl border border-white/10 bg-white/5 px-3.5 py-3">
-            <span className="mb-2.5 block text-[13px] text-white">Accent Color</span>
-            <div className="flex gap-3">
+          <div className="flex items-center justify-between px-3.5 py-3">
+            <span className="text-[13px] text-white">Warna aksen</span>
+            <div className="flex gap-2.5">
               {accents.map((a) => (
                 <button
                   key={a.id}
                   onClick={() => setAccent(a.id)}
-                  className="flex flex-col items-center gap-1.5"
                   title={a.label}
-                >
-                  <span
-                    className={`h-7 w-7 rounded-full ${a.className} ${
-                      accent === a.id ? "ring-2 ring-white ring-offset-2 ring-offset-surface" : ""
-                    }`}
-                  />
-                </button>
+                  aria-label={a.label}
+                  className={`h-5 w-5 rounded-full ${a.className} ${
+                    accent === a.id ? "ring-2 ring-white ring-offset-2 ring-offset-surface" : ""
+                  }`}
+                />
               ))}
             </div>
           </div>
 
-          <div className="rounded-xl border border-white/10 bg-white/5 px-3.5 py-3">
+          <div className="px-3.5 py-3">
             <span className="mb-2.5 block text-[13px] text-white">Wallpaper</span>
             <div className="grid grid-cols-3 gap-2.5">
               {wallpapers.map((w) => (
-                <button
-                  key={w.id}
-                  onClick={() => setWallpaper(w.id)}
-                  className="flex flex-col items-center gap-1"
-                  aria-label={w.label}
-                >
+                <button key={w.id} onClick={() => setWallpaper(w.id)} aria-label={w.label}>
                   <span
-                    style={{
-                      backgroundImage: `url(${w.src})`,
-                      backgroundSize: "cover",
-                      backgroundPosition: "center",
-                    }}
-                    className={`h-16 w-full rounded-lg border-2 transition-transform hover:scale-[1.03] ${
-                      currentWallpaper?.id === w.id
-                        ? "border-white shadow-[0_0_0_2px_var(--accent-500)]"
-                        : "border-white/15"
+                    style={{ backgroundImage: `url(${w.src})`, backgroundSize: "cover", backgroundPosition: "center" }}
+                    className={`block h-16 w-full rounded-lg border-2 transition-transform hover:scale-[1.03] ${
+                      currentWallpaper?.id === w.id ? "border-[var(--accent-400)]" : "border-transparent"
                     }`}
                   />
                 </button>
               ))}
             </div>
           </div>
-        </section>
+        </Group>
 
-        <section className="flex flex-col gap-2.5">
-          <span className="px-1 font-mono-ui text-[10px] font-semibold uppercase tracking-widest text-white/40">
-            System
-          </span>
-          <Row>
-            <div className="flex items-center gap-2.5">
-              <span className="material-symbols-outlined text-white/70">volume_up</span>
-              <div className="flex flex-col">
-                <span className="text-[13px] text-white">UI Sound Effects</span>
-                <span className="text-[11px] text-white/40">Klik pelan ala macOS saat buka window</span>
-              </div>
+        <Group title="Suara">
+          <div className="flex items-center justify-between px-3.5 py-3">
+            <div className="flex flex-col">
+              <span className="text-[13px] text-white">Efek suara UI</span>
+              <span className="text-[11.5px] text-white/50">Klik pelan ala macOS saat buka jendela</span>
             </div>
-            <Toggle checked={soundEnabled} onChange={toggleSound} label="Toggle UI sound effects" />
-          </Row>
-        </section>
+            <Toggle checked={soundEnabled} onChange={toggleSound} label="Efek suara UI" />
+          </div>
+        </Group>
 
-        <section className="flex flex-col gap-2.5">
-          <span className="px-1 font-mono-ui text-[10px] font-semibold uppercase tracking-widest text-white/40">
-            About This Portfolio
-          </span>
-          <div className="rounded-xl border border-white/10 bg-white/5 p-3.5">
-            <p className="mb-3 text-[12px] leading-relaxed text-white/70">
-              Portofolio ini dibangun sebagai simulasi desktop macOS bermaterial Liquid Glass —
-              lengkap dengan window system, dock magnify, dan boot sequence.
-            </p>
-            <div className="flex flex-wrap gap-1.5">
-              {stack.map((s) => (
-                <span
-                  key={s}
-                  className="rounded-full border border-white/10 bg-white/5 px-2.5 py-1 text-[10px] text-white/70"
-                >
-                  {s}
-                </span>
-              ))}
+        <Group title="Tentang portfolio ini">
+          <div className="flex gap-3.5 px-3.5 py-3.5">
+            <SuryaMajapahit className="h-11 w-11 shrink-0" color="#f2a94e" title="Surya Majapahit" />
+            <div className="flex flex-col gap-1.5">
+              <span className="text-[13px] font-semibold text-white">Portfolio OS</span>
+              <p className="text-[12px] leading-relaxed text-white/70">
+                Portofolio ini dibangun sebagai simulasi desktop macOS bermaterial Liquid Glass, lengkap dengan
+                window system, dock magnify, dan boot sequence. Emblemnya Surya Majapahit, lambang kerajaan yang dulu berpusat di Mojokerto.
+              </p>
+              <p className="text-[11.5px] text-white/50">Dibangun dengan {stack.join(", ")}.</p>
             </div>
           </div>
-        </section>
+        </Group>
       </div>
     </AppFrame>
   );

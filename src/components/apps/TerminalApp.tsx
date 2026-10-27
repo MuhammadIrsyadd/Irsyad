@@ -4,8 +4,39 @@ import { useEffect, useRef, useState } from "react";
 import AppFrame from "@/components/AppFrame";
 import { profile, skills, projects } from "@/lib/content";
 import { useSystemStore } from "@/store/system-store";
+import { ASCII_FACE } from "@/lib/ascii-face";
 
-type Line = { type: "cmd" | "out"; text: string };
+const ART_WIDTH = Math.max(...ASCII_FACE.map((r) => r.length)) + 3;
+
+function neofetch(theme: string): Line[] {
+  const minutes = Math.max(1, Math.round(performance.now() / 60000));
+  const info: [string | undefined, string][] = [
+    [undefined, "irsyad@portfolio-os"],
+    [undefined, "-------------------"],
+    ["OS", "Portfolio OS (Liquid Glass)"],
+    ["Host", profile.location],
+    ["Kernel", "Next.js 16 + React 19"],
+    ["Uptime", `${minutes} menit`],
+    ["Packages", `${projects.length} proyek, ${skills.length} kategori skill`],
+    ["Shell", "irsh 1.2"],
+    ["Resolution", `${window.innerWidth}x${window.innerHeight}`],
+    ["Theme", theme === "light" ? "Light" : "Dark"],
+    ["Role", profile.role],
+    ["Status", profile.availability],
+  ];
+  const rows = Math.max(ASCII_FACE.length, info.length);
+  return Array.from({ length: rows }, (_, i) => ({
+    type: "fetch" as const,
+    art: (ASCII_FACE[i] ?? "").padEnd(ART_WIDTH),
+    key: info[i]?.[0],
+    value: info[i]?.[1],
+  }));
+}
+
+type Line =
+  | { type: "cmd" | "out"; text: string }
+  // neofetch row: ASCII portrait on the left, "Key: value" on the right
+  | { type: "fetch"; art: string; key?: string; value?: string };
 
 const BOOT_SEQUENCE: { cmd: string; output: string[] }[] = [
   { cmd: "whoami", output: [profile.name.toLowerCase().replace(/\s+/g, "-")] },
@@ -25,6 +56,7 @@ const BOOT_SEQUENCE: { cmd: string; output: string[] }[] = [
 
 const HELP_TEXT = [
   "Perintah tersedia:",
+  "  neofetch             — info sistem + potret ASCII",
   "  whoami               — siapa aku & informasi profil",
   "  projects             — daftar semua proyek & deploy",
   "  cat projects/<id>    — info lengkap proyek (contoh: cat projects/gigizi)",
@@ -52,6 +84,10 @@ export default function TerminalApp() {
   useEffect(() => {
     let cancelled = false;
     async function typeBoot() {
+      // greet with neofetch first, the way a dev's shell opens
+      await new Promise((r) => setTimeout(r, 260));
+      if (cancelled) return;
+      setLines([{ type: "cmd", text: "neofetch" }, ...neofetch(useSystemStore.getState().theme)]);
       for (const step of BOOT_SEQUENCE) {
         if (cancelled) return;
         await new Promise((r) => setTimeout(r, 260));
@@ -214,7 +250,7 @@ export default function TerminalApp() {
       openApp("mail");
       return [
         "[sudo] access granted — you seem trustworthy.",
-        "Membuka aplikasi Mail untuk mengirim pesan langsung 📬...",
+        "Membuka aplikasi Mail untuk mengirim pesan langsung...",
       ];
     }
 
@@ -231,6 +267,8 @@ export default function TerminalApp() {
     setLines((prev) => [...prev, { type: "cmd", text: cmd }]);
     if (cmd.trim().toLowerCase() === "clear") {
       setLines([]);
+    } else if (cmd.trim().toLowerCase() === "neofetch") {
+      setLines((prev) => [...prev, ...neofetch(useSystemStore.getState().theme)]);
     } else {
       const out = executeCommand(cmd);
       setLines((prev) => [
@@ -245,7 +283,6 @@ export default function TerminalApp() {
     <AppFrame
       id="terminal"
       title="Terminal — Skills & CLI"
-      icon={<span className="material-symbols-outlined text-[15px] text-terminal-green">terminal</span>}
     >
       <div
         ref={scrollRef}
@@ -262,6 +299,18 @@ export default function TerminalApp() {
               <span className="text-terminal-green">➜</span>
               <span className="text-[var(--accent-300)]">~</span>
               <span>{l.text}</span>
+            </div>
+          ) : l.type === "fetch" ? (
+            <div key={i} className="whitespace-pre leading-[1.35]">
+              <span className="text-[var(--accent-300)]">{l.art}</span>
+              {l.key ? (
+                <>
+                  <span className="font-semibold text-terminal-green">{l.key}</span>
+                  <span className="text-white/80">: {l.value}</span>
+                </>
+              ) : (
+                <span className="font-semibold text-white">{l.value}</span>
+              )}
             </div>
           ) : (
             <div key={i} className="whitespace-pre-wrap pl-5 text-white/70">

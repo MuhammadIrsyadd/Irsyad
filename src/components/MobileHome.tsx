@@ -6,6 +6,8 @@ import { appRegistry } from "@/lib/apps";
 import { useSystemStore } from "@/store/system-store";
 import { profile } from "@/lib/content";
 import OpenApps, { preloadApp } from "@/components/apps/OpenApps";
+import AppIcon from "@/components/icons/AppIcon";
+import { batteryIcon, useBattery, useOnline } from "@/hooks/use-device-status";
 import Avatar from "@/components/Avatar";
 import IdleScreensaver from "@/components/IdleScreensaver";
 import HomeLogo from "@/components/HomeLogo";
@@ -25,19 +27,30 @@ export default function MobileHome() {
   const now = useClock();
   const openApp = useSystemStore((s) => s.openApp);
   const lock = useSystemStore((s) => s.lock);
+  const online = useOnline();
+  const battery = useBattery();
 
   return (
     <div className="relative h-full w-full overflow-hidden">
+      {/* dim the wallpaper a little so the profile and labels stay readable */}
+      <div className="pointer-events-none absolute inset-0 bg-black/40" />
       {/* Status bar */}
       <div className="glass-menubar fixed inset-x-0 top-0 z-[900] flex h-11 items-center justify-between px-5 pt-[env(safe-area-inset-top)] text-[14px] text-white/90">
         <span className="font-medium">
           {now?.toLocaleTimeString("id-ID", { hour: "2-digit", minute: "2-digit" }) ?? ""}
         </span>
         <div className="flex items-center gap-2">
-          <span className="material-symbols-outlined text-[17px]">wifi</span>
-          <span className="material-symbols-outlined icon-fill text-[17px] text-emerald-400">
-            battery_charging_80
-          </span>
+          <span className="material-symbols-outlined text-[17px]">{online ? "wifi" : "wifi_off"}</span>
+          {battery && (
+            <span className="flex items-center gap-0.5 text-[12px] tabular-nums">
+              <span
+                className={`material-symbols-outlined icon-fill text-[17px] ${battery.charging ? "text-emerald-400" : ""}`}
+              >
+                {batteryIcon(battery)}
+              </span>
+              {Math.round(battery.level * 100)}%
+            </span>
+          )}
           <button onClick={lock} aria-label="Lock screen" className="ml-1 flex active:scale-90">
             <span className="material-symbols-outlined text-[17px]">power_settings_new</span>
           </button>
@@ -45,7 +58,7 @@ export default function MobileHome() {
       </div>
 
       {/* Home screen grid */}
-      <div className="flex h-full flex-col items-center justify-center gap-8 px-8 pt-11">
+      <div className="relative flex h-full flex-col items-center justify-center gap-8 px-8 pt-11">
         <div className="flex flex-col items-center gap-2 text-center">
           <div className="h-24 w-24 overflow-hidden rounded-2xl border border-white/20 shadow-2xl">
             <img src="/images/avatar.webp" alt="" className="h-full w-full object-cover object-top" />
@@ -66,16 +79,7 @@ export default function MobileHome() {
               onClick={() => openApp(app.id)}
               className="flex flex-col items-center gap-2"
             >
-              <span
-                className={`app-icon-gloss relative flex h-16 w-16 items-center justify-center overflow-hidden rounded-2xl bg-gradient-to-b ${app.gradient} border border-white/25 shadow-[0_6px_18px_rgba(0,0,0,0.45)]`}
-              >
-                <span
-                  className={`material-symbols-outlined icon-fill relative ${app.iconColor}`}
-                  style={{ fontSize: "32px" }}
-                >
-                  {app.icon}
-                </span>
-              </span>
+              <AppIcon id={app.id} className="h-16 w-16 drop-shadow-[0_6px_12px_rgba(0,0,0,0.4)]" />
               <span className="text-[13px] text-white/85">{app.label}</span>
             </motion.button>
           ))}
