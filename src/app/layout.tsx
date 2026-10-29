@@ -25,9 +25,43 @@ const kanit = Kanit({
 
 export const metadata: Metadata = {
   metadataBase: new URL(process.env.NEXT_PUBLIC_SITE_URL || "https://muhirsyad.my.id"),
-  title: "Muh Irsyad — Portfolio OS",
+  title: "Muh Irsyad — Full-Stack & Mobile Developer | Portfolio OS",
   description:
-    "Hi, namaku Irsyad. Kenalan lebih dekat yuk sama aku! Simulasi desktop macOS Liquid Glass. Klik, jelajah, dan buka tiap 'app' untuk kenal aku lebih jauh.",
+    "Portfolio resmi Muh. Irsyad Dwi Kurniawan (Muh Irsyad). Full-Stack & Mobile Developer (Next.js, Laravel, Kotlin). Simulasi desktop macOS Liquid Glass interaktif.",
+  keywords: [
+    "Muh Irsyad",
+    "Muh. Irsyad Dwi Kurniawan",
+    "Muhammad Irsyad",
+    "Irsyad",
+    "muhirsyad",
+    "muhirsyad.my.id",
+    "Portfolio Muh Irsyad",
+    "Web Developer Indonesia",
+    "Full-Stack Developer",
+    "Mobile Developer",
+    "Laravel",
+    "Next.js",
+    "Kotlin",
+    "Mojokerto",
+    "Surabaya",
+  ],
+  authors: [{ name: "Muh. Irsyad Dwi Kurniawan", url: "https://muhirsyad.my.id" }],
+  creator: "Muh. Irsyad Dwi Kurniawan",
+  publisher: "Muh. Irsyad Dwi Kurniawan",
+  alternates: {
+    canonical: "https://muhirsyad.my.id",
+  },
+  robots: {
+    index: true,
+    follow: true,
+    googleBot: {
+      index: true,
+      follow: true,
+      "max-video-preview": -1,
+      "max-image-preview": "large",
+      "max-snippet": -1,
+    },
+  },
   manifest: "/manifest.json",
   icons: {
     icon: [
@@ -41,10 +75,27 @@ export const metadata: Metadata = {
     ],
   },
   openGraph: {
-    title: "Muh Irsyad — Portfolio OS",
+    title: "Muh Irsyad — Full-Stack & Mobile Developer | Portfolio OS",
     description:
-      "Hi, namaku Irsyad. Kenalan lebih dekat yuk sama aku! Simulasi desktop macOS Liquid Glass. Klik, jelajah, dan buka tiap 'app' untuk kenal aku lebih jauh.",
+      "Portfolio resmi Muh. Irsyad Dwi Kurniawan. Jelajahi pengalaman, proyek, dan keahlian web & mobile development dalam antarmuka desktop macOS interaktif.",
+    url: "https://muhirsyad.my.id",
+    siteName: "Muh Irsyad Portfolio OS",
+    locale: "id_ID",
     type: "website",
+    images: [
+      {
+        url: "/apple-touch-icon.png",
+        width: 180,
+        height: 180,
+        alt: "Muh Irsyad Portfolio OS",
+      },
+    ],
+  },
+  twitter: {
+    card: "summary",
+    title: "Muh Irsyad — Full-Stack & Mobile Developer | Portfolio OS",
+    description:
+      "Portfolio resmi Muh. Irsyad Dwi Kurniawan. Full-Stack & Mobile Developer (Next.js, Laravel, Kotlin).",
     images: ["/apple-touch-icon.png"],
   },
 };
@@ -55,6 +106,47 @@ export const viewport: Viewport = {
   maximumScale: 1,
   userScalable: false,
   themeColor: "#111319",
+};
+
+const jsonLd = {
+  "@context": "https://schema.org",
+  "@graph": [
+    {
+      "@type": "Person",
+      "@id": "https://muhirsyad.my.id/#person",
+      name: "Muh. Irsyad Dwi Kurniawan",
+      alternateName: ["Muh Irsyad", "Irsyad", "muhirsyad"],
+      url: "https://muhirsyad.my.id",
+      jobTitle: "Full-Stack & Mobile Developer",
+      sameAs: [
+        "https://github.com/MuhammadIrsyadd",
+        "https://www.linkedin.com/in/muh-irsyad-dwi-kurniawan/",
+        "https://www.instagram.com/irsyad_dwi/",
+      ],
+      address: {
+        "@type": "PostalAddress",
+        addressLocality: "Mojokerto",
+        addressRegion: "Jawa Timur",
+        addressCountry: "ID",
+      },
+      alumniOf: {
+        "@type": "CollegeOrUniversity",
+        name: "UPN 'Veteran' Jawa Timur",
+      },
+    },
+    {
+      "@type": "WebSite",
+      "@id": "https://muhirsyad.my.id/#website",
+      url: "https://muhirsyad.my.id",
+      name: "Muh Irsyad Portfolio OS",
+      description:
+        "Portfolio resmi Muh. Irsyad Dwi Kurniawan (Muh Irsyad) berbasis desktop macOS Liquid Glass interaktif.",
+      publisher: {
+        "@id": "https://muhirsyad.my.id/#person",
+      },
+      inLanguage: "id-ID",
+    },
+  ],
 };
 
 export default function RootLayout({ children }: { children: React.ReactNode }) {
@@ -73,6 +165,10 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
         <link rel="preconnect" href="https://fonts.gstatic.com" crossOrigin="anonymous" />
         {/* Icon font subset to just the glyphs used in src/ (~80KB instead of ~4MB) */}
         <link rel="stylesheet" href={ICON_FONT_URL} crossOrigin="anonymous" />
+        <script
+          type="application/ld+json"
+          dangerouslySetInnerHTML={{ __html: JSON.stringify(jsonLd) }}
+        />
       </head>
       <body className="h-full min-h-full overflow-hidden bg-background text-on-surface">
         {children}
