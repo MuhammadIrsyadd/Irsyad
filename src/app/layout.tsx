@@ -25,7 +25,7 @@ const kanit = Kanit({
 
 export const metadata: Metadata = {
   metadataBase: new URL(process.env.NEXT_PUBLIC_SITE_URL || "https://muhirsyad.my.id"),
-  title: "Muh Irsyad — Full-Stack & Mobile Developer | Portfolio OS",
+  title: "Muh Irsyad — Full-Stack & Mobile Developer",
   description:
     "Portfolio resmi Muh. Irsyad Dwi Kurniawan (Muh Irsyad). Full-Stack & Mobile Developer (Next.js, Laravel, Kotlin). Simulasi desktop macOS Liquid Glass interaktif.",
   keywords: [
@@ -79,7 +79,7 @@ export const metadata: Metadata = {
     description:
       "Portfolio resmi Muh. Irsyad Dwi Kurniawan. Jelajahi pengalaman, proyek, dan keahlian web & mobile development dalam antarmuka desktop macOS interaktif.",
     url: "https://muhirsyad.my.id",
-    siteName: "Muh Irsyad Portfolio OS",
+    siteName: "Muh Irsyad Portofolio",
     locale: "id_ID",
     type: "website",
     images: [
@@ -87,7 +87,7 @@ export const metadata: Metadata = {
         url: "/apple-touch-icon.png",
         width: 180,
         height: 180,
-        alt: "Muh Irsyad Portfolio OS",
+        alt: "Muh Irsyad Portofolio",
       },
     ],
   },
