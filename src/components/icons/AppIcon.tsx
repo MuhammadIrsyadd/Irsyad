@@ -5,11 +5,11 @@ import type { AppId } from "@/store/system-store";
 import SuryaMajapahit from "@/components/icons/SuryaMajapahit";
 
 // Hand-drawn app icons for Portfolio OS. Each one is an object sitting on
-// a macOS-style squircle (except the desktop items and the Trash, which
-// are free-standing objects like on a real Mac). All vector, ~1KB each,
+// a macOS-style squircle (except the desktop items, which are
+// free-standing objects like on a real Mac). All vector, ~1KB each,
 // so they stay crisp through the dock magnification.
 
-export type IconId = AppId | "trash" | "resume" | "folder" | "contact";
+export type IconId = AppId | "resume" | "folder" | "contact";
 
 const SQUIRCLE = "M50 0C88 0 100 12 100 50S88 100 50 100 0 88 0 50 12 0 50 0Z";
 
@@ -234,30 +234,6 @@ function Settings() {
   );
 }
 
-function Trash() {
-  const id = useIds();
-  const bars = [30, 38, 46, 54, 62, 70];
-  return (
-    <>
-      <defs>
-        <linearGradient id={id("bin")} x1="0" y1="0" x2="1" y2="0">
-          <stop offset="0" stopColor="#9ca3af" stopOpacity="0.55" />
-          <stop offset="0.5" stopColor="#f9fafb" stopOpacity="0.8" />
-          <stop offset="1" stopColor="#9ca3af" stopOpacity="0.55" />
-        </linearGradient>
-      </defs>
-      <path d="M22 22 L78 22 L72 90 Q71 94 66 94 L34 94 Q29 94 28 90 Z" fill={`url(#${id("bin")})`} />
-      {bars.map((x) => (
-        <line key={x} x1={x} y1="26" x2={x + (x - 50) * -0.08} y2="90" stroke="#6b7280" strokeOpacity="0.55" strokeWidth="1.4" />
-      ))}
-      {[40, 58, 76].map((y) => (
-        <line key={y} x1="24" y1={y} x2="76" y2={y} stroke="#6b7280" strokeOpacity="0.35" strokeWidth="1.2" />
-      ))}
-      <rect x="18" y="16" width="64" height="9" rx="4.5" fill="#e5e7eb" stroke="#6b7280" strokeOpacity="0.5" />
-    </>
-  );
-}
-
 function Resume() {
   return (
     <>
@@ -325,7 +301,6 @@ const ICONS: Record<IconId, () => React.JSX.Element> = {
   notes: Notes,
   photos: Photos,
   settings: Settings,
-  trash: Trash,
   resume: Resume,
   folder: Folder,
   contact: Contact,

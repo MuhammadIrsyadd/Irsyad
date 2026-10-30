@@ -2,7 +2,6 @@
 
 import { memo, useEffect, useRef, useState, type RefObject } from "react";
 import {
-  AnimatePresence,
   motion,
   Reorder,
   useAnimate,
@@ -16,7 +15,6 @@ import { sound } from "@/lib/sound";
 import { useSystemStore, type AppId } from "@/store/system-store";
 import { preloadApp } from "@/components/apps/OpenApps";
 import AppIcon from "@/components/icons/AppIcon";
-import TrashPanel from "@/components/TrashPanel";
 
 const ICON_BASE = 58;
 const ICON_MAX = 88;
@@ -181,87 +179,50 @@ const DockIcon = memo(function DockIcon({
   );
 });
 
-function TrashIcon({ mouseX, onOpen }: { mouseX: MotionValue<number>; onOpen: () => void }) {
-  const ref = useRef<HTMLButtonElement>(null);
-  const width = useMagnify(ref, mouseX);
-  return (
-    <div className="group/dockitem relative flex flex-col items-center">
-      <motion.button
-        ref={ref}
-        style={{ width, height: width }}
-        onClick={onOpen}
-        aria-label="Trash"
-        whileTap={{ scale: 0.88 }}
-        className="relative flex items-center justify-center"
-      >
-        <Tooltip label="Trash" />
-        <AppIcon id="trash" className="h-full w-full drop-shadow-[0_5px_10px_rgba(0,0,0,0.35)]" />
-      </motion.button>
-      <span className="mt-1.5 h-1.5 w-1.5" />
-    </div>
-  );
-}
-
 export default function Dock() {
   const mouseX = useMotionValue(Infinity);
   const windows = useSystemStore((s) => s.windows);
   const dockOrder = useSystemStore((s) => s.dockOrder);
   const setDockOrder = useSystemStore((s) => s.setDockOrder);
-  const [trashOpen, setTrashOpen] = useState(false);
 
   return (
-    <>
-      <motion.footer
-        initial={{ y: 90, opacity: 0 }}
-        animate={{ y: 0, opacity: 1 }}
-        transition={{ type: "spring", stiffness: 200, damping: 20, delay: 0.35 }}
-        className="fixed inset-x-0 bottom-3 z-[950] flex justify-center"
+    <motion.footer
+      initial={{ y: 90, opacity: 0 }}
+      animate={{ y: 0, opacity: 1 }}
+      transition={{ type: "spring", stiffness: 200, damping: 20, delay: 0.35 }}
+      className="fixed inset-x-0 bottom-3 z-[950] flex justify-center"
+    >
+      <div
+        onMouseMove={(e) => mouseX.set(e.clientX)}
+        onMouseLeave={() => mouseX.set(Infinity)}
+        className="glass-dock flex items-end gap-3 rounded-[22px] px-4 pb-1.5 pt-3"
       >
-        <div
-          onMouseMove={(e) => mouseX.set(e.clientX)}
-          onMouseLeave={() => mouseX.set(Infinity)}
-          className="glass-dock flex items-end gap-3 rounded-[22px] px-4 pb-1.5 pt-3"
-        >
-          <Reorder.Group as="div" axis="x" values={dockOrder} onReorder={setDockOrder} className="flex items-end gap-3">
-            {dockOrder.map((id, i) => {
-              const app = getAppMeta(id);
-              return (
-                <Reorder.Item
-                  as="div"
-                  key={id}
-                  value={id}
-                  initial={{ y: 30, opacity: 0 }}
-                  animate={{ y: 0, opacity: 1 }}
-                  transition={{ delay: 0.4 + i * 0.06, type: "spring", stiffness: 260, damping: 20 }}
-                  whileDrag={{ scale: 1.1, zIndex: 1 }}
-                  className="cursor-grab active:cursor-grabbing"
-                >
-                  <DockIcon
-                    id={app.id}
-                    label={app.label}
-                    mouseX={mouseX}
-                    isOpen={windows[app.id].isOpen}
-                    isMinimized={windows[app.id].isMinimized}
-                  />
-                </Reorder.Item>
-              );
-            })}
-          </Reorder.Group>
-
-          {/* separator between apps and the Trash, like the real dock */}
-          <span className="mb-4 h-12 w-px self-end bg-white/25" aria-hidden />
-
-          <motion.div
-            initial={{ y: 30, opacity: 0 }}
-            animate={{ y: 0, opacity: 1 }}
-            transition={{ delay: 0.4 + dockOrder.length * 0.06, type: "spring", stiffness: 260, damping: 20 }}
-          >
-            <TrashIcon mouseX={mouseX} onOpen={() => setTrashOpen(true)} />
-          </motion.div>
-        </div>
-      </motion.footer>
-
-      <AnimatePresence>{trashOpen && <TrashPanel onClose={() => setTrashOpen(false)} />}</AnimatePresence>
-    </>
+        <Reorder.Group as="div" axis="x" values={dockOrder} onReorder={setDockOrder} className="flex items-end gap-3">
+          {dockOrder.map((id, i) => {
+            const app = getAppMeta(id);
+            return (
+              <Reorder.Item
+                as="div"
+                key={id}
+                value={id}
+                initial={{ y: 30, opacity: 0 }}
+                animate={{ y: 0, opacity: 1 }}
+                transition={{ delay: 0.4 + i * 0.06, type: "spring", stiffness: 260, damping: 20 }}
+                whileDrag={{ scale: 1.1, zIndex: 1 }}
+                className="cursor-grab active:cursor-grabbing"
+              >
+                <DockIcon
+                  id={app.id}
+                  label={app.label}
+                  mouseX={mouseX}
+                  isOpen={windows[app.id].isOpen}
+                  isMinimized={windows[app.id].isMinimized}
+                />
+              </Reorder.Item>
+            );
+          })}
+        </Reorder.Group>
+      </div>
+    </motion.footer>
   );
 }
