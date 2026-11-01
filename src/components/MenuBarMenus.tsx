@@ -14,11 +14,11 @@ type Item = { label: string; shortcut?: string; checked?: boolean; action: () =>
 type Menu = { title: string; items: Item[] };
 
 const GO_LABELS: Record<AppId, string> = {
-  finder: "Tentang aku",
-  terminal: "Skill (Terminal)",
-  safari: "Proyek",
-  mail: "Kontak",
-  notes: "Case study",
+  finder: "About me",
+  terminal: "Skills (Terminal)",
+  safari: "Projects",
+  mail: "Contact",
+  notes: "Case studies",
   photos: "Photos",
   settings: "Settings",
 };
@@ -78,40 +78,40 @@ export default function MenuBarMenus() {
     {
       title: "File",
       items: [
-        { label: "Pesan baru", action: () => store().openApp("mail") },
-        { label: "Buka resume (PDF)", action: () => window.open("/resume.pdf", "_blank") },
+        { label: "New message", action: () => store().openApp("mail") },
+        { label: "Open resume (PDF)", action: () => window.open("/resume.pdf", "_blank") },
         "sep",
-        { label: "Kunci layar", action: () => store().lock() },
+        { label: "Lock screen", action: () => store().lock() },
       ],
     },
     {
       title: "Edit",
       items: [
         {
-          label: "Salin alamat email",
+          label: "Copy email address",
           action: () => {
             navigator.clipboard?.writeText(profile.email).then(
-              () => setToast("Email disalin"),
+              () => setToast("Email copied"),
               () => setToast(profile.email)
             );
           },
         },
-        { label: "Cari…", shortcut: `${mod}K`, action: () => store().setSpotlightOpen(true) },
+        { label: "Search…", shortcut: `${mod}K`, action: () => store().setSpotlightOpen(true) },
       ],
     },
     {
       title: "View",
       items: [
-        { label: "Mode terang", checked: theme === "light", action: () => store().toggleTheme() },
+        { label: "Light mode", checked: theme === "light", action: () => store().toggleTheme() },
         {
-          label: "Wallpaper berikutnya",
+          label: "Next wallpaper",
           action: () => {
             if (!wallpapers.length) return;
             const i = wallpapers.findIndex((w) => w.id === wallpaperId);
             store().setWallpaper(wallpapers[(i + 1) % wallpapers.length].id);
           },
         },
-        { label: "Efek suara", checked: soundEnabled, action: () => store().toggleSound() },
+        { label: "Sound effects", checked: soundEnabled, action: () => store().toggleSound() },
       ],
     },
     {
@@ -125,8 +125,8 @@ export default function MenuBarMenus() {
     {
       title: "Window",
       items: [
-        { label: "Minimize semua", action: () => openIds.forEach((id) => store().minimizeApp(id)) },
-        { label: "Tutup semua", action: () => openIds.forEach((id) => store().closeApp(id)) },
+        { label: "Minimize all", action: () => openIds.forEach((id) => store().minimizeApp(id)) },
+        { label: "Close all", action: () => openIds.forEach((id) => store().closeApp(id)) },
         ...(openIds.length ? (["sep"] as Item[]) : []),
         ...openIds.map((id) => ({
           label: getAppMeta(id).label + (windows[id].isMinimized ? " (minimized)" : ""),
@@ -138,10 +138,10 @@ export default function MenuBarMenus() {
     {
       title: "Help",
       items: [
-        { label: "Daftar perintah Terminal", action: () => store().openApp("terminal") },
-        { label: "Kirim masukan", action: () => store().openApp("mail") },
+        { label: "Terminal commands", action: () => store().openApp("terminal") },
+        { label: "Send feedback", action: () => store().openApp("mail") },
         {
-          label: "Source code di GitHub",
+          label: "Source code on GitHub",
           action: () => window.open("https://github.com/MuhammadIrsyadd", "_blank"),
         },
       ],

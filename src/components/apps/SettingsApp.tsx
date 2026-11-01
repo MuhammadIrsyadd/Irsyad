@@ -63,19 +63,19 @@ export default function SettingsApp() {
   return (
     <AppFrame id="settings" title="Settings" minWidth={380}>
       <div className="flex flex-col gap-5 p-4 sm:p-5">
-        <Group title="Tampilan">
+        <Group title="Appearance">
           <div className="flex items-center justify-between px-3.5 py-3">
             <div className="flex flex-col">
-              <span className="text-[13px] text-white">Mode terang</span>
+              <span className="text-[13px] text-white">Light mode</span>
               <span className="text-[11.5px] text-white/50">
-                {theme === "dark" ? "Sekarang mode gelap (default)" : "Sekarang mode terang"}
+                {theme === "dark" ? "Currently dark mode (default)" : "Currently light mode"}
               </span>
             </div>
-            <Toggle checked={theme === "light"} onChange={toggleTheme} label="Ganti mode terang dan gelap" />
+            <Toggle checked={theme === "light"} onChange={toggleTheme} label="Switch between light and dark mode" />
           </div>
 
           <div className="flex items-center justify-between px-3.5 py-3">
-            <span className="text-[13px] text-white">Warna aksen</span>
+            <span className="text-[13px] text-white">Accent color</span>
             <div className="flex gap-2.5">
               {accents.map((a) => (
                 <button
@@ -108,26 +108,26 @@ export default function SettingsApp() {
           </div>
         </Group>
 
-        <Group title="Suara">
+        <Group title="Sound">
           <div className="flex items-center justify-between px-3.5 py-3">
             <div className="flex flex-col">
-              <span className="text-[13px] text-white">Efek suara UI</span>
-              <span className="text-[11.5px] text-white/50">Klik pelan ala macOS saat buka jendela</span>
+              <span className="text-[13px] text-white">UI sound effects</span>
+              <span className="text-[11.5px] text-white/50">A soft macOS-style click when opening windows</span>
             </div>
-            <Toggle checked={soundEnabled} onChange={toggleSound} label="Efek suara UI" />
+            <Toggle checked={soundEnabled} onChange={toggleSound} label="UI sound effects" />
           </div>
         </Group>
 
-        <Group title="Tentang portfolio ini">
+        <Group title="About this portfolio">
           <div className="flex gap-3.5 px-3.5 py-3.5">
             <SuryaMajapahit className="h-11 w-11 shrink-0" color="#f2a94e" title="Surya Majapahit" />
             <div className="flex flex-col gap-1.5">
               <span className="text-[13px] font-semibold text-white">Portfolio OS</span>
               <p className="text-[12px] leading-relaxed text-white/70">
-                Portofolio ini dibangun sebagai simulasi desktop macOS bermaterial Liquid Glass, lengkap dengan
-                window system, dock magnify, dan boot sequence. Emblemnya Surya Majapahit, lambang kerajaan yang dulu berpusat di Mojokerto.
+                This portfolio is built as a macOS desktop simulation with Liquid Glass materials, complete with a
+                window system, dock magnification and a boot sequence. Its emblem is the Surya Majapahit, the symbol of the kingdom once centered in Mojokerto.
               </p>
-              <p className="text-[11.5px] text-white/50">Dibangun dengan {stack.join(", ")}.</p>
+              <p className="text-[11.5px] text-white/50">Built with {stack.join(", ")}.</p>
             </div>
           </div>
         </Group>

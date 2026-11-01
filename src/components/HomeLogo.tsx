@@ -22,7 +22,7 @@ export default function HomeLogo() {
             className="glass-modal pointer-events-none mb-2 rounded-xl px-2.5 py-1 text-[11px] font-medium text-white shadow-xl backdrop-blur-md"
           >
             <span className="text-[var(--accent-300)] font-semibold">{profile.shortName || "Muh Irsyad"}</span>
-            <span className="text-white/50 ml-1.5 font-mono-ui text-[10px]">Portfolio Irsyad</span>
+            <span className="text-white/50 ml-1.5 font-mono-ui text-[10px]">Irsyad&apos;s Portfolio</span>
           </motion.div>
         )}
       </AnimatePresence>
@@ -34,8 +34,8 @@ export default function HomeLogo() {
         onHoverEnd={() => setHovered(false)}
         whileHover={{ scale: 1.08 }}
         whileTap={{ scale: 0.94 }}
-        title="Buka Finder / About Me"
-        aria-label="Logo Portofolio"
+        title="Open Finder / About Me"
+        aria-label="Portfolio logo"
         className="group relative flex h-12 w-12 sm:h-15 sm:w-15 items-center justify-center rounded-2xl border border-white/15 bg-white p-2 shadow-2xl backdrop-blur-xl transition-colors hover:border-[var(--accent-400)]/40 hover:bg-white"
       >
         {/* Subtle glowing halo */}

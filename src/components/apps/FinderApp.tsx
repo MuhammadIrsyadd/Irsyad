@@ -51,7 +51,7 @@ export default function FinderApp() {
           }`}
         >
           <div className="flex flex-col gap-0.5">
-            <span className="mb-1 px-2 text-[11px] font-semibold text-white/40">Favorit</span>
+            <span className="mb-1 px-2 text-[11px] font-semibold text-white/40">Favorites</span>
             {tabs.map((t) => (
               <button
                 key={t.id}
@@ -116,7 +116,7 @@ export default function FinderApp() {
                         <div className="flex flex-wrap items-center gap-2 pt-2">
                           <Magnet padding={30} magnetStrength={6}>
                             <button onClick={() => openApp("safari")} className={primaryButton}>
-                              Lihat proyek
+                              View projects
                             </button>
                           </Magnet>
                           <Magnet padding={30} magnetStrength={6}>
@@ -127,7 +127,7 @@ export default function FinderApp() {
                           </Magnet>
                           <Magnet padding={30} magnetStrength={6}>
                             <button onClick={() => openApp("mail")} className={secondaryButton}>
-                              Kirim pesan
+                              Send a message
                             </button>
                           </Magnet>
                           {profile.linkedin && (
@@ -147,8 +147,8 @@ export default function FinderApp() {
                       <dl className="hairline grid grid-cols-[96px_1fr] border-t text-[12.5px]">
                         {[
                           ["Status", profile.availability],
-                          ["Lokasi", profile.location],
-                          ["IPK", "3.93 / 4.00"],
+                          ["Location", profile.location],
+                          ["GPA", "3.93 / 4.00"],
                           ["Email", profile.email],
                         ].map(([k, v]) => (
                           <div key={k} className="hairline col-span-2 grid grid-cols-subgrid border-b py-2">
@@ -160,12 +160,12 @@ export default function FinderApp() {
                     </section>
 
                     <section>
-                      <Heading>Ringkasan</Heading>
+                      <Heading>Summary</Heading>
                       <p className="max-w-[68ch] text-[13px] leading-relaxed text-white/80">{profile.summary}</p>
                     </section>
 
                     <section>
-                      <Heading>Sorotan</Heading>
+                      <Heading>Highlights</Heading>
                       <ul className="hairline border-t">
                         {overviewHighlights.map((h) => (
                           <li key={h.title} className="hairline flex items-start gap-3 border-b py-3">
@@ -194,17 +194,17 @@ export default function FinderApp() {
                           <div className="flex flex-col text-[12px] tabular-nums sm:items-end">
                             <span className="text-white/60">{edu.period}</span>
                             <span className="font-semibold text-emerald-500">
-                              IPK {edu.gpa} / {edu.maxGpa}
+                              GPA {edu.gpa} / {edu.maxGpa}
                             </span>
                           </div>
                         </div>
                         <p className="max-w-[68ch] text-[13px] leading-relaxed text-white/75">{edu.description}</p>
                         <blockquote className="border-l-2 border-[var(--accent-500)] pl-3 text-[12.5px] leading-relaxed text-white/85">
-                          <span className="font-semibold">Skripsi: </span>
+                          <span className="font-semibold">Thesis: </span>
                           {edu.thesis}
                         </blockquote>
                         <div>
-                          <p className="mb-1.5 text-[12px] text-white/50">Mata kuliah utama</p>
+                          <p className="mb-1.5 text-[12px] text-white/50">Key coursework</p>
                           <div className="flex flex-wrap gap-1.5">
                             {edu.coursework.map((course) => (
                               <span key={course} className="rounded-md bg-white/5 px-2 py-1 text-[11.5px] text-white/80">
@@ -217,7 +217,7 @@ export default function FinderApp() {
                     ))}
 
                     <section>
-                      <Heading>Penghargaan</Heading>
+                      <Heading>Awards</Heading>
                       <ul className="hairline border-t">
                         {awards.map((award) => (
                           <li key={award.title} className="hairline flex gap-3 border-b py-3">
@@ -241,8 +241,8 @@ export default function FinderApp() {
                 {tab === "journey" && (
                   <section className="flex flex-col gap-3">
                     <div className="flex items-baseline justify-between gap-3">
-                      <h1 className="text-[18px] font-semibold tracking-tight text-white">Pengalaman kerja & magang</h1>
-                      <span className="hidden text-[11.5px] text-white/50 sm:inline">Scroll untuk mundur ke masa lalu</span>
+                      <h1 className="text-[18px] font-semibold tracking-tight text-white">Work & internship experience</h1>
+                      <span className="hidden text-[11.5px] text-white/50 sm:inline">Scroll to go back in time</span>
                     </div>
                     <TimeMachine />
                   </section>
@@ -251,7 +251,7 @@ export default function FinderApp() {
                 {tab === "organization" && (
                   <>
                     <section>
-                      <Heading>Jabatan organisasi</Heading>
+                      <Heading>Organization roles</Heading>
                       <ul className="hairline border-t">
                         {organizations.map((org) => (
                           <li key={org.role + org.period} className="hairline flex flex-col gap-1.5 border-b py-3">
@@ -276,13 +276,13 @@ export default function FinderApp() {
 
                     {/* Finder list view: column headers + rows */}
                     <section>
-                      <Heading>Kepanitiaan & event</Heading>
+                      <Heading>Committees & events</Heading>
                       <div className="hairline overflow-hidden rounded-lg border">
                         <div className="hairline hidden grid-cols-[1.1fr_1.2fr_1.2fr_0.9fr] gap-3 border-b bg-white/5 px-3 py-1.5 text-[11px] font-medium text-white/50 md:grid">
-                          <span>Peran</span>
+                          <span>Role</span>
                           <span>Event</span>
-                          <span>Penyelenggara</span>
-                          <span className="text-right">Periode</span>
+                          <span>Organizer</span>
+                          <span className="text-right">Period</span>
                         </div>
                         {committees.map((com, i) => (
                           <div

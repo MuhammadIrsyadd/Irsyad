@@ -1,6 +1,5 @@
-// Semua konten portofolio dipusatkan di sini supaya gampang diganti
-// tanpa menyentuh komponen. Isi placeholder di bawah — tinggal edit
-// teks & data-nya sesuai dirimu.
+// All portfolio content lives here so it can be changed without touching
+// the components.
 
 export const profile = {
   name: "Muh. Irsyad Dwi Kurniawan",
@@ -10,10 +9,10 @@ export const profile = {
   email: "muhammadirsyad258@gmail.com",
   phone: "+62 813-3100-2068",
   linkedin: "https://www.linkedin.com/in/muh-irsyad-dwi-kurniawan/",
-  tagline: "Spesialisasi Web (Laravel, Next.js) & Mobile (Kotlin). Mengutamakan skalabilitas, efisiensi, dan antarmuka ramah pengguna.",
+  tagline: "Specializing in Web (Laravel, Next.js) and Mobile (Kotlin), with a focus on scalability, efficiency and user-friendly interfaces.",
   summary:
-    "Lulusan S1 Informatika UPN 'Veteran' Jawa Timur (IPK 3.93/4.00) dengan pengalaman praktis dalam pengembangan sistem ERP (Laravel) dan aplikasi mobile (Kotlin). Memiliki rekam jejak magang di PT. INKA serta pelatihan intensif di Bangkit Academy. Terampil dalam problem-solving, optimasi sistem, dan pengembangan kolaboratif untuk menghadirkan solusi digital yang efisien, terukur, dan berdampak.",
-  availability: "Terbuka untuk peluang kerja & kolaborasi",
+    "Informatics graduate from UPN 'Veteran' Jawa Timur (GPA 3.93/4.00) with hands-on experience building ERP systems (Laravel) and mobile apps (Kotlin). Completed an internship at PT. INKA and intensive training at Bangkit Academy. Skilled in problem-solving, system optimization and collaborative development, delivering digital solutions that are efficient, measurable and impactful.",
+  availability: "Open to work & collaboration",
 };
 
 export type HighlightItem = {
@@ -27,28 +26,28 @@ export type HighlightItem = {
 export const overviewHighlights: HighlightItem[] = [
   {
     icon: "school",
-    title: "Pendidikan Terakhir",
-    value: "S1 Informatika",
-    sub: "UPN 'Veteran' Jawa Timur · IPK 3.93/4.00",
+    title: "Latest Education",
+    value: "Bachelor's in Informatics",
+    sub: "UPN 'Veteran' Jawa Timur · GPA 3.93/4.00",
     accent: "text-amber-400 bg-amber-400/10 border-amber-400/30",
   },
   {
     icon: "work",
-    title: "Pengalaman Industri",
+    title: "Industry Experience",
     value: "IT Intern @ PT. INKA",
-    sub: "Pengembangan ERP & Bangkit Academy Cohort",
+    sub: "ERP Development & Bangkit Academy Cohort",
     accent: "text-blue-400 bg-blue-400/10 border-blue-400/30",
   },
   {
     icon: "emoji_events",
-    title: "Prestasi Terkini",
-    value: "Juara 2 Web Competition",
+    title: "Latest Achievement",
+    value: "2nd Place, Web Competition",
     sub: "HIMATIFTA UNTAG Surabaya",
     accent: "text-emerald-400 bg-emerald-400/10 border-emerald-400/30",
   },
   {
     icon: "terminal",
-    title: "Keahlian Utama",
+    title: "Core Skills",
     value: "Web & Mobile Dev",
     sub: "Laravel, Next.js, Kotlin, System Optimization",
     accent: "text-purple-400 bg-purple-400/10 border-purple-400/30",
@@ -69,8 +68,8 @@ export type EducationItem = {
 export const educationHistory: EducationItem[] = [
   {
     institution: "UPN \"Veteran\" Jawa Timur",
-    degree: "Bachelor of Computer Science (S1 Informatika)",
-    period: "Sept 2021 – Des 2025",
+    degree: "Bachelor of Computer Science (Informatics)",
+    period: "Sep 2021 – Dec 2025",
     gpa: "3.93",
     maxGpa: "4.00",
     thesis: "Visual Computing",
@@ -82,7 +81,7 @@ export const educationHistory: EducationItem[] = [
       "Machine Learning",
     ],
     description:
-      "Menyelesaikan studi Sarjana Komputer dengan predikat Dengan Pujian (Cumlaude, IPK 3.93/4.00). Mendalami rekayasa perangkat lunak, perancangan antarmuka intuitif, dan komputasi visual.",
+      "Graduated with a Bachelor of Computer Science, Cum Laude (GPA 3.93/4.00). Focused on software engineering, intuitive interface design and visual computing.",
   },
 ];
 
@@ -96,11 +95,11 @@ export type AwardItem = {
 
 export const awards: AwardItem[] = [
   {
-    title: "Juara 2 Web Competition",
+    title: "2nd Place, Web Competition",
     issuer: "HIMATIFTA UNTAG Surabaya",
-    period: "Maret 2022",
+    period: "March 2022",
     description:
-      "Merancang dan mengembangkan website profil perusahaan responsif (minimum 3 halaman). Berkolaborasi dalam tim menangani implementasi coding antarmuka yang adaptif dan interaktif.",
+      "Designed and built a responsive company profile website (minimum 3 pages), collaborating as a team to implement an adaptive, interactive interface.",
     skills: ["JavaScript", "CSS3", "Responsive Web Design"],
   },
 ];
@@ -119,47 +118,47 @@ export type JourneyItem = {
 export const journey: JourneyItem[] = [
   {
     year: "2024",
-    period: "Feb 2024 – Juli 2024",
+    period: "Feb 2024 – Jul 2024",
     title: "Information Technology Intern",
     company: "PT. INKA (Persero)",
     type: "Internship",
     description:
-      "Pengembangan dan pemeliharaan aplikasi web ERP perusahaan dengan framework Laravel untuk efisiensi operasional.",
+      "Developed and maintained the company's ERP web application with Laravel to improve operational efficiency.",
     bullets: [
-      "Mengembangkan dan memelihara aplikasi web ERP perusahaan menggunakan framework Laravel.",
-      "Berkolaborasi dengan tim lintas fungsi untuk merancang dan mengimplementasikan antarmuka web yang user-friendly.",
-      "Mengoptimalkan fitur sistem demi meningkatkan efisiensi dan kemudahan operasional pengguna akhir.",
-      "Membantu proses debugging, troubleshooting, dan perbaikan modul-modul sistem berjalan.",
-      "Menjalin komunikasi efektif dalam tim guna memastikan seluruh kebutuhan proyek terimplementasi dengan tepat.",
+      "Developed and maintained the company's ERP web application using the Laravel framework.",
+      "Worked with cross-functional teams to design and implement user-friendly web interfaces.",
+      "Optimized system features to make daily operations more efficient and easier for end users.",
+      "Assisted with debugging, troubleshooting and fixing live system modules.",
+      "Communicated effectively within the team to ensure all project requirements were implemented correctly.",
     ],
     skills: ["Laravel", "PHP", "ERP Systems", "Troubleshooting", "Cross-Functional Team"],
   },
   {
     year: "2023–2024",
-    period: "Agu 2023 – Jan 2024",
+    period: "Aug 2023 – Jan 2024",
     title: "Mobile Development Cohort",
     company: "Bangkit Academy led by Google, Tokopedia, Gojek, & Traveloka",
-    type: "Studi Independen",
+    type: "Independent Study",
     description:
-      "Pelatihan intensif pengembangan aplikasi mobile Android berskala industri yang didukung oleh Google.",
+      "Intensive, industry-scale Android development training backed by Google.",
     bullets: [
-      "Mempelajari dan menerapkan fundamental pemrograman modern Kotlin, SOLID Paradigm, dan Jetpack Compose.",
-      "Membangun aplikasi Android secara bertahap: level Beginner, Fundamental, hingga Intermediate.",
-      "Menerapkan prinsip arsitektur perangkat lunak yang bersih (Clean Architecture) dan integrasi RESTful API.",
+      "Learned and applied modern Kotlin fundamentals, the SOLID paradigm and Jetpack Compose.",
+      "Built Android apps progressively through the Beginner, Fundamental and Intermediate levels.",
+      "Applied Clean Architecture principles and RESTful API integration.",
     ],
     skills: ["Kotlin", "Jetpack Compose", "Android Studio", "SOLID Paradigm", "REST APIs"],
   },
   {
-    year: "2021–Sekarang",
-    period: "2021 – Sekarang",
+    year: "2021–Present",
+    period: "2021 – Present",
     title: "Full-Stack & Creative Development",
     company: "Independent & Open Source Exploration",
-    type: "Proyek & Eksplorasi",
+    type: "Projects & Exploration",
     description:
-      "Eksplorasi berkesinambungan dalam membangun aplikasi web modern, desktop simulator, dan desain antarmuka interaktif.",
+      "Ongoing exploration in building modern web apps, a desktop simulator and interactive interface design.",
     bullets: [
-      "Membangun proyek personal seperti Liquid Glass OS dengan Next.js, Framer Motion, dan Tailwind CSS.",
-      "Mengeksplorasi integrasi modern frontend, REST API, state management, dan estetika visual tingkat tinggi.",
+      "Built personal projects such as Liquid Glass OS with Next.js, Framer Motion and Tailwind CSS.",
+      "Explored modern frontend integration, REST APIs, state management and high-end visual design.",
     ],
     skills: ["Next.js", "React", "TypeScript", "Tailwind CSS", "Framer Motion"],
   },
@@ -175,32 +174,32 @@ export type OrganizationItem = {
 
 export const organizations: OrganizationItem[] = [
   {
-    period: "Feb 2023 – Mei 2024",
+    period: "Feb 2023 – May 2024",
     role: "Head of Event Division",
     organization: "Veteran Esports",
     bullets: [
-      "Memimpin dan mengawasi 8 anggota divisi dalam perencanaan, pembagian tanggung jawab, dan pelaksanaan seluruh event.",
-      "Memonitor jalannya 4 event berskala besar dan 5 agenda kegiatan, serta mengevaluasi performa panitia dan capaian acara.",
+      "Led and supervised 8 division members in planning, delegating and running all events.",
+      "Oversaw 4 large-scale events and 5 activity programs, and evaluated committee performance and event outcomes.",
     ],
-    highlights: "Kepemimpinan divisi event berskala regional & lintas universitas.",
+    highlights: "Led an event division at a regional, inter-university scale.",
   },
   {
     period: "Apr 2022 – Feb 2023",
     role: "Staff of Communication and Information",
-    organization: "HIMATIFA (Himpunan Mahasiswa Informatika)",
+    organization: "HIMATIFA (Informatics Student Association)",
     bullets: [
-      "Merancang konten kreatif, feeds, dan stories informatif untuk akun media sosial resmi Instagram HIMATIFA.",
-      "Mengelola publikasi media sosial dan aktif melayani interaksi maupun pertanyaan dari mahasiswa.",
+      "Created creative content, feed posts and informative stories for HIMATIFA's official Instagram account.",
+      "Managed social media publishing and actively handled student interactions and questions.",
     ],
-    highlights: "Manajemen komunikasi visual & media sosial himpunan jurusan.",
+    highlights: "Managed visual communication and social media for the student association.",
   },
   {
-    period: "Des 2021 – Jan 2023",
+    period: "Dec 2021 – Jan 2023",
     role: "Staff of Event Division",
     organization: "Veteran Esports",
     bullets: [
-      "Bertanggung jawab atas kelancaran berbagai agenda kegiatan dan mendampingi ketua pelaksana di setiap acara.",
-      "Dipercaya menjadi PIC utama untuk agenda besar M4 World Championship Watch Party.",
+      "Responsible for running activities smoothly and supporting the event chair at every event.",
+      "Trusted as the main PIC for the major M4 World Championship Watch Party.",
     ],
   },
 ];
@@ -216,84 +215,84 @@ export type CommitteeItem = {
 
 export const committees: CommitteeItem[] = [
   {
-    period: "Sept 2023 – Nov 2023",
+    period: "Sep 2023 – Nov 2023",
     role: "Steering Committee",
     event: "VESDL Season 3",
     organizer: "Veteran Esports",
-    description: "Supervisi dan arahan strategis kepada ketua pelaksana saat menghadapi kendala teknis.",
-    impact: "Sukses menyelenggarakan hybrid event 5 hari dengan 100 peserta dari 4 cabang game.",
+    description: "Provided supervision and strategic direction to the event chair when technical issues came up.",
+    impact: "Successfully ran a 5-day hybrid event with 100 participants across 4 game titles.",
   },
   {
-    period: "Mei 2023 – Agu 2023",
+    period: "May 2023 – Aug 2023",
     role: "Steering Committee",
     event: "Veteran East Java",
     organizer: "Veteran Esports",
-    description: "Mengarahkan dan memonitor ketua pelaksana serta seluruh panitia dalam turnamen offline se-Jawa Timur.",
-    impact: "Event berlangsung lancar di BG Junction Surabaya, diikuti 160 peserta (32 slot tim MLBB).",
+    description: "Guided and monitored the event chair and the full committee for an offline East Java-wide tournament.",
+    impact: "The event ran smoothly at BG Junction Surabaya with 160 participants (32 MLBB team slots).",
   },
   {
     period: "Jan 2023 – Feb 2023",
     role: "Steering Committee",
     event: "Doran Goes To Campus",
     organizer: "Veteran Esports",
-    description: "Memberikan panduan strategis dalam perencanaan, eksekusi, dan evaluasi kegiatan bersama klien.",
-    impact: "Sukses memenuhi target event klien (Doran Gadget) dalam 1 hari dengan 160 peserta.",
+    description: "Gave strategic guidance on planning, execution and evaluation of the event with the client.",
+    impact: "Met the client's (Doran Gadget) event targets in 1 day with 160 participants.",
   },
   {
-    period: "Okt 2023 – Nov 2023",
+    period: "Oct 2023 – Nov 2023",
     role: "Staff Logistic",
     event: "PMCC 2023 (PUBG Mobile)",
     organizer: "Veteran Esports & Tencent Indonesia",
-    description: "Mempersiapkan seluruh kebutuhan logistik, tata panggung, sarana teknis, serta data registrasi peserta.",
-    impact: "Event turnamen & workshop berjalan lancar dengan 80 peserta, dihadiri langsung oleh Tencent Indonesia.",
+    description: "Prepared all logistics, stage setup, technical equipment and participant registration data.",
+    impact: "The tournament and workshop ran smoothly with 80 participants, attended in person by Tencent Indonesia.",
   },
   {
-    period: "Des 2022 – Jan 2023",
+    period: "Dec 2022 – Jan 2023",
     role: "PIC (Person In Charge)",
     event: "M4 Watch Party",
     organizer: "Veteran Esports & Moonton",
-    description: "Liaison antara Moonton dan panitia untuk memastikan keselarasan regulasi dan kesiapan venue.",
-    impact: "Event berjalan sukses di Hotel Harris selama 2 hari dengan target 100 peserta per hari bersama tim inti 5 orang.",
+    description: "Acted as liaison between Moonton and the committee to align on regulations and venue readiness.",
+    impact: "Successfully ran for 2 days at Hotel Harris, targeting 100 participants per day with a core team of 5.",
   },
   {
     period: "Nov 2022",
-    role: "Head of Pubdok",
+    role: "Head of Publication & Documentation",
     event: "Sapa Desa",
     organizer: "HIMATIFA",
-    description: "Memimpin dokumentasi foto/video dan materi publikasi selama kegiatan pengabdian masyarakat.",
-    impact: "Distribusi publikasi berjalan teratur dan terdokumentasi lengkap.",
+    description: "Led photo/video documentation and publication materials during a community service program.",
+    impact: "Publications went out on schedule and the program was fully documented.",
   },
   {
-    period: "Juli 2022 – Agu 2022",
-    role: "Staff Pubdok",
+    period: "Jul 2022 – Aug 2022",
+    role: "Publication & Documentation Staff",
     event: "Hampers HIMATIFA",
     organizer: "HIMATIFA",
-    description: "Merancang desain feed Instagram, merchandise, dan video promosi hampers bersama tim.",
-    impact: "Peningkatan awareness dan kelancaran penjualan paket hampers.",
+    description: "Designed Instagram feed posts, merchandise and promotional videos for gift hampers with the team.",
+    impact: "Raised awareness and supported smooth sales of the hamper packages.",
   },
 ];
 
-// Nilai filosofis desain (opsional / pelengkap)
+// Design values (optional)
 export const values = [
   {
     icon: "straighten",
-    title: "Presisi & Performa",
-    description: "Detail arsitektur, clean code, serta optimasi efisiensi pada sisi web maupun mobile.",
+    title: "Precision & Performance",
+    description: "Careful architecture, clean code and efficient optimization on both web and mobile.",
   },
   {
     icon: "speed",
-    title: "Solusi Skalabel",
-    description: "Membangun sistem yang siap berkembang dan mudah dipelihara jangka panjang.",
+    title: "Scalable Solutions",
+    description: "Building systems that are ready to grow and easy to maintain long term.",
   },
   {
     icon: "magic_button",
     title: "User Experience",
-    description: "Antarmuka yang intuitif dan nyaman digunakan oleh pengguna akhir.",
+    description: "Interfaces that are intuitive and comfortable for end users.",
   },
   {
     icon: "hub",
-    title: "Kolaborasi Tim",
-    description: "Komunikasi aktif dan kerja sama lintas fungsi untuk mencapai target proyek.",
+    title: "Team Collaboration",
+    description: "Active communication and cross-functional teamwork to hit project goals.",
   },
 ];
 
@@ -308,16 +307,16 @@ export const skills: Skill[] = [
     items: ["React", "Next.js", "TypeScript", "Tailwind CSS", "Framer Motion"],
   },
   {
-    category: "Interaksi & Animasi",
-    items: ["Framer Motion", "GSAP", "CSS Animations", "Canvas/WebGL dasar"],
+    category: "Interaction & Animation",
+    items: ["Framer Motion", "GSAP", "CSS Animations", "Canvas/WebGL basics"],
   },
   {
     category: "Tooling",
     items: ["Git", "Figma", "Vite", "Vercel", "ESLint/Prettier"],
   },
   {
-    category: "Belajar Sekarang",
-    items: ["Three.js", "React Three Fiber", "Shader (GLSL) dasar"],
+    category: "Currently Learning",
+    items: ["Three.js", "React Three Fiber", "Shader (GLSL) basics"],
   },
 ];
 
@@ -340,7 +339,7 @@ export const projects: Project[] = [
     name: "Arcana Mystica — Tarot Divination",
     tagline: "Modern Digital Divination & Tarot Exploration Platform",
     description:
-      "Platform ramalan modern interaktif yang memadukan simbolisme klasik dengan antarmuka digital yang estetik dan imersif. Menghadirkan fitur Bacaan Harian (Daily Reading), beragam tebaran kartu (Spreads), ensiklopedia makna kartu lengkap, jurnal refleksi pribadi, serta penyejajaran kosmik dan rasi zodiak.",
+      "An interactive modern divination platform that blends classic symbolism with an aesthetic, immersive digital interface. Features Daily Readings, a range of card Spreads, a complete encyclopedia of card meanings, a personal reflection journal, and cosmic alignments with zodiac constellations.",
     tech: ["Next.js", "React", "Tailwind CSS", "Framer Motion", "Lucide Icons"],
     url: "https://tarot.muhirsyad.my.id",
     accent: "violet",
@@ -349,10 +348,10 @@ export const projects: Project[] = [
   },
   {
     id: "gigizi",
-    name: "GIGIZI — Nutrisi di Ujung Jari",
-    tagline: "Kalkulator Nutrisi & Dapur Digital Makanan Khas Indonesia",
+    name: "GIGIZI — Nutrition at Your Fingertips",
+    tagline: "Nutrition Calculator & Digital Kitchen for Indonesian Food",
     description:
-      "Aplikasi kalkulator dan edukasi gizi praktis yang disesuaikan dengan makanan lokal Indonesia (Warteg, Tempe, Rendang, dll.). Menghadirkan penghitungan kalori & makronutrien real-time, rekomendasi kebutuhan harian personal, fitur komparasi 'Battle Gizi', dan ensiklopedia khasiat 'Apotek Alami'.",
+      "A practical nutrition calculator and education app tailored to local Indonesian food (Warteg, Tempe, Rendang and more). Features real-time calorie and macronutrient tracking, personalized daily recommendations, a 'Battle Gizi' comparison tool and an 'Apotek Alami' encyclopedia of natural remedies.",
     tech: ["Next.js", "TypeScript", "Tailwind CSS", "PWA", "Web Vitals"],
     url: "https://gigizi.muhirsyad.my.id",
     accent: "emerald",
@@ -364,7 +363,7 @@ export const projects: Project[] = [
     name: "QuadFuse 2048 ARCADE",
     tagline: "Cyberpunk / Synthwave Edition of the Classic 2048 Puzzle",
     description:
-      "Game puzzle angka 2048 dengan nuansa retro Synthwave & Cyberpunk arcade. Dilengkapi kontrol sentuh (swipe) halus dan keyboard (WASD / Panah), fitur Undo langkah, pelacak timer & gerakan, efek suara audio sintetis via Web Audio API, serta papan peringkat (Leaderboard) lokal tersimpan.",
+      "The 2048 number puzzle with a retro Synthwave and Cyberpunk arcade feel. Includes smooth swipe and keyboard (WASD / arrow) controls, move Undo, timer and move tracking, synthesized sound effects via the Web Audio API, and a locally saved leaderboard.",
     tech: ["React", "TypeScript", "Tailwind CSS", "Web Audio API", "LocalStorage"],
     url: "https://2048.muhirsyad.my.id",
     accent: "cyan",
@@ -376,7 +375,7 @@ export const projects: Project[] = [
     name: "Retro Bounce: The 25th Chamber",
     tagline: "Neon Retro Brick Breaker Arcade with 25 Stages",
     description:
-      "Game arkade penghancur bata klasik bergaya retro modern dengan 25 level penuh tantangan. Dibangun berbasis Canvas 2D dengan simulasi fisika pantulan bola, partikel ledakan neon dinamis, variasi ketahanan bata, audio sintetis multi-frekuensi, dan pencatat rekor Hi-Score.",
+      "A classic brick breaker arcade game in a modern retro style with 25 challenging levels. Built on Canvas 2D with ball bounce physics, dynamic neon explosion particles, varied brick durability, multi-frequency synthesized audio and Hi-Score tracking.",
     tech: ["React", "HTML5 Canvas 2D", "Web Audio API", "Game Physics"],
     url: "https://brickbreaker.muhirsyad.my.id",
     accent: "rose",
@@ -388,7 +387,7 @@ export const projects: Project[] = [
     name: "PenaltyZone — Soccer Penalty Shootout",
     tagline: "Interactive 2.5D Soccer Penalty Simulator",
     description:
-      "Mini-game adu tendangan penalti sepak bola interaktif dengan mekanisme geser arah tendangan (swipe-to-shoot) ke gawang. Dilengkapi simulasi kiper dinamis, animasi penonton interaktif (crowd simulation), pelacak skor & sisa percobaan, serta sistem evaluasi bintang akhir permainan.",
+      "An interactive soccer penalty shootout mini-game with swipe-to-shoot controls. Includes a dynamic goalkeeper, an animated crowd simulation, score and remaining-attempt tracking, and an end-of-game star rating.",
     tech: ["Vanilla JavaScript", "HTML5 Canvas", "Physics Engine", "CSS Animations"],
     url: "https://penalty.muhirsyad.my.id",
     accent: "emerald",
@@ -400,7 +399,7 @@ export const projects: Project[] = [
     name: "SKYRISE — Tower Stacker",
     tagline: "Build Your Legacy, One Floor at a Time",
     description:
-      "Game arkade vertikal menyusun lantai gedung bertingkat yang menguji ketepatan ritme dan konsentrasi. Mengusung mekanisme pemotongan balok otomatis saat posisi tidak presisi, pengganda poin combo streaks, pencatat rekor tinggi lantai, dan efek audio interaktif.",
+      "A vertical arcade game about stacking the floors of a tower, testing your timing and focus. Features automatic block trimming when a placement is off, combo streak multipliers, floor height records and interactive audio.",
     tech: ["Vite", "React", "TypeScript", "Tailwind CSS", "Tabler Icons"],
     url: "https://skyrise.muhirsyad.my.id",
     accent: "amber",
@@ -410,9 +409,9 @@ export const projects: Project[] = [
   {
     id: "liquid-glass-os",
     name: "Liquid Glass Portfolio OS",
-    tagline: "Simulasi desktop macOS interaktif — website portofolio ini.",
+    tagline: "An interactive macOS desktop simulation: this portfolio website.",
     description:
-      "Website portofolio yang dibungkus sebagai desktop environment lengkap dengan window system, dock magnify, terminal CLI interaktif, Spotlight search (Ctrl+K), dan material liquid glass aurora. Dibangun dari nol dengan Next.js, Framer Motion, dan Zustand.",
+      "A portfolio website wrapped as a desktop environment, complete with a window system, dock magnification, an interactive CLI terminal, Spotlight search (Ctrl+K) and liquid glass materials. Built from scratch with Next.js, Framer Motion and Zustand.",
     tech: ["Next.js", "TypeScript", "Tailwind CSS", "Framer Motion", "Zustand"],
     url: "https://muhirsyad.my.id",
     repo: "https://github.com/MuhammadIrsyadd/Irsyad",
@@ -423,9 +422,9 @@ export const projects: Project[] = [
   {
     id: "inka-erp",
     name: "Enterprise ERP System — PT. INKA",
-    tagline: "Sistem ERP perusahaan manufaktur kereta api terbesar di Asia Tenggara.",
+    tagline: "ERP system for the largest train manufacturer in Southeast Asia.",
     description:
-      "Pengembangan dan pemeliharaan aplikasi web ERP berbasis Laravel untuk mendukung operasional PT. INKA (Persero). Mencakup perancangan antarmuka user-friendly, optimasi modul sistem, debugging & troubleshooting, serta kolaborasi lintas divisi untuk memastikan efisiensi operasional pengguna akhir.",
+      "Developed and maintained a Laravel-based ERP web application supporting the operations of PT. INKA (Persero). Covered user-friendly interface design, system module optimization, debugging and troubleshooting, and cross-division collaboration to keep operations efficient for end users.",
     tech: ["Laravel", "PHP", "MySQL", "REST API", "Blade"],
     accent: "violet",
     category: "Enterprise System",
@@ -433,19 +432,19 @@ export const projects: Project[] = [
   {
     id: "bangkit-android",
     name: "Bangkit Capstone — Android Mobile App",
-    tagline: "Aplikasi Android skala industri hasil pelatihan intensif Google, Tokopedia, Gojek & Traveloka.",
+    tagline: "An industry-scale Android app from intensive training by Google, Tokopedia, Gojek & Traveloka.",
     description:
-      "Membangun aplikasi Android secara bertahap dari level Beginner hingga Intermediate sebagai bagian dari program Bangkit Academy 2023. Menerapkan Kotlin, Jetpack Compose, MVVM Clean Architecture, dan integrasi RESTful API. Menekankan prinsip SOLID Paradigm dan kualitas kode yang terukur.",
+      "Built Android apps progressively from Beginner to Intermediate level as part of the Bangkit Academy 2023 program, applying Kotlin, Jetpack Compose, MVVM Clean Architecture and RESTful API integration, with an emphasis on the SOLID paradigm and measurable code quality.",
     tech: ["Kotlin", "Jetpack Compose", "Android Studio", "Retrofit", "MVVM"],
     accent: "cyan",
     category: "Mobile App",
   },
   {
     id: "web-competition",
-    name: "Company Profile Website — Juara 2",
-    tagline: "Website profil perusahaan responsif pemenang Web Competition HIMATIFTA UNTAG Surabaya.",
+    name: "Company Profile Website — 2nd Place",
+    tagline: "A responsive company profile website, award winner at the HIMATIFTA UNTAG Surabaya Web Competition.",
     description:
-      "Merancang dan mengembangkan website profil perusahaan responsif minimal 3 halaman dalam kompetisi web tingkat regional. Berkolaborasi dalam tim untuk mengimplementasikan antarmuka yang adaptif, interaktif, dan memenuhi standar aksesibilitas. Berhasil meraih Juara 2 dari peserta se-Surabaya.",
+      "Designed and built a responsive company profile website of at least 3 pages for a regional web competition, collaborating as a team on an adaptive, interactive and accessible interface. Won 2nd place among participants from across Surabaya.",
     tech: ["JavaScript", "CSS3", "HTML5", "Responsive Design"],
     accent: "amber",
     category: "Web Competition",
@@ -458,7 +457,7 @@ export type Social = {
   handle: string;
   /** Leave empty until you drop in your real profile URL — an invented
    *  username could point to a stranger's real account, so this stays
-   *  blank (shown as "belum diisi" in the UI) instead of guessing. */
+   *  blank (shown as "not set" in the UI) instead of guessing. */
   url: string;
 };
 
@@ -486,49 +485,49 @@ export const caseStudies: CaseStudy[] = [
   {
     id: "liquid-glass-os-story",
     projectId: "liquid-glass-os",
-    title: "Kenapa portofolio ini dibungkus jadi 'desktop OS'?",
+    title: "Why is this portfolio wrapped as a 'desktop OS'?",
     problem:
-      "Portofolio developer kebanyakan bentuknya sama: hero besar, 3 kartu fitur, testimonial. Susah dibedakan satu sama lain, dan gampang dilupakan begitu tab-nya ditutup.",
+      "Most developer portfolios look the same: a big hero, 3 feature cards, testimonials. They're hard to tell apart and easy to forget the moment the tab closes.",
     approach:
-      "Daripada halaman yang di-scroll, aku bikin simulasi desktop macOS penuh — window system, dock magnify, material liquid glass, sampai boot & lock screen. Setiap bagian portofolio jadi 'aplikasi' yang dibuka sendiri, bukan section yang dilewatin.",
+      "Instead of a scrolling page, I built a full macOS desktop simulation: window system, dock magnification, liquid glass materials, even a boot and lock screen. Each part of the portfolio is an 'app' you open yourself, not a section you scroll past.",
     result:
-      "Hasilnya jadi sesuatu yang orang mau eksplorasi, bukan cuma scroll cepat lalu pergi. Detail interaksi — dock magnify, animasi genie saat window ditutup, avatar yang bereaksi — jadi bagian dari cerita, bukan dekorasi tempelan.",
+      "The result is something people want to explore rather than skim and leave. Interaction details like dock magnification, the genie animation and the reactive avatar are part of the story, not decoration.",
     tags: ["Next.js", "Framer Motion", "Zustand", "Design System"],
   },
   {
     id: "inka-erp-story",
     projectId: "inka-erp",
-    title: "Belajar apa dari mengerjakan ERP perusahaan BUMN skala besar?",
+    title: "What did I learn from working on a large state-owned company's ERP?",
     problem:
-      "PT. INKA adalah produsen kereta api terbesar di Asia Tenggara. Sistem ERP yang digunakan harus menangani operasional lintas divisi dengan data yang kompleks dan pengguna dari berbagai latar belakang teknis. Tantangannya: bagaimana membangun fitur baru tanpa merusak modul lain yang sudah berjalan, sekaligus membuat antarmuka yang mudah dipakai oleh pengguna non-teknis?",
+      "PT. INKA is the largest train manufacturer in Southeast Asia. Its ERP has to handle cross-division operations with complex data and users from many technical backgrounds. The challenge: how do you build new features without breaking modules already in use, while keeping the interface easy for non-technical users?",
     approach:
-      "Bergabung sebagai IT Intern dan langsung terlibat di development cycle nyata. Setiap fitur baru diawali dengan pemahaman kebutuhan pengguna akhir, lalu dirancang antarmukanya sebelum masuk ke koding. Debugging dilakukan secara sistematis dengan menelusuri log dan isolasi modul. Komunikasi rutin dengan tim lintas fungsi jadi kunci agar implementasi sesuai kebutuhan bisnis.",
+      "I joined as an IT Intern and worked directly in the real development cycle. Each new feature started with understanding end users' needs, then interface design, then code. Debugging was systematic, tracing logs and isolating modules. Regular communication with cross-functional teams was key to matching implementation with business needs.",
     result:
-      "Berhasil mengoptimalkan beberapa modul sistem yang sebelumnya memiliki bottleneck performa. Antarmuka yang dirancang ulang terbukti lebih intuitif berdasarkan feedback pengguna. Pengalaman ini mengajarkan pentingnya dokumentasi kode dan komunikasi teknis yang jelas dalam tim besar.",
+      "Optimized several system modules that previously had performance bottlenecks. User feedback showed the redesigned interfaces were more intuitive. The experience taught me the importance of code documentation and clear technical communication in a large team.",
     tags: ["Laravel", "PHP", "ERP", "Team Collaboration", "System Optimization"],
   },
   {
     id: "bangkit-android-story",
     projectId: "bangkit-android",
-    title: "Dari nol ke Intermediate Android Developer dalam 6 bulan di Bangkit Academy.",
+    title: "From zero to Intermediate Android Developer in 6 months at Bangkit Academy.",
     problem:
-      "Bangkit Academy adalah program intensif 6 bulan yang dirancang Google, Tokopedia, Gojek, dan Traveloka untuk mencetak developer siap industri. Tantangannya bukan sekadar belajar syntax Kotlin, tapi memahami cara membangun aplikasi yang benar-benar scalable, maintainable, dan sesuai standar industri dalam waktu yang sangat terbatas.",
+      "Bangkit Academy is an intensive 6-month program designed by Google, Tokopedia, Gojek and Traveloka to produce industry-ready developers. The challenge wasn't just learning Kotlin syntax, but understanding how to build apps that are truly scalable, maintainable and up to industry standards in very limited time.",
     approach:
-      "Mulai dari fundamental Kotlin modern, lalu secara bertahap membangun pemahaman tentang Jetpack Compose, MVVM Clean Architecture, dan integrasi REST API dengan Retrofit. Setiap materi langsung dipraktikkan dalam proyek nyata. Prinsip SOLID diterapkan konsisten agar kode mudah diuji dan dikembangkan.",
+      "I started with modern Kotlin fundamentals, then gradually built up Jetpack Compose, MVVM Clean Architecture and REST API integration with Retrofit. Every topic was put into practice in real projects, and SOLID principles were applied consistently to keep code easy to test and extend.",
     result:
-      "Berhasil menyelesaikan program dengan status lulus dan memperoleh sertifikasi resmi Bangkit Academy. Capstone Project tim berhasil dibangun dan dipresentasikan kepada panel reviewer dari Google dan mitra industri.",
+      "Completed the program and earned the official Bangkit Academy certification. The team's Capstone Project was built and presented to a review panel from Google and industry partners.",
     tags: ["Kotlin", "Jetpack Compose", "Clean Architecture", "SOLID", "Teamwork"],
   },
   {
     id: "web-competition-story",
     projectId: "web-competition",
-    title: "Juara 2 Web Competition: Pelajaran dari kompetisi pertama.",
+    title: "2nd Place at a Web Competition: lessons from my first contest.",
     problem:
-      "Kompetisi Web HIMATIFTA UNTAG Surabaya mengharuskan peserta membangun website profil perusahaan responsif minimal 3 halaman dalam waktu terbatas. Tantangannya: bagaimana membuat website yang tidak hanya fungsional tapi juga secara visual unggul dan memberikan user experience yang baik?",
+      "The HIMATIFTA UNTAG Surabaya Web Competition required participants to build a responsive company profile website of at least 3 pages in limited time. The challenge: how do you make a site that isn't just functional, but also stands out visually and offers a good user experience?",
     approach:
-      "Tim langsung menyepakati pembagian tugas yang jelas. Kami prioritaskan mobile-first responsive design karena juri akan menguji di berbagai perangkat. Setiap halaman diiterasi beberapa kali berdasarkan saling review antar anggota tim.",
+      "The team agreed on a clear division of tasks right away. We prioritized mobile-first responsive design because the judges would test on various devices. Each page went through several iterations based on reviews between team members.",
     result:
-      "Berhasil meraih Juara 2 dari seluruh peserta kompetisi. Pengalaman ini menjadi fondasi penting dalam memahami kolaborasi tim, manajemen waktu dalam tekanan, dan cara membuat keputusan desain yang cepat namun tepat.",
+      "We won 2nd place among all participants. The experience became an important foundation for understanding teamwork, managing time under pressure and making design decisions that are both fast and sound.",
     tags: ["JavaScript", "CSS3", "Responsive Design", "Team Collaboration"],
   },
 ];

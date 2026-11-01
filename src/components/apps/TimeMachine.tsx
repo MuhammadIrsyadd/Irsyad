@@ -44,7 +44,7 @@ export default function TimeMachine() {
         if (e.key === "ArrowUp") go(active + 1);
         if (e.key === "ArrowDown") go(active - 1);
       }}
-      aria-label="Riwayat pengalaman, gunakan panah atas dan bawah untuk berpindah"
+      aria-label="Experience history, use the up and down arrows to move"
       className="timemachine-space relative flex h-[400px] select-none overflow-hidden rounded-xl outline-none"
     >
       {/* the snapshot stack */}
@@ -110,7 +110,7 @@ export default function TimeMachine() {
             animate={{ opacity: 1, y: 0 }}
             className="rounded-full bg-black/45 px-3 py-1 text-[12px] font-medium text-[#fff] backdrop-blur-sm"
           >
-            {active === 0 ? "Sekarang" : current.period}
+            {active === 0 ? "Latest" : current.period}
           </motion.span>
         </div>
       </div>
@@ -120,7 +120,7 @@ export default function TimeMachine() {
         <button
           onClick={() => go(active + 1)}
           disabled={active === last}
-          aria-label="Lebih lama"
+          aria-label="Older"
           className="flex h-8 w-8 items-center justify-center rounded-full bg-white/15 text-white transition hover:bg-white/25 disabled:opacity-30"
         >
           <span className="material-symbols-outlined text-[20px]">keyboard_arrow_up</span>
@@ -145,7 +145,7 @@ export default function TimeMachine() {
         <button
           onClick={() => go(active - 1)}
           disabled={active === 0}
-          aria-label="Lebih baru"
+          aria-label="Newer"
           className="flex h-8 w-8 items-center justify-center rounded-full bg-white/15 text-white transition hover:bg-white/25 disabled:opacity-30"
         >
           <span className="material-symbols-outlined text-[20px]">keyboard_arrow_down</span>

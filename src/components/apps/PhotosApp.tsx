@@ -21,9 +21,9 @@ export default function PhotosApp() {
           <div className="flex h-full flex-col items-center justify-center gap-3 text-center text-white/40">
             <span className="material-symbols-outlined text-4xl">add_photo_alternate</span>
             <p className="max-w-xs text-[12px] leading-relaxed">
-              Belum ada foto. Taruh sertifikat, dokumentasi event, atau behind-the-scenes di{" "}
-              <code className="font-mono-ui text-white/60">public/images/photos/</code> — muncul
-              otomatis di sini, nggak perlu ubah kode.
+              No photos yet. Drop certificates, event photos or behind-the-scenes shots in{" "}
+              <code className="font-mono-ui text-white/60">public/images/photos/</code> and they
+              show up here automatically, no code changes needed.
             </p>
           </div>
         ) : (

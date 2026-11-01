@@ -32,8 +32,8 @@ function useMinuteClock() {
 function ClockWidget() {
   const now = useMinuteClock();
   const time = now?.toLocaleTimeString("en-GB", { hour: "2-digit", minute: "2-digit" }) ?? "--:--";
-  const weekday = now?.toLocaleDateString("id-ID", { weekday: "long" }) ?? "";
-  const date = now?.toLocaleDateString("id-ID", { day: "numeric", month: "long", year: "numeric" }) ?? "";
+  const weekday = now?.toLocaleDateString("en-US", { weekday: "long" }) ?? "";
+  const date = now?.toLocaleDateString("en-US", { day: "numeric", month: "long", year: "numeric" }) ?? "";
 
   return (
     <div className="glass-widget flex h-full w-[208px] flex-col justify-between rounded-[22px] p-4">
@@ -86,7 +86,7 @@ function ShowcaseWidget() {
       <button
         onClick={() => openSafariProject(project.id)}
         className="absolute inset-0 text-left"
-        aria-label={`Buka project ${project.name} di Safari`}
+        aria-label={`Open ${project.name} in Safari`}
       >
         <AnimatePresence initial={false}>
           <motion.img
@@ -135,7 +135,7 @@ function ShowcaseWidget() {
           <button
             key={p.id}
             onClick={() => setIndex(i)}
-            aria-label={`Tampilkan ${p.name}`}
+            aria-label={`Show ${p.name}`}
             className="relative h-[3px] flex-1 overflow-hidden rounded-full bg-white/20"
           >
             {i === index && (

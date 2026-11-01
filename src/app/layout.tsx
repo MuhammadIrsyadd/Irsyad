@@ -27,7 +27,7 @@ export const metadata: Metadata = {
   metadataBase: new URL(process.env.NEXT_PUBLIC_SITE_URL || "https://muhirsyad.my.id"),
   title: "Muh Irsyad — Full-Stack & Mobile Developer",
   description:
-    "Portfolio resmi Muh. Irsyad Dwi Kurniawan (Muh Irsyad). Full-Stack & Mobile Developer (Next.js, Laravel, Kotlin). Simulasi desktop macOS Liquid Glass interaktif.",
+    "Official portfolio of Muh. Irsyad Dwi Kurniawan (Muh Irsyad), Full-Stack & Mobile Developer (Next.js, Laravel, Kotlin). An interactive macOS Liquid Glass desktop simulation.",
   keywords: [
     "Muh Irsyad",
     "Muh. Irsyad Dwi Kurniawan",
@@ -77,17 +77,17 @@ export const metadata: Metadata = {
   openGraph: {
     title: "Muh Irsyad — Full-Stack & Mobile Developer | Portfolio OS",
     description:
-      "Portfolio resmi Muh. Irsyad Dwi Kurniawan. Jelajahi pengalaman, proyek, dan keahlian web & mobile development dalam antarmuka desktop macOS interaktif.",
+      "Official portfolio of Muh. Irsyad Dwi Kurniawan. Explore his experience, projects and web & mobile development skills in an interactive macOS desktop interface.",
     url: "https://muhirsyad.my.id",
-    siteName: "Muh Irsyad Portofolio",
-    locale: "id_ID",
+    siteName: "Muh Irsyad Portfolio",
+    locale: "en_US",
     type: "website",
     images: [
       {
         url: "/apple-touch-icon.png",
         width: 180,
         height: 180,
-        alt: "Muh Irsyad Portofolio",
+        alt: "Muh Irsyad Portfolio",
       },
     ],
   },
@@ -95,7 +95,7 @@ export const metadata: Metadata = {
     card: "summary",
     title: "Muh Irsyad — Full-Stack & Mobile Developer | Portfolio OS",
     description:
-      "Portfolio resmi Muh. Irsyad Dwi Kurniawan. Full-Stack & Mobile Developer (Next.js, Laravel, Kotlin).",
+      "Official portfolio of Muh. Irsyad Dwi Kurniawan, Full-Stack & Mobile Developer (Next.js, Laravel, Kotlin).",
     images: ["/apple-touch-icon.png"],
   },
 };
@@ -140,11 +140,11 @@ const jsonLd = {
       url: "https://muhirsyad.my.id",
       name: "Muh Irsyad Portfolio OS",
       description:
-        "Portfolio resmi Muh. Irsyad Dwi Kurniawan (Muh Irsyad) berbasis desktop macOS Liquid Glass interaktif.",
+        "Official portfolio of Muh. Irsyad Dwi Kurniawan (Muh Irsyad), built as an interactive macOS Liquid Glass desktop.",
       publisher: {
         "@id": "https://muhirsyad.my.id/#person",
       },
-      inLanguage: "id-ID",
+      inLanguage: "en-US",
     },
   ],
 };
@@ -152,7 +152,7 @@ const jsonLd = {
 export default function RootLayout({ children }: { children: React.ReactNode }) {
   return (
     <html
-      lang="id"
+      lang="en"
       className={`${geistSans.variable} ${jetbrainsMono.variable} ${kanit.variable} h-full antialiased dark`}
     >
       <head>

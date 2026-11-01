@@ -111,7 +111,7 @@ export default function DesktopIcons() {
                       <div className="flex flex-1 flex-col">
                         <span className="text-[13px] font-medium text-white">{s.label}</span>
                         <span className="text-[11px] text-white/50">
-                          {filled ? s.handle : "belum diisi"}
+                          {filled ? s.handle : "not set"}
                         </span>
                       </div>
                       <span className="material-symbols-outlined text-[16px] text-white/40">
@@ -122,7 +122,7 @@ export default function DesktopIcons() {
                 })}
               </div>
               <div className="border-t border-white/10 px-4 py-2.5 text-center text-[10px] text-white/40">
-                Mau ngobrol lebih personal? Email juga selalu terbuka.
+                Prefer something more personal? My email is always open.
               </div>
             </motion.div>
           </motion.div>

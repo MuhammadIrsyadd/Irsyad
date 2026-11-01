@@ -55,7 +55,7 @@ export default function IdleScreensaver() {
             transition={{ duration: 2.2, repeat: Infinity }}
             className="text-[11px] uppercase tracking-[0.3em] text-white/50"
           >
-            Sentuh untuk lanjut
+            Touch to continue
           </motion.span>
         </motion.div>
       )}

@@ -16,8 +16,8 @@ function neofetch(theme: string): Line[] {
     ["OS", "Portfolio OS (Liquid Glass)"],
     ["Host", profile.location],
     ["Kernel", "Next.js 16 + React 19"],
-    ["Uptime", `${minutes} menit`],
-    ["Packages", `${projects.length} proyek, ${skills.length} kategori skill`],
+    ["Uptime", `${minutes} min`],
+    ["Packages", `${projects.length} projects, ${skills.length} skill categories`],
     ["Shell", "irsh 1.2"],
     ["Resolution", `${window.innerWidth}x${window.innerHeight}`],
     ["Theme", theme === "light" ? "Light" : "Dark"],
@@ -55,20 +55,20 @@ const BOOT_SEQUENCE: { cmd: string; output: string[] }[] = [
 ];
 
 const HELP_TEXT = [
-  "Perintah tersedia:",
-  "  neofetch             — info sistem + potret ASCII",
-  "  whoami               — siapa aku & informasi profil",
-  "  projects             — daftar semua proyek & deploy",
-  "  cat projects/<id>    — info lengkap proyek (contoh: cat projects/gigizi)",
-  "  open <id>            — arahkan & buka proyek di Safari (contoh: open 2048)",
-  "  ls skills/           — daftar kategori skill teknis",
-  "  cat <kategori>       — detail skill (contoh: cat frontend)",
-  "  cv                   — buka Resume / CV (PDF)",
-  "  cat contact.txt      — info kontak, email & status",
-  "  sudo hire-me         — kirim undangan kerja",
-  "  coffee --brew        — bikin kopi virtual",
-  "  clear                — bersihkan layar terminal",
-  "  help                 — tampilkan pesan panduan ini",
+  "Available commands:",
+  "  neofetch             — system info + ASCII portrait",
+  "  whoami               — who I am & profile info",
+  "  projects             — list all projects & deployments",
+  "  cat projects/<id>    — full project info (e.g. cat projects/gigizi)",
+  "  open <id>            — open a project in Safari (e.g. open 2048)",
+  "  ls skills/           — list technical skill categories",
+  "  cat <category>       — skill details (e.g. cat frontend)",
+  "  cv                   — open Resume / CV (PDF)",
+  "  cat contact.txt      — contact info, email & status",
+  "  sudo hire-me         — send a job invitation",
+  "  coffee --brew        — brew a virtual coffee",
+  "  clear                — clear the terminal",
+  "  help                 — show this help message",
 ];
 
 export default function TerminalApp() {
@@ -127,7 +127,7 @@ export default function TerminalApp() {
 
     if (cmd === "projects" || cmd === "ls projects" || cmd === "ls projects/") {
       return [
-        "DAFTAR PROYEK DEPLOY & KARYA:",
+        "PROJECTS & DEPLOYMENTS:",
         ...projects.map(
           (p) =>
             `  • ${p.id.padEnd(16)} : ${p.name} [${p.category || "Project"}]${
@@ -135,7 +135,7 @@ export default function TerminalApp() {
             }`
         ),
         "",
-        "Tips: Ketik 'cat projects/<id>' untuk baca info, atau 'open <id>' untuk arahkan ke Safari.",
+        "Tip: type 'cat projects/<id>' to read more, or 'open <id>' to open it in Safari.",
       ];
     }
 
@@ -150,43 +150,43 @@ export default function TerminalApp() {
 
       if (found) {
         openSafariProject(found.id);
-        return [`[Safari] Membuka tab proyek "${found.name}" di Safari...`];
+        return [`[Safari] Opening "${found.name}" in Safari...`];
       }
 
       if (target === "safari") {
         openApp("safari");
-        return ["[Safari] Membuka Safari..."];
+        return ["[Safari] Opening Safari..."];
       }
       if (target === "finder") {
         openApp("finder");
-        return ["[Finder] Membuka Finder..."];
+        return ["[Finder] Opening Finder..."];
       }
       if (target === "mail") {
         openApp("mail");
-        return ["[Mail] Membuka Mail..."];
+        return ["[Mail] Opening Mail..."];
       }
       if (target === "notes") {
         openApp("notes");
-        return ["[Notes] Membuka Notes..."];
+        return ["[Notes] Opening Notes..."];
       }
       if (target === "photos") {
         openApp("photos");
-        return ["[Photos] Membuka Photos..."];
+        return ["[Photos] Opening Photos..."];
       }
       if (target === "settings") {
         openApp("settings");
-        return ["[Settings] Membuka Settings..."];
+        return ["[Settings] Opening Settings..."];
       }
 
       return [
-        `Target '${target}' tidak ditemukan.`,
-        "Ketik 'projects' untuk melihat ID proyek yang valid.",
+        `Target '${target}' not found.`,
+        "Type 'projects' to see valid project IDs.",
       ];
     }
 
     if (cmd === "cv" || cmd === "resume" || cmd === "cat resume") {
       window.open("/resume.pdf", "_blank");
-      return ["[CV] Membuka resume.pdf di tab baru..."];
+      return ["[CV] Opening resume.pdf in a new tab..."];
     }
 
     if (cmd === "ls skills/" || cmd === "ls skills") {
@@ -209,17 +209,17 @@ export default function TerminalApp() {
 
       if (p) {
         return [
-          `Nama     : ${p.name}`,
-          `Kategori : ${p.category || "-"}`,
+          `Name     : ${p.name}`,
+          `Category : ${p.category || "-"}`,
           `Tagline  : ${p.tagline}`,
           `Tech     : ${p.tech.join(", ")}`,
           `URL      : ${p.url || "(Internal / Confidential)"}`,
-          `Deskripsi: ${p.description}`,
+          `About    : ${p.description}`,
           "",
-          `Tips: Ketik 'open ${p.id}' untuk melihat proyek ini di Safari.`,
+          `Tip: type 'open ${p.id}' to view this project in Safari.`,
         ];
       }
-      return [`cat: projects/${target}: No such project. Ketik 'projects' untuk daftar lengkap.`];
+      return [`cat: projects/${target}: No such project. Type 'projects' for the full list.`];
     }
 
     if (cmd.startsWith("cat ")) {
@@ -243,22 +243,22 @@ export default function TerminalApp() {
       );
       if (foundSkill) return [`${foundSkill.category}: ${foundSkill.items.join(", ")}`];
 
-      return [`cat: ${target}: No such file or directory. Ketik 'help' untuk panduan.`];
+      return [`cat: ${target}: No such file or directory. Type 'help' for guidance.`];
     }
 
     if (cmd === "sudo hire-me") {
       openApp("mail");
       return [
         "[sudo] access granted — you seem trustworthy.",
-        "Membuka aplikasi Mail untuk mengirim pesan langsung...",
+        "Opening Mail so you can send a message directly...",
       ];
     }
 
     if (cmd === "coffee --brew") {
-      return ["☕ Brewing... done. Produktivitas +100%."];
+      return ["☕ Brewing... done. Productivity +100%."];
     }
 
-    return [`command not found: ${cmd}`, `ketik 'help' untuk melihat daftar perintah yang tersedia.`];
+    return [`command not found: ${cmd}`, `type 'help' to see the available commands.`];
   }
 
   function handleSubmit(e: React.FormEvent) {
@@ -290,8 +290,8 @@ export default function TerminalApp() {
         className="h-full overflow-y-auto bg-terminal-canvas p-4 font-mono-ui text-[12px] leading-relaxed text-white/90"
       >
         <div className="mb-2 text-white/40">
-          {profile.name} — Interactive Shell v1.2. Ketik{" "}
-          <span className="text-terminal-green font-semibold">help</span> untuk melihat daftar perintah.
+          {profile.name} — Interactive Shell v1.2. Type{" "}
+          <span className="text-terminal-green font-semibold">help</span> to see the available commands.
         </div>
         {lines.map((l, i) =>
           l.type === "cmd" ? (

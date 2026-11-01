@@ -7,22 +7,22 @@ import { getAppMeta } from "@/lib/apps";
 import { profile } from "@/lib/content";
 import { sound } from "@/lib/sound";
 
-const INTRO_MESSAGE = `Hai, aku ${profile.name} 👋`;
+const INTRO_MESSAGE = `Hi, I'm ${profile.name} 👋`;
 
 const IDLE_MESSAGES = [
   INTRO_MESSAGE,
-  "Coba klik dock di bawah ✨",
-  "Psst, buka Mail kalau mau say hi 📬",
-  "Liquid glass, bukan sekadar blur biasa loh.",
+  "Try clicking the dock below ✨",
+  "Psst, open Mail if you want to say hi 📬",
+  "Liquid glass, not just your average blur.",
 ];
 
 const CLICK_MESSAGES = [
-  "Hai! Mau diskusi atau kerja sama? Buka Mail app ya 📬",
-  "Psst, coba ketik 'neofetch' atau 'sudo hire-me' di Terminal 😉",
-  "Klik dock di bawah buat jelajah project dan resume Irsyad ✨",
-  "Kamu menemukan easter egg klik maskot! 🚀",
-  "Portofolio ini dibangun dengan Next.js & Framer Motion loh 🍏",
-  "Lulusan UPN Veteran Jatim (IPK 3.93) siap berkontribusi! 🎓",
+  "Hi! Want to talk or work together? Open the Mail app 📬",
+  "Psst, try typing 'neofetch' or 'sudo hire-me' in Terminal 😉",
+  "Click the dock below to explore Irsyad's projects and resume ✨",
+  "You found the mascot click easter egg! 🚀",
+  "This portfolio is built with Next.js & Framer Motion 🍏",
+  "UPN Veteran Jatim graduate (GPA 3.93), ready to contribute! 🎓",
 ];
 
 export default function Avatar() {
@@ -146,7 +146,7 @@ export default function Avatar() {
         whileTap={{ scale: 0.92 }}
         className="pointer-events-auto relative h-48 w-36 cursor-pointer select-none sm:h-80 sm:w-56 lg:h-[26rem] lg:w-72"
         style={{ perspective: 400 }}
-        title="Klik aku untuk interaksi!"
+        title="Click me!"
       >
         <div className="absolute inset-0 rounded-full bg-primary-container/30 blur-2xl" />
         <motion.div
@@ -155,7 +155,7 @@ export default function Avatar() {
         >
           <motion.img
             src="/images/avatar.webp"
-            alt="Avatar 3D karakter developer, memakai kacamata hitam"
+            alt="3D avatar of a developer wearing sunglasses"
             className="h-full w-full object-contain drop-shadow-[0_16px_24px_rgba(0,0,0,0.6)]"
             style={{ scaleY: blink ? 0.96 : 1 }}
           />

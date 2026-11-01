@@ -37,7 +37,7 @@ export default function MobileHome() {
       {/* Status bar */}
       <div className="glass-menubar fixed inset-x-0 top-0 z-[900] flex h-11 items-center justify-between px-5 pt-[env(safe-area-inset-top)] text-[14px] text-white/90">
         <span className="font-medium">
-          {now?.toLocaleTimeString("id-ID", { hour: "2-digit", minute: "2-digit" }) ?? ""}
+          {now?.toLocaleTimeString("en-GB", { hour: "2-digit", minute: "2-digit" }) ?? ""}
         </span>
         <div className="flex items-center gap-2">
           <span className="material-symbols-outlined text-[17px]">{online ? "wifi" : "wifi_off"}</span>
@@ -86,7 +86,7 @@ export default function MobileHome() {
         </div>
 
         <span className="glass-pill rounded-full px-3 py-1 text-center text-[10px] text-white/50">
-          Ketuk ikon untuk membuka aplikasi
+          Tap an icon to open an app
         </span>
       </div>
 

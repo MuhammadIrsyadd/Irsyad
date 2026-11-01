@@ -53,7 +53,7 @@ export default function ControlCenter() {
             </div>
             <div className="mt-2 flex flex-col">
               <span className="text-[12px] font-semibold text-white">Wi-Fi</span>
-              <span className="text-[10px] text-white/60">{online ? "Terhubung" : "Offline"}</span>
+              <span className="text-[10px] text-white/60">{online ? "Connected" : "Offline"}</span>
             </div>
           </div>
 
@@ -75,13 +75,13 @@ export default function ControlCenter() {
                 {soundEnabled ? "volume_up" : "volume_off"}
               </span>
               <span className={`text-[10px] font-medium ${soundEnabled ? "text-[var(--accent-300)]" : "text-white/40"}`}>
-                {soundEnabled ? "Aktif" : "Mati"}
+                {soundEnabled ? "On" : "Off"}
               </span>
             </div>
             <div className="mt-2 flex flex-col">
               <span className="text-[12px] font-semibold text-white">Sound FX</span>
               <span className="text-[10px] text-white/60">
-                {soundEnabled ? "Audio Aktif" : "Mute (Klik untuk aktif)"}
+                {soundEnabled ? "Audio on" : "Muted (click to enable)"}
               </span>
             </div>
           </button>
@@ -90,7 +90,7 @@ export default function ControlCenter() {
         {/* Display & Accent Section */}
         <div className="flex flex-col gap-2 rounded-xl border border-white/10 bg-white/5 p-3">
           <div className="flex items-center justify-between">
-            <span className="text-[12px] font-semibold text-white/60">Tema & aksen</span>
+            <span className="text-[12px] font-semibold text-white/60">Theme & accent</span>
             <button
               onClick={toggleTheme}
               className="flex items-center gap-1 rounded-lg border border-white/10 bg-white/10 px-2 py-0.5 text-[11px] text-white/80 hover:bg-white/20"
@@ -103,7 +103,7 @@ export default function ControlCenter() {
           </div>
 
           <div className="flex items-center justify-between pt-1">
-            <span className="text-[12px] text-white/80">Warna Aksen</span>
+            <span className="text-[12px] text-white/80">Accent color</span>
             <div className="flex gap-2">
               {accents.map((a) => (
                 <button

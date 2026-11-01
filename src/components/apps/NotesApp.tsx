@@ -21,8 +21,8 @@ export default function NotesApp() {
       <div className="grid h-full grid-cols-1 md:grid-cols-[240px_1fr]">
         <aside className="hairline flex flex-col overflow-y-auto border-r bg-black/20">
           <div className="flex items-baseline justify-between px-4 pb-2 pt-3">
-            <span className="text-[13px] font-semibold text-white">Catatan</span>
-            <span className="text-[11px] text-white/50">{caseStudies.length} catatan</span>
+            <span className="text-[13px] font-semibold text-white">Notes</span>
+            <span className="text-[11px] text-white/50">{caseStudies.length} notes</span>
           </div>
           <div className="flex flex-col px-2 pb-2">
             {caseStudies.map((c) => {
@@ -67,14 +67,14 @@ export default function NotesApp() {
               >
                 <div className="mx-auto max-w-[62ch]">
                   {activeProject && (
-                    <p className="mb-4 text-center text-[11px] text-white/50">Catatan untuk {activeProject.name}</p>
+                    <p className="mb-4 text-center text-[11px] text-white/50">Note for {activeProject.name}</p>
                   )}
                   <h1 className="text-[24px] font-bold leading-tight tracking-tight text-white">{active.title}</h1>
 
                   {[
-                    { label: "Masalah", body: active.problem },
-                    { label: "Pendekatan", body: active.approach },
-                    { label: "Hasil", body: active.result },
+                    { label: "Problem", body: active.problem },
+                    { label: "Approach", body: active.approach },
+                    { label: "Result", body: active.result },
                   ].map((section) => (
                     <section key={section.label} className="mt-6">
                       <h2 className="text-[15px] font-semibold text-white">{section.label}</h2>

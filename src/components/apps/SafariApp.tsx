@@ -105,8 +105,8 @@ export default function SafariApp() {
         <div className="hairline flex items-center gap-2 border-b bg-black/20 px-3 py-2">
           <button
             onClick={view === "overview" ? () => select(activeId) : showOverview}
-            aria-label={view === "overview" ? "Kembali ke proyek" : "Lihat semua proyek"}
-            title={view === "overview" ? "Kembali ke proyek" : "Lihat semua proyek"}
+            aria-label={view === "overview" ? "Back to project" : "View all projects"}
+            title={view === "overview" ? "Back to project" : "View all projects"}
             className={`flex h-7 w-7 shrink-0 items-center justify-center rounded-md transition-colors ${
               view === "overview" ? "bg-white/15 text-white" : "text-white/60 hover:bg-white/[0.1] hover:text-white"
             }`}
@@ -124,7 +124,7 @@ export default function SafariApp() {
               href={active.url}
               target="_blank"
               rel="noreferrer"
-              title="Buka website di tab baru"
+              title="Open website in a new tab"
               className="flex h-7 w-7 shrink-0 items-center justify-center rounded-md text-white/60 transition-colors hover:bg-white/[0.1] hover:text-white"
             >
               <span className="material-symbols-outlined text-[17px]">open_in_new</span>
@@ -166,8 +166,8 @@ export default function SafariApp() {
             // Mission-Control style overview of every project
             <motion.div layoutScroll className="absolute inset-0 overflow-y-auto p-5 sm:p-6">
               <div className="mb-4 flex items-baseline justify-between">
-                <h1 className="text-[18px] font-semibold tracking-tight text-white">Proyek</h1>
-                <span className="text-[11.5px] text-white/50">{projects.length} proyek, klik untuk membuka</span>
+                <h1 className="text-[18px] font-semibold tracking-tight text-white">Projects</h1>
+                <span className="text-[11.5px] text-white/50">{projects.length} projects, click to open</span>
               </div>
               <div className="grid grid-cols-2 gap-x-4 gap-y-5 lg:grid-cols-3">
                 {projects.map((p, i) => (
@@ -205,7 +205,7 @@ export default function SafariApp() {
               >
                 <div className="mx-auto flex max-w-2xl flex-col gap-4">
                   {active.url ? (
-                    <a href={active.url} target="_blank" rel="noreferrer" className="group block" title="Kunjungi website">
+                    <a href={active.url} target="_blank" rel="noreferrer" className="group block" title="Visit website">
                       <Shot project={active} className="aspect-[16/9] w-full rounded-xl ring-1 ring-white/10" />
                     </a>
                   ) : (
@@ -226,7 +226,7 @@ export default function SafariApp() {
                   <p className="max-w-[68ch] text-[13px] leading-relaxed text-white/75">{active.description}</p>
 
                   <p className="text-[12px] text-white/50">
-                    <span className="text-white/70">Dibangun dengan </span>
+                    <span className="text-white/70">Built with </span>
                     {active.tech.join(", ")}
                   </p>
 
@@ -239,7 +239,7 @@ export default function SafariApp() {
                           rel="noreferrer"
                           className="inline-flex items-center gap-1.5 rounded-lg bg-[var(--accent-500)] px-4 py-2 text-xs font-semibold text-black transition hover:brightness-110 active:scale-95"
                         >
-                          Buka website
+                          Open website
                           <span className="material-symbols-outlined text-[15px]">open_in_new</span>
                         </a>
                       </Magnet>

@@ -48,7 +48,7 @@ function EnvelopeSend({ subject }: { subject: string }) {
           animate={{ top: 18, height: 120 }}
           transition={{ delay: 0.15, duration: 0.6, ease: [0.3, 0, 0.2, 1] }}
         >
-          <p className="truncate text-[10px] font-semibold text-neutral-800">{subject || "Pesan baru"}</p>
+          <p className="truncate text-[10px] font-semibold text-neutral-800">{subject || "New message"}</p>
           {[78, 92, 64, 85].map((w, i) => (
             <div key={i} className="mt-1.5 h-[3px] rounded bg-neutral-200" style={{ width: `${w}%` }} />
           ))}
@@ -94,10 +94,10 @@ export default function MailApp() {
   const [flying, setFlying] = useState(false);
 
   function validate() {
-    if (!name.trim()) return "Nama belum diisi.";
-    if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email)) return "Format email tidak valid.";
-    if (!subject.trim()) return "Subject belum diisi.";
-    if (!body.trim() || body.trim().length < 10) return "Pesan terlalu pendek (min. 10 karakter).";
+    if (!name.trim()) return "Please enter your name.";
+    if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email)) return "That email address isn't valid.";
+    if (!subject.trim()) return "Please enter a subject.";
+    if (!body.trim() || body.trim().length < 10) return "Message is too short (min. 10 characters).";
     return "";
   }
 
@@ -149,7 +149,7 @@ export default function MailApp() {
         reset();
       } catch {
         setFlying(false);
-        setError("Gagal terkirim, coba lagi atau pakai email langsung.");
+        setError("Couldn't send. Try again or email me directly.");
         setStatus("error");
       }
       return;
@@ -173,44 +173,44 @@ export default function MailApp() {
       <form onSubmit={handleSend} className="relative flex h-full flex-col">
         {/* toolbar */}
         <div className="hairline flex items-center justify-between border-b bg-black/20 px-4 py-2">
-          <span className="text-[13px] font-semibold text-white">Pesan baru</span>
+          <span className="text-[13px] font-semibold text-white">New message</span>
           <button
             type="submit"
             disabled={status === "sending"}
-            title="Kirim"
+            title="Send"
             className="flex items-center gap-1.5 rounded-md px-2.5 py-1 text-[12px] font-medium text-white/80 transition hover:bg-white/[0.1] hover:text-white disabled:opacity-50"
           >
             <span className="material-symbols-outlined text-[18px] text-[var(--accent-400)]">send</span>
-            {status === "sending" ? "Mengirim…" : "Kirim"}
+            {status === "sending" ? "Sending…" : "Send"}
           </button>
         </div>
 
         {/* header rows */}
         <div className="px-4 text-[13px]">
           <div className="hairline flex items-center gap-3 border-b py-2">
-            <span className="w-16 text-white/50">Ke:</span>
+            <span className="w-16 text-white/50">To:</span>
             <span className="rounded bg-[var(--accent-500)]/20 px-1.5 py-0.5 text-white/90">{profile.email}</span>
           </div>
           <label className="hairline flex items-center gap-3 border-b">
-            <span className="w-16 text-white/50">Dari:</span>
+            <span className="w-16 text-white/50">From:</span>
             <input
               value={email}
               onChange={(e) => setEmail(e.target.value)}
-              placeholder="emailmu@contoh.com"
+              placeholder="you@example.com"
               type="email"
               className={field}
             />
           </label>
           <label className="hairline flex items-center gap-3 border-b">
-            <span className="w-16 text-white/50">Nama:</span>
-            <input value={name} onChange={(e) => setName(e.target.value)} placeholder="Nama kamu" className={field} />
+            <span className="w-16 text-white/50">Name:</span>
+            <input value={name} onChange={(e) => setName(e.target.value)} placeholder="Your name" className={field} />
           </label>
           <label className="hairline flex items-center gap-3 border-b">
-            <span className="w-16 text-white/50">Subjek:</span>
+            <span className="w-16 text-white/50">Subject:</span>
             <input
               value={subject}
               onChange={(e) => setSubject(e.target.value)}
-              placeholder="Mau ngobrolin apa?"
+              placeholder="What's this about?"
               className={`${field} font-medium`}
             />
           </label>
@@ -219,7 +219,7 @@ export default function MailApp() {
         <textarea
           value={body}
           onChange={(e) => setBody(e.target.value)}
-          placeholder="Tulis pesanmu di sini…"
+          placeholder="Write your message here…"
           className="min-h-0 flex-1 resize-none bg-transparent px-4 py-3 text-[13.5px] leading-relaxed text-white outline-none placeholder:text-white/30"
         />
 
@@ -229,13 +229,13 @@ export default function MailApp() {
           ) : status === "sent" ? (
             <span className="text-emerald-500">
               {EMAILJS_CONFIGURED
-                ? "Terkirim. Makasih sudah menghubungi, aku balas secepatnya."
-                : "Aplikasi email kamu sudah dibuka dengan pesan ini, tinggal tekan kirim."}
+                ? "Sent. Thanks for reaching out, I'll reply soon."
+                : "Your email app has opened with this message. Just press send."}
             </span>
           ) : EMAILJS_CONFIGURED ? (
-            "Pesan langsung masuk ke inbox-ku."
+            "Messages go straight to my inbox."
           ) : (
-            "Pesan akan dibuka di aplikasi email kamu."
+            "This opens in your email app."
           )}
         </div>
 

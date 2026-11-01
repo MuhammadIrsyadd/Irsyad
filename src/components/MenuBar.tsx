@@ -46,7 +46,7 @@ export default function MenuBar() {
   );
 
   const dateLabel = now
-    ? now.toLocaleString("id-ID", {
+    ? now.toLocaleString("en-US", {
         weekday: "short",
         month: "short",
         day: "numeric",
@@ -151,7 +151,7 @@ export default function MenuBar() {
                 ? "border-amber-500/30 bg-amber-400/20 text-neutral-900 hover:bg-amber-400/30"
                 : "border-white/15 bg-white/10 text-white/90 hover:bg-white/20"
             }`}
-            title={`Ganti ke ${theme === "dark" ? "Light Mode" : "Dark Mode"}`}
+            title={`Switch to ${theme === "dark" ? "Light Mode" : "Dark Mode"}`}
           >
             <span
               className={`material-symbols-outlined text-[17px] ${
@@ -176,14 +176,14 @@ export default function MenuBar() {
                 ? "border-[var(--accent-400)]/50 bg-[var(--accent-500)]/20 text-white"
                 : "border-white/10 bg-white/10 hover:bg-white/15 hover:text-white"
             }`}
-            title="Control Center (Pengaturan Cepat)"
+            title="Control Center (Quick Settings)"
           >
             <span className="material-symbols-outlined text-[17px]">instant_mix</span>
           </button>
 
           <span
             className="material-symbols-outlined hidden text-[18px] text-white/70 sm:inline"
-            title={online ? "Terhubung ke internet" : "Offline"}
+            title={online ? "Connected to the internet" : "Offline"}
           >
             {online ? "wifi" : "wifi_off"}
           </span>
@@ -192,7 +192,7 @@ export default function MenuBar() {
           {battery && (
             <div
               className="hidden items-center gap-1 sm:flex"
-              title={battery.charging ? "Sedang mengisi daya" : "Baterai"}
+              title={battery.charging ? "Charging" : "Battery"}
             >
               <span
                 className={`material-symbols-outlined icon-fill text-[18px] ${

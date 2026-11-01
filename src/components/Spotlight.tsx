@@ -41,7 +41,7 @@ export default function Spotlight() {
   const hits = useMemo<Hit[]>(() => {
     const openAppHit = (id: AppId, label: string, icon: string): Hit => ({
       label,
-      hint: "Buka app",
+      hint: "Open app",
       icon,
       onSelect: () => {
         openApp(id);
@@ -69,7 +69,7 @@ export default function Spotlight() {
       openAppHit("settings", "Settings", "settings"),
       ...projects.map((p) => ({
         label: `Project: ${p.name}`,
-        hint: "Buka di Safari",
+        hint: "Open in Safari",
         icon: "explore",
         onSelect: () => {
           openSafariProject(p.id);
@@ -78,11 +78,11 @@ export default function Spotlight() {
       })),
       ...caseStudies.map((c) => openAppHit("notes", `Case Study: ${c.title}`, "sticky_note_2")),
       ...skills.map((s) => openAppHit("terminal", `Skill: ${s.category}`, "code")),
-      actionHit("Lock Screen", "lock", "Aksi", lock),
-      actionHit("Toggle Sound Effects", "volume_up", "Aksi", toggleSound),
+      actionHit("Lock Screen", "lock", "Action", lock),
+      actionHit("Toggle Sound Effects", "volume_up", "Action", toggleSound),
       ...socials
         .filter((s) => s.url)
-        .map((s) => actionHit(`Buka ${s.label}`, "north_east", "Link", () => window.open(s.url, "_blank"))),
+        .map((s) => actionHit(`Open ${s.label}`, "north_east", "Link", () => window.open(s.url, "_blank"))),
     ];
 
     if (!query.trim()) return base.slice(0, 6);
@@ -129,7 +129,7 @@ export default function Spotlight() {
                 role="combobox"
                 aria-expanded
                 aria-controls="spotlight-results"
-                placeholder="Cari project, skill, atau app..."
+                placeholder="Search projects, skills or apps..."
                 className="flex-1 bg-transparent text-[15px] text-white placeholder:text-white/40 focus:outline-none"
               />
               <span className="glass-pill rounded-md px-1.5 py-0.5 font-mono-ui text-[10px] text-white/60">
@@ -139,7 +139,7 @@ export default function Spotlight() {
             <div id="spotlight-results" role="listbox" className="max-h-72 overflow-y-auto p-1.5">
               {hits.length === 0 && (
                 <div className="px-3 py-6 text-center text-[12px] text-white/40">
-                  Tidak ada hasil.
+                  No results.
                 </div>
               )}
               {hits.map((h, i) => (

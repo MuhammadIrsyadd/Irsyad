@@ -158,7 +158,7 @@ export default function LoginScreen() {
 
   const time = now?.toLocaleTimeString("en-GB", { hour: "2-digit", minute: "2-digit" }) ?? "";
   const date =
-    now?.toLocaleDateString("id-ID", { weekday: "long", day: "numeric", month: "long" }) ?? "";
+    now?.toLocaleDateString("en-US", { weekday: "long", day: "numeric", month: "long" }) ?? "";
 
   const leaveEase = [0.55, 0, 0.75, 0.2] as const;
 
@@ -254,7 +254,7 @@ export default function LoginScreen() {
               >
                 <span className="material-symbols-outlined text-[16px] text-amber-400">touch_app</span>
                 <span className="block text-xs font-semibold uppercase tracking-widest text-[#D7E2EA] sm:text-sm">
-                  Klik untuk masuk
+                  Click to enter
                 </span>
               </motion.div>
             </FadeIn>
@@ -275,7 +275,7 @@ export default function LoginScreen() {
               className="absolute -top-14 left-1/2 z-20 -translate-x-1/2 whitespace-nowrap rounded-2xl rounded-bl-md border border-white/20 bg-white/10 px-4 py-2 text-[13px] font-medium text-[#E7EEF3] shadow-[0_10px_30px_rgba(0,0,0,0.45)] backdrop-blur-md sm:text-[15px]"
               style={{ fontFamily: "var(--font-geist-sans), sans-serif" }}
             >
-              Klik di mana saja untuk masuk 👋
+              Click anywhere to enter 👋
             </motion.div>
           )}
         </AnimatePresence>
