@@ -30,11 +30,13 @@ export default function Window({
   const toggleMaximizeApp = useSystemStore((s) => s.toggleMaximizeApp);
   const focusApp = useSystemStore((s) => s.focusApp);
   const moveWindow = useSystemStore((s) => s.moveWindow);
+  const snapWindow = useSystemStore((s) => s.snapWindow);
 
   const dragControls = useDragControls();
   const startRect = useRef(w.rect);
   const resizeStart = useRef({ width: 0, height: 0, pointerX: 0, pointerY: 0 });
   const [isResizing, setIsResizing] = useState(false);
+  const [snapPreview, setSnapPreview] = useState<"left" | "right" | null>(null);
   // True while the genie (minimize / restore) runs. Re-blurring a full
   // window's backdrop on every frame of that flight is what made it stutter,
   // so the glass turns solid for the duration and the blur comes back after.
@@ -119,23 +121,64 @@ export default function Window({
   // open / restore / maximize: a snappy, slightly over-springy pop
   const popTransition = { type: "spring" as const, stiffness: 360, damping: 24 };
 
+  const snapEdgeThreshold = 28;
+  const halfSnapW = Math.floor((viewportW - 30) / 2);
+  const snapH = viewportH - MENU_BAR_HEIGHT - DOCK_CLEARANCE;
+
   return (
-    <motion.div
-      key={id}
-      drag
-      dragListener={false}
-      dragControls={dragControls}
-      dragMomentum={false}
-      dragElastic={0}
-      onDragStart={() => {
-        startRect.current = w.rect;
-      }}
-      onDragEnd={(_e, info) => {
-        moveWindow(id, {
-          x: startRect.current.x + info.offset.x,
-          y: Math.max(MENU_BAR_HEIGHT, startRect.current.y + info.offset.y),
-        });
-      }}
+    <>
+      {snapPreview && (
+        <div
+          aria-hidden
+          style={{
+            position: "fixed",
+            top: MENU_BAR_HEIGHT + 8,
+            left: snapPreview === "left" ? 10 : 20 + halfSnapW,
+            width: halfSnapW,
+            height: snapH,
+            zIndex: w.zIndex - 1,
+          }}
+          className="pointer-events-none rounded-window border-2 border-[var(--accent-400)]/60 bg-[var(--accent-500)]/15 backdrop-blur-md transition-all duration-150"
+        />
+      )}
+      <motion.div
+        key={id}
+        drag
+        dragListener={false}
+        dragControls={dragControls}
+        dragMomentum={false}
+        dragElastic={0}
+        onDragStart={() => {
+          startRect.current = w.rect;
+        }}
+        onDrag={(_e, info) => {
+          const px = info.point.x;
+          const vw = typeof window !== "undefined" ? window.innerWidth : 1200;
+          if (px <= snapEdgeThreshold) {
+            if (snapPreview !== "left") setSnapPreview("left");
+          } else if (px >= vw - snapEdgeThreshold) {
+            if (snapPreview !== "right") setSnapPreview("right");
+          } else if (snapPreview !== null) {
+            setSnapPreview(null);
+          }
+        }}
+        onDragEnd={(_e, info) => {
+          const px = info.point.x;
+          const vw = typeof window !== "undefined" ? window.innerWidth : 1200;
+          setSnapPreview(null);
+          if (px <= snapEdgeThreshold) {
+            snapWindow(id, "left");
+            return;
+          }
+          if (px >= vw - snapEdgeThreshold) {
+            snapWindow(id, "right");
+            return;
+          }
+          moveWindow(id, {
+            x: startRect.current.x + info.offset.x,
+            y: Math.max(MENU_BAR_HEIGHT, startRect.current.y + info.offset.y),
+          });
+        }}
       onPointerDownCapture={() => focusApp(id)}
       onAnimationComplete={() => genieActive && setGenieActive(false)}
       initial={{
@@ -270,6 +313,7 @@ export default function Window({
           </svg>
         </div>
       )}
-    </motion.div>
+      </motion.div>
+    </>
   );
 }

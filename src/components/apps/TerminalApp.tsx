@@ -1,8 +1,8 @@
 "use client";
 
-import { useEffect, useRef, useState } from "react";
+import { useEffect, useMemo, useRef, useState } from "react";
 import AppFrame from "@/components/AppFrame";
-import { profile, skills, projects } from "@/lib/content";
+import { awards, caseStudies, educationHistory, journey, profile, skills, projects } from "@/lib/content";
 import { useSystemStore } from "@/store/system-store";
 import { ASCII_FACE } from "@/lib/ascii-face";
 
@@ -55,31 +55,74 @@ const BOOT_SEQUENCE: { cmd: string; output: string[] }[] = [
 ];
 
 const HELP_TEXT = [
-  "Available commands:",
+  "Available commands (Tab to autocomplete, ↑/↓ for history):",
   "  neofetch             — system info + ASCII portrait",
   "  whoami               — who I am & profile info",
+  "  education            — degree, GPA & awards",
+  "  experience           — PT. INKA, Bangkit & work history",
   "  projects             — list all projects & deployments",
   "  cat projects/<id>    — full project info (e.g. cat projects/gigizi)",
   "  open <id>            — open a project in Safari (e.g. open 2048)",
+  "  notes                — list all engineering case studies",
+  "  note <id>            — open a case study in Notes (e.g. note inka-erp)",
   "  ls skills/           — list technical skill categories",
-  "  cat <category>       — skill details (e.g. cat frontend)",
+  "  cat <category>       — skill details (e.g. cat backend-&-erp)",
+  "  theme [dark|light]   — toggle or set desktop theme",
   "  cv                   — open Resume / CV (PDF)",
   "  cat contact.txt      — contact info, email & status",
   "  sudo hire-me         — send a job invitation",
   "  coffee --brew        — brew a virtual coffee",
-  "  clear                — clear the terminal",
+  "  clear                — clear the terminal (or Ctrl+L)",
   "  help                 — show this help message",
+];
+
+const AUTOCOMPLETE_COMMANDS = [
+  "help",
+  "neofetch",
+  "whoami",
+  "education",
+  "experience",
+  "projects",
+  "notes",
+  "ls skills/",
+  ...skills.map((s) => `cat ${s.category.toLowerCase().replace(/\s+/g, "-")}`),
+  ...projects.map((p) => `cat projects/${p.id}`),
+  ...projects.map((p) => `open ${p.id}`),
+  ...caseStudies.map((c) => `note ${c.projectId}`),
+  "cat contact.txt",
+  "cat role.txt",
+  "theme",
+  "theme dark",
+  "theme light",
+  "cv",
+  "sudo hire-me",
+  "coffee --brew",
+  "clear",
 ];
 
 export default function TerminalApp() {
   const [lines, setLines] = useState<Line[]>([]);
   const [booted, setBooted] = useState(false);
   const [input, setInput] = useState("");
+  const [history, setHistory] = useState<string[]>([]);
+  const [historyIdx, setHistoryIdx] = useState<number>(-1);
   const scrollRef = useRef<HTMLDivElement>(null);
   const inputRef = useRef<HTMLInputElement>(null);
 
   const openApp = useSystemStore((s) => s.openApp);
   const openSafariProject = useSystemStore((s) => s.openSafariProject);
+  const openNote = useSystemStore((s) => s.openNote);
+  const setTheme = useSystemStore((s) => s.setTheme);
+  const toggleTheme = useSystemStore((s) => s.toggleTheme);
+
+  const suggestion = useMemo(() => {
+    if (!input.trim()) return "";
+    const lower = input.toLowerCase();
+    const match = AUTOCOMPLETE_COMMANDS.find(
+      (c) => c.toLowerCase().startsWith(lower) && c.toLowerCase() !== lower
+    );
+    return match ? input + match.slice(input.length) : "";
+  }, [input]);
 
   useEffect(() => {
     let cancelled = false;
@@ -239,11 +282,74 @@ export default function TerminalApp() {
       }
 
       const foundSkill = skills.find(
-        (s) => s.category.toLowerCase().replace(/\s+/g, "-") === target
+        (s) =>
+          s.category.toLowerCase().replace(/\s+/g, "-") === target ||
+          s.category.toLowerCase().includes(target)
       );
       if (foundSkill) return [`${foundSkill.category}: ${foundSkill.items.join(", ")}`];
 
       return [`cat: ${target}: No such file or directory. Type 'help' for guidance.`];
+    }
+
+    if (cmd === "education" || cmd === "edu") {
+      const edu = educationHistory[0];
+      return [
+        `${edu.institution} (${edu.period})`,
+        `  Degree : ${edu.degree}`,
+        `  GPA    : ${edu.gpa} / ${edu.maxGpa} (Cum Laude)`,
+        `  Thesis : ${edu.thesis}`,
+        "",
+        "Awards:",
+        ...awards.map((a) => `  • ${a.title} — ${a.issuer} (${a.period})`),
+      ];
+    }
+
+    if (cmd === "experience" || cmd === "journey" || cmd === "work") {
+      return [
+        "WORK & INDUSTRY EXPERIENCE:",
+        ...journey.flatMap((j) => [
+          `  • [${j.period}] ${j.title} @ ${j.company}`,
+          `    ${j.description}`,
+          `    Skills: ${j.skills.join(", ")}`,
+        ]),
+      ];
+    }
+
+    if (cmd === "notes" || cmd === "casestudies" || cmd === "ls notes") {
+      return [
+        "CASE STUDIES (Notes App):",
+        ...caseStudies.map(
+          (c) => `  • ${c.projectId.padEnd(16)} : ${c.title}`
+        ),
+        "",
+        "Tip: type 'note <id>' to open a case study in the Notes app.",
+      ];
+    }
+
+    if (cmd.startsWith("note ")) {
+      const target = cmd.replace("note ", "").trim();
+      const found = caseStudies.find(
+        (c) =>
+          c.id.toLowerCase() === target ||
+          c.projectId.toLowerCase() === target ||
+          c.title.toLowerCase().includes(target)
+      );
+      if (found) {
+        openNote(found.id);
+        return [`[Notes] Opening case study: "${found.title}"...`];
+      }
+      return [`Case study '${target}' not found. Type 'notes' to list all.`];
+    }
+
+    if (cmd === "theme" || cmd.startsWith("theme ")) {
+      const arg = cmd.replace("theme", "").trim();
+      if (arg === "light" || arg === "dark") {
+        setTheme(arg);
+        return [`[System] Theme set to ${arg}.`];
+      }
+      toggleTheme();
+      const current = useSystemStore.getState().theme;
+      return [`[System] Theme toggled to ${current}.`];
     }
 
     if (cmd === "sudo hire-me") {
@@ -254,8 +360,8 @@ export default function TerminalApp() {
       ];
     }
 
-    if (cmd === "coffee --brew") {
-      return ["☕ Brewing... done. Productivity +100%."];
+    if (cmd === "coffee --brew" || cmd === "coffee") {
+      return ["☕ Brewing Mojokerto specialty roast... done. Productivity +100%."];
     }
 
     return [`command not found: ${cmd}`, `type 'help' to see the available commands.`];
@@ -264,6 +370,10 @@ export default function TerminalApp() {
   function handleSubmit(e: React.FormEvent) {
     e.preventDefault();
     const cmd = input;
+    if (cmd.trim()) {
+      setHistory((prev) => [...prev, cmd]);
+      setHistoryIdx(-1);
+    }
     setLines((prev) => [...prev, { type: "cmd", text: cmd }]);
     if (cmd.trim().toLowerCase() === "clear") {
       setLines([]);
@@ -279,6 +389,38 @@ export default function TerminalApp() {
     setInput("");
   }
 
+  function handleKeyDown(e: React.KeyboardEvent<HTMLInputElement>) {
+    if ((e.key === "Tab" || (e.key === "ArrowRight" && e.currentTarget.selectionStart === input.length)) && suggestion) {
+      e.preventDefault();
+      setInput(suggestion);
+      return;
+    }
+    if (e.key === "ArrowUp") {
+      e.preventDefault();
+      if (history.length === 0) return;
+      const nextIdx = historyIdx === -1 ? history.length - 1 : Math.max(0, historyIdx - 1);
+      setHistoryIdx(nextIdx);
+      setInput(history[nextIdx]);
+      return;
+    }
+    if (e.key === "ArrowDown") {
+      e.preventDefault();
+      if (historyIdx === -1) return;
+      if (historyIdx + 1 >= history.length) {
+        setHistoryIdx(-1);
+        setInput("");
+      } else {
+        setHistoryIdx(historyIdx + 1);
+        setInput(history[historyIdx + 1]);
+      }
+      return;
+    }
+    if (e.ctrlKey && e.key.toLowerCase() === "l") {
+      e.preventDefault();
+      setLines([]);
+    }
+  }
+
   return (
     <AppFrame
       id="terminal"
@@ -290,8 +432,9 @@ export default function TerminalApp() {
         className="h-full overflow-y-auto bg-terminal-canvas p-4 font-mono-ui text-[12px] leading-relaxed text-white/90"
       >
         <div className="mb-2 text-white/40">
-          {profile.name} — Interactive Shell v1.2. Type{" "}
-          <span className="text-terminal-green font-semibold">help</span> to see the available commands.
+          {profile.name} — Interactive Shell v1.3. Type{" "}
+          <span className="text-terminal-green font-semibold">help</span> or press{" "}
+          <span className="text-white/60">Tab</span> to autocomplete.
         </div>
         {lines.map((l, i) =>
           l.type === "cmd" ? (
@@ -322,14 +465,28 @@ export default function TerminalApp() {
           <form onSubmit={handleSubmit} className="mt-1 flex items-center gap-2">
             <span className="text-terminal-green">➜</span>
             <span className="text-[var(--accent-300)]">~</span>
-            <input
-              ref={inputRef}
-              value={input}
-              onChange={(e) => setInput(e.target.value)}
-              className="flex-1 bg-transparent text-white outline-none"
-              autoFocus
-              spellCheck={false}
-            />
+            <div className="relative flex-1">
+              {suggestion && (
+                <span
+                  aria-hidden
+                  className="pointer-events-none absolute inset-0 select-none whitespace-pre text-white/30"
+                >
+                  {suggestion}
+                </span>
+              )}
+              <input
+                ref={inputRef}
+                value={input}
+                onChange={(e) => {
+                  setInput(e.target.value);
+                  setHistoryIdx(-1);
+                }}
+                onKeyDown={handleKeyDown}
+                className="relative w-full bg-transparent text-white outline-none"
+                autoFocus
+                spellCheck={false}
+              />
+            </div>
           </form>
         )}
       </div>

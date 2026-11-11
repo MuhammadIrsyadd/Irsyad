@@ -84,21 +84,12 @@ export const metadata: Metadata = {
     siteName: "Muh Irsyad Portfolio",
     locale: "en_US",
     type: "website",
-    images: [
-      {
-        url: "/apple-touch-icon.png",
-        width: 180,
-        height: 180,
-        alt: "Muh Irsyad Portfolio",
-      },
-    ],
   },
   twitter: {
-    card: "summary",
+    card: "summary_large_image",
     title: "Muh Irsyad — Full-Stack & Mobile Developer | Portfolio OS",
     description:
       "Official portfolio of Muh. Irsyad Dwi Kurniawan, Full-Stack & Mobile Developer (Next.js, Laravel, Kotlin).",
-    images: ["/apple-touch-icon.png"],
   },
 };
 

@@ -4,7 +4,7 @@ import { useEffect, useState } from "react";
 import { AnimatePresence, motion } from "framer-motion";
 import AppFrame from "@/components/AppFrame";
 import Magnet from "@/components/Magnet";
-import { projects, type Project } from "@/lib/content";
+import { caseStudies, projects, type Project } from "@/lib/content";
 import { useSystemStore } from "@/store/system-store";
 
 const dotColor: Record<Project["accent"], string> = {
@@ -56,6 +56,7 @@ function Shot({ project, className }: { project: Project; className?: string }) 
 export default function SafariApp() {
   const activeSafariProject = useSystemStore((s) => s.activeSafariProject);
   const setActiveSafariProject = useSystemStore((s) => s.setActiveSafariProject);
+  const openNote = useSystemStore((s) => s.openNote);
   const [activeId, setActiveId] = useState(
     () =>
       activeSafariProject && projects.some((p) => p.id === activeSafariProject)
@@ -66,7 +67,12 @@ export default function SafariApp() {
   // project (desktop widget, Terminal `open`, Spotlight): go straight to it.
   const [view, setView] = useState<"overview" | "detail">(activeSafariProject ? "detail" : "overview");
   const [direction, setDirection] = useState(1);
+  const [livePreview, setLivePreview] = useState(false);
+  const [iframeLoading, setIframeLoading] = useState(false);
+  const [iframeKey, setIframeKey] = useState(0);
   const active = projects.find((p) => p.id === activeId) ?? projects[0];
+  const matchedNote = caseStudies.find((c) => c.projectId === active.id);
+  const canEmbedLive = Boolean(active.url && active.id !== "liquid-glass-os");
 
   useEffect(() => {
     if (activeSafariProject && projects.some((p) => p.id === activeSafariProject)) {
@@ -78,6 +84,7 @@ export default function SafariApp() {
         return activeSafariProject;
       });
       setView("detail");
+      setLivePreview(false);
       /* eslint-enable react-hooks/set-state-in-effect */
     }
   }, [activeSafariProject]);
@@ -89,11 +96,23 @@ export default function SafariApp() {
     setActiveId(id);
     setActiveSafariProject(id);
     setView("detail");
+    setLivePreview(false);
   }
 
   function showOverview() {
     setView("overview");
     setActiveSafariProject(null);
+    setLivePreview(false);
+  }
+
+  function startLivePreview() {
+    setIframeLoading(true);
+    setLivePreview(true);
+  }
+
+  function reloadIframe() {
+    setIframeLoading(true);
+    setIframeKey((k) => k + 1);
   }
 
   const address = view === "overview" ? "muhirsyad.my.id/projects" : active.url ?? `portfolio.dev/projects/${active.id}`;
@@ -114,10 +133,38 @@ export default function SafariApp() {
             <span className="material-symbols-outlined text-[18px]">grid_view</span>
           </button>
 
+          {view === "detail" && canEmbedLive && (
+            <button
+              onClick={() => (livePreview ? setLivePreview(false) : startLivePreview())}
+              title={livePreview ? "Exit interactive preview" : "Run live app inside Safari"}
+              className={`flex h-7 shrink-0 items-center gap-1 rounded-md px-2 text-[11px] font-medium transition-colors ${
+                livePreview
+                  ? "bg-[var(--accent-500)] text-black"
+                  : "bg-white/10 text-white/80 hover:bg-white/15 hover:text-white"
+              }`}
+            >
+              <span className="material-symbols-outlined text-[15px]">
+                {livePreview ? "visibility_off" : "play_circle"}
+              </span>
+              <span className="hidden sm:inline">{livePreview ? "Exit Live" : "Live Preview"}</span>
+            </button>
+          )}
+
           <div className="flex min-w-0 flex-1 items-center justify-center gap-1.5 rounded-md bg-white/10 px-3 py-1">
             <span className="material-symbols-outlined text-[12px] text-white/50">lock</span>
             <span className="truncate text-[12px] text-white/80">{address}</span>
           </div>
+
+          {view === "detail" && livePreview && (
+            <button
+              onClick={reloadIframe}
+              aria-label="Reload live preview"
+              title="Reload live preview"
+              className="flex h-7 w-7 shrink-0 items-center justify-center rounded-md text-white/60 transition-colors hover:bg-white/[0.1] hover:text-white"
+            >
+              <span className="material-symbols-outlined text-[17px]">refresh</span>
+            </button>
+          )}
 
           {view === "detail" && active.url ? (
             <a
@@ -193,6 +240,25 @@ export default function SafariApp() {
                 ))}
               </div>
             </motion.div>
+          ) : livePreview && canEmbedLive && active.url ? (
+            <div className="relative h-full w-full bg-black">
+              {iframeLoading && (
+                <div className="absolute inset-0 z-10 flex flex-col items-center justify-center gap-2 bg-black/75 backdrop-blur-sm">
+                  <span className="material-symbols-outlined animate-spin text-2xl text-[var(--accent-400)]">
+                    progress_activity
+                  </span>
+                  <span className="text-[12px] text-white/70">Loading {active.name.split(" — ")[0]}...</span>
+                </div>
+              )}
+              <iframe
+                key={`${active.id}-${iframeKey}`}
+                src={active.url}
+                title={active.name}
+                onLoad={() => setIframeLoading(false)}
+                className="h-full w-full border-0"
+                allow="autoplay; fullscreen; clipboard-write"
+              />
+            </div>
           ) : (
             <AnimatePresence mode="popLayout" initial={false} custom={direction}>
               <motion.div
@@ -231,17 +297,43 @@ export default function SafariApp() {
                   </p>
 
                   <div className="flex flex-wrap items-center gap-2 pt-1">
+                    {canEmbedLive && (
+                      <Magnet padding={30} magnetStrength={6}>
+                        <button
+                          onClick={startLivePreview}
+                          className="inline-flex items-center gap-1.5 rounded-lg bg-[var(--accent-500)] px-4 py-2 text-xs font-semibold text-black transition hover:brightness-110 active:scale-95"
+                        >
+                          <span className="material-symbols-outlined text-[15px]">play_circle</span>
+                          Try Live Preview
+                        </button>
+                      </Magnet>
+                    )}
                     {active.url && (
                       <Magnet padding={30} magnetStrength={6}>
                         <a
                           href={active.url}
                           target="_blank"
                           rel="noreferrer"
-                          className="inline-flex items-center gap-1.5 rounded-lg bg-[var(--accent-500)] px-4 py-2 text-xs font-semibold text-black transition hover:brightness-110 active:scale-95"
+                          className={
+                            canEmbedLive
+                              ? "inline-flex items-center gap-1.5 rounded-lg border border-white/15 bg-white/10 px-3.5 py-2 text-xs font-medium text-white transition hover:bg-white/15 active:scale-95"
+                              : "inline-flex items-center gap-1.5 rounded-lg bg-[var(--accent-500)] px-4 py-2 text-xs font-semibold text-black transition hover:brightness-110 active:scale-95"
+                          }
                         >
                           Open website
                           <span className="material-symbols-outlined text-[15px]">open_in_new</span>
                         </a>
+                      </Magnet>
+                    )}
+                    {matchedNote && (
+                      <Magnet padding={30} magnetStrength={6}>
+                        <button
+                          onClick={() => openNote(matchedNote.id)}
+                          className="inline-flex items-center gap-1.5 rounded-lg border border-white/15 bg-white/10 px-3.5 py-2 text-xs font-medium text-white transition hover:bg-white/15 active:scale-95"
+                        >
+                          <span className="material-symbols-outlined text-[15px]">edit_note</span>
+                          Read Case Study
+                        </button>
                       </Magnet>
                     )}
                     {active.repo && (

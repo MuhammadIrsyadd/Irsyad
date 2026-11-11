@@ -12,8 +12,10 @@ export default function Spotlight() {
   const setOpen = useSystemStore((s) => s.setSpotlightOpen);
   const openApp = useSystemStore((s) => s.openApp);
   const openSafariProject = useSystemStore((s) => s.openSafariProject);
+  const openNote = useSystemStore((s) => s.openNote);
   const lock = useSystemStore((s) => s.lock);
   const toggleSound = useSystemStore((s) => s.toggleSound);
+  const toggleTheme = useSystemStore((s) => s.toggleTheme);
   const [query, setQuery] = useState("");
   const [selected, setSelected] = useState(0);
 
@@ -68,7 +70,7 @@ export default function Spotlight() {
       openAppHit("photos", "Photos", "photo_library"),
       openAppHit("settings", "Settings", "settings"),
       ...projects.map((p) => ({
-        label: `Project: ${p.name}`,
+        label: `Project: ${p.name} (${p.tech.join(", ")})`,
         hint: "Open in Safari",
         icon: "explore",
         onSelect: () => {
@@ -76,8 +78,22 @@ export default function Spotlight() {
           setOpen(false);
         },
       })),
-      ...caseStudies.map((c) => openAppHit("notes", `Case Study: ${c.title}`, "sticky_note_2")),
-      ...skills.map((s) => openAppHit("terminal", `Skill: ${s.category}`, "code")),
+      ...caseStudies.map((c) => ({
+        label: `Case Study: ${c.title}`,
+        hint: "Open in Notes",
+        icon: "sticky_note_2",
+        onSelect: () => {
+          openNote(c.id);
+          setOpen(false);
+        },
+      })),
+      ...skills.map((s) =>
+        openAppHit("terminal", `Skill: ${s.category} — ${s.items.join(", ")}`, "code")
+      ),
+      actionHit("Download Resume / CV (PDF)", "description", "Document", () =>
+        window.open("/resume.pdf", "_blank")
+      ),
+      actionHit("Toggle Dark / Light Theme", "contrast", "Action", toggleTheme),
       actionHit("Lock Screen", "lock", "Action", lock),
       actionHit("Toggle Sound Effects", "volume_up", "Action", toggleSound),
       ...socials
@@ -88,7 +104,7 @@ export default function Spotlight() {
     if (!query.trim()) return base.slice(0, 6);
     const q = query.toLowerCase();
     return base.filter((h) => h.label.toLowerCase().includes(q)).slice(0, 8);
-  }, [query, openApp, openSafariProject, setOpen, lock, toggleSound]);
+  }, [query, openApp, openSafariProject, openNote, setOpen, lock, toggleSound, toggleTheme]);
 
   return (
     <AnimatePresence>

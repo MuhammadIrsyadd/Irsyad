@@ -304,19 +304,23 @@ export type Skill = {
 export const skills: Skill[] = [
   {
     category: "Frontend",
-    items: ["React", "Next.js", "TypeScript", "Tailwind CSS", "Framer Motion"],
+    items: ["React", "Next.js", "TypeScript", "Tailwind CSS", "Framer Motion", "HTML5/CSS3"],
   },
   {
-    category: "Interaction & Animation",
-    items: ["Framer Motion", "GSAP", "CSS Animations", "Canvas/WebGL basics"],
+    category: "Backend & ERP",
+    items: ["Laravel", "PHP", "MySQL", "RESTful API", "System Optimization", "Blade"],
   },
   {
-    category: "Tooling",
-    items: ["Git", "Figma", "Vite", "Vercel", "ESLint/Prettier"],
+    category: "Mobile Development",
+    items: ["Kotlin", "Jetpack Compose", "Android Studio", "MVVM Clean Architecture", "Retrofit", "SOLID Paradigm"],
   },
   {
-    category: "Currently Learning",
-    items: ["Three.js", "React Three Fiber", "Shader (GLSL) basics"],
+    category: "Interactive & Canvas",
+    items: ["HTML5 Canvas 2D", "Web Audio API", "Game Physics", "PWA", "GSAP"],
+  },
+  {
+    category: "Tooling & Workflow",
+    items: ["Git", "GitHub", "Figma", "Vite", "Vercel", "Cross-Functional Team"],
   },
 ];
 
@@ -517,6 +521,54 @@ export const caseStudies: CaseStudy[] = [
     result:
       "Completed the program and earned the official Bangkit Academy certification. The team's Capstone Project was built and presented to a review panel from Google and industry partners.",
     tags: ["Kotlin", "Jetpack Compose", "Clean Architecture", "SOLID", "Teamwork"],
+  },
+  {
+    id: "gigizi-story",
+    projectId: "gigizi",
+    title: "Making everyday Indonesian nutrition practical with GIGIZI.",
+    problem:
+      "Most calorie and nutrition trackers are built around Western food databases, making it tedious for Indonesians to log everyday meals like Warteg dishes, Tempe, Soto or Rendang.",
+    approach:
+      "I built GIGIZI as a fast, PWA-ready web application centered on local Indonesian dishes. Beyond macro calculation, I added interactive features like 'Battle Gizi' to compare two foods head-to-head and 'Apotek Alami' for traditional herbal insights.",
+    result:
+      "Delivered a responsive, mobile-friendly nutrition companion with instant client-side search, high Core Web Vitals scores and zero friction for daily meal planning.",
+    tags: ["Next.js", "TypeScript", "Tailwind CSS", "PWA", "Health Tech"],
+  },
+  {
+    id: "tarot-story",
+    projectId: "tarot",
+    title: "Designing an atmospheric, tactile digital reading experience in Arcana Mystica.",
+    problem:
+      "Digital divination and card apps often feel flat and mechanical—just random number generators behind a button—losing the sense of ritual and visual symbolism.",
+    approach:
+      "Using Next.js and Framer Motion, I choreographed card shuffling, flip physics, multi-card spread layouts and a searchable encyclopedia of card meanings paired with a local reflection journal.",
+    result:
+      "Created an immersive, cohesive web experience that showcases advanced UI choreography, state transitions and thematic design consistency.",
+    tags: ["Next.js", "React", "Framer Motion", "Interactive UI", "Design"],
+  },
+  {
+    id: "2048-story",
+    projectId: "2048",
+    title: "Reimagining 2048 as a zero-asset Synthwave arcade cabinet.",
+    problem:
+      "How do you make a classic number puzzle feel like a tactile retro arcade cabinet on both desktop keyboards and mobile touchscreens without bloating the bundle with audio files?",
+    approach:
+      "I wrote a deterministic grid reducer with full undo history, paired touch swipe detection with WASD/arrow controls, and synthesized every merge and combo sound effect in real time using the browser's Web Audio API.",
+    result:
+      "An instant-loading arcade game with 60fps tile animations, synthesized retro audio and persistent local high-score leaderboards.",
+    tags: ["React", "TypeScript", "Web Audio API", "Game Logic", "Tailwind CSS"],
+  },
+  {
+    id: "brickbreaker-story",
+    projectId: "brickbreaker",
+    title: "Building a 25-stage Canvas 2D physics & particle engine in Retro Bounce.",
+    problem:
+      "DOM-based animations struggle when dozens of bricks, multi-ball collisions and hundreds of neon explosion particles update simultaneously every frame.",
+    approach:
+      "I implemented a custom requestAnimationFrame game loop on HTML5 Canvas 2D with swept collision detection, variable brick durability across 25 handcrafted stages, particle emitters and multi-frequency Web Audio synth feedback.",
+    result:
+      "Smooth 60fps arcade gameplay across 25 progressive stages with responsive paddle physics and zero external game-engine dependencies.",
+    tags: ["HTML5 Canvas 2D", "React", "Game Physics", "Web Audio API"],
   },
   {
     id: "web-competition-story",

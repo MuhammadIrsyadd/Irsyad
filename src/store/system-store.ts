@@ -31,6 +31,7 @@ type SystemState = {
   wallpaperId: string;
   dockOrder: AppId[];
   activeSafariProject: string | null;
+  activeNoteId: string | null;
 
   setBootStage: (stage: BootStage) => void;
   unlock: () => void;
@@ -38,6 +39,7 @@ type SystemState = {
   setTheme: (theme: "dark" | "light") => void;
   toggleTheme: () => void;
   setAccent: (accent: AccentColor) => void;
+  setSoundEnabled: (enabled: boolean) => void;
   toggleSound: () => void;
   setSpotlightOpen: (open: boolean) => void;
   setHoveredApp: (id: AppId | null) => void;
@@ -45,6 +47,8 @@ type SystemState = {
   setDockOrder: (order: AppId[]) => void;
   setActiveSafariProject: (id: string | null) => void;
   openSafariProject: (projectId: string) => void;
+  setActiveNote: (id: string | null) => void;
+  openNote: (noteId: string) => void;
 
   openApp: (id: AppId) => void;
   closeApp: (id: AppId) => void;
@@ -52,6 +56,7 @@ type SystemState = {
   toggleMaximizeApp: (id: AppId) => void;
   focusApp: (id: AppId) => void;
   moveWindow: (id: AppId, rect: Partial<Rect>) => void;
+  snapWindow: (id: AppId, side: "left" | "right") => void;
 };
 
 const defaultRects: Record<AppId, Rect> = {
@@ -93,6 +98,7 @@ export const useSystemStore = create<SystemState>((set, get) => ({
   wallpaperId: "wallpaper1", // default; falls back to the first discovered wallpaper if missing
   dockOrder: appOrder,
   activeSafariProject: null,
+  activeNoteId: null,
 
   setBootStage: (stage) => set({ bootStage: stage }),
   unlock: () => set({ bootStage: "desktop" }),
@@ -124,22 +130,44 @@ export const useSystemStore = create<SystemState>((set, get) => ({
     if (typeof document !== "undefined") {
       document.documentElement.setAttribute("data-accent", accent);
     }
+    try {
+      localStorage.setItem("porto_accent", accent);
+    } catch {}
     set({ accent });
+  },
+  setSoundEnabled: (enabled) => {
+    try {
+      localStorage.setItem("porto_sound", enabled ? "1" : "0");
+    } catch {}
+    set({ soundEnabled: enabled });
   },
   toggleSound: () =>
     set((s) => {
       const next = !s.soundEnabled;
       if (next) sound.toggle(); // audible confirmation the moment it's turned on
+      try {
+        localStorage.setItem("porto_sound", next ? "1" : "0");
+      } catch {}
       return { soundEnabled: next };
     }),
   setSpotlightOpen: (open) => set({ spotlightOpen: open }),
   setHoveredApp: (id) => set({ hoveredApp: id }),
-  setWallpaper: (id) => set({ wallpaperId: id }),
+  setWallpaper: (id) => {
+    try {
+      localStorage.setItem("porto_wallpaper", id);
+    } catch {}
+    set({ wallpaperId: id });
+  },
   setDockOrder: (order) => set({ dockOrder: order }),
   setActiveSafariProject: (id) => set({ activeSafariProject: id }),
   openSafariProject: (projectId) => {
     get().openApp("safari");
     set({ activeSafariProject: projectId });
+  },
+  setActiveNote: (id) => set({ activeNoteId: id }),
+  openNote: (noteId) => {
+    get().openApp("notes");
+    set({ activeNoteId: noteId });
   },
 
   openApp: (id) => {
@@ -217,6 +245,34 @@ export const useSystemStore = create<SystemState>((set, get) => ({
         [id]: { ...s.windows[id], rect: { ...s.windows[id].rect, ...rect } },
       },
     })),
+
+  snapWindow: (id, side) => {
+    if (get().soundEnabled) sound.maximize();
+    const viewportW = typeof window !== "undefined" ? window.innerWidth : 1200;
+    const viewportH = typeof window !== "undefined" ? window.innerHeight : 800;
+    const menuBarH = 44;
+    const dockClearance = 120;
+    const gap = 10;
+    const halfW = Math.floor((viewportW - gap * 3) / 2);
+    const snapH = viewportH - menuBarH - dockClearance;
+    const snapX = side === "left" ? gap : gap * 2 + halfW;
+    const snapY = menuBarH + 8;
+
+    set((s) => {
+      const w = s.windows[id];
+      return {
+        windows: {
+          ...s.windows,
+          [id]: {
+            ...w,
+            isMaximized: false,
+            preMaximizeRect: w.preMaximizeRect ?? w.rect,
+            rect: { x: snapX, y: snapY, width: halfW, height: snapH },
+          },
+        },
+      };
+    });
+  },
 }));
 
 export function isAnyWindowOpen(windows: Record<AppId, WindowState>) {

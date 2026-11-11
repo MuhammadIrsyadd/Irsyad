@@ -23,9 +23,27 @@ export default function HomeClient() {
 
   useEffect(() => {
     try {
+      const store = useSystemStore.getState();
       const savedTheme = localStorage.getItem("porto_theme");
       if (savedTheme === "light" || savedTheme === "dark") {
-        useSystemStore.getState().setTheme(savedTheme);
+        store.setTheme(savedTheme);
+      }
+      const savedAccent = localStorage.getItem("porto_accent");
+      if (
+        savedAccent === "amber" ||
+        savedAccent === "violet" ||
+        savedAccent === "cyan" ||
+        savedAccent === "coral"
+      ) {
+        store.setAccent(savedAccent);
+      }
+      const savedWallpaper = localStorage.getItem("porto_wallpaper");
+      if (savedWallpaper) {
+        store.setWallpaper(savedWallpaper);
+      }
+      const savedSound = localStorage.getItem("porto_sound");
+      if (savedSound === "1" || savedSound === "0") {
+        store.setSoundEnabled(savedSound === "1");
       }
     } catch {}
   }, []);
