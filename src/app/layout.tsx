@@ -1,4 +1,5 @@
 import type { Metadata, Viewport } from "next";
+import { Analytics } from "@vercel/analytics/next";
 import { Geist, JetBrains_Mono, Kanit } from "next/font/google";
 import { ICON_FONT_URL } from "@/lib/icon-font";
 import "./globals.css";
@@ -167,6 +168,7 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
       </head>
       <body className="h-full min-h-full overflow-hidden bg-background text-on-surface">
         {children}
+        <Analytics />
       </body>
     </html>
   );
